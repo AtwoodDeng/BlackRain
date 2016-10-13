@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 6402898d34328e84b9e20179b5accf58
+labels:
+- FX
+- Rain
+- Storm
+- Lightning
+- Thunder
+- ParticleEffect
+- Weather
+NativeFormatImporter:
+  userData: 
