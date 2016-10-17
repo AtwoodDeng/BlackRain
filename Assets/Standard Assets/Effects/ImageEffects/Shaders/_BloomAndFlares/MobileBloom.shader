@@ -3,9 +3,12 @@ Shader "Hidden/FastBloom" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_Bloom ("Bloom (RGB)", 2D) = "black" {}
+		_BloomColor("Bloom Color" , Color ) = (1,1,1,1)
+		_Tolarence("Tolarence" , float ) = 0.05
 	}
 	
 	CGINCLUDE
+		#pragma BLOOM_ONE_COLOR
 
 		#include "UnityCG.cginc"
 
@@ -18,7 +21,11 @@ Shader "Hidden/FastBloom" {
 		uniform half4 _Parameter;
 		uniform half4 _OffsetsA;
 		uniform half4 _OffsetsB;
-		
+		uniform half4 _BloomColor;
+		uniform half _Tolarence;
+
+		int _IfShowOneColor;
+
 		#define ONE_MINUS_THRESHHOLD_TIMES_INTENSITY _Parameter.w
 		#define THRESHHOLD _Parameter.z
 
@@ -91,7 +98,20 @@ Shader "Hidden/FastBloom" {
 			color += tex2D (_MainTex, i.uv21);
 			color += tex2D (_MainTex, i.uv22);
 			color += tex2D (_MainTex, i.uv23);
-			return max(color/4 - THRESHHOLD, 0) * ONE_MINUS_THRESHHOLD_TIMES_INTENSITY;
+			color = color / 4; 
+
+			if (_IfShowOneColor == 1 )
+			{
+				fixed similarity = abs(color.r-_BloomColor.r) + abs(color.g-_BloomColor.g) + abs(color.b-_BloomColor.b);
+				if ( similarity < _Tolarence )
+					return color * ONE_MINUS_THRESHHOLD_TIMES_INTENSITY;
+				else
+					return fixed4(0,0,0,0);
+			}
+			else
+			{
+				return max(color - THRESHHOLD, 0) * ONE_MINUS_THRESHHOLD_TIMES_INTENSITY;
+			}
 		}
 	
 		// weight curves
@@ -221,7 +241,8 @@ Shader "Hidden/FastBloom" {
 	Pass { 
 	
 		CGPROGRAM
-		
+
+		#pragma BLOOM_ONE_COLOR
 		#pragma vertex vert4Tap
 		#pragma fragment fragDownsample
 		

@@ -9,6 +9,8 @@ using System;
 public enum LogicEvents
 {
 	None=0,
+
+	Death = 10,
 }
 
 public class M_Event : MonoBehaviour {

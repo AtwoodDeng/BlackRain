@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: b68c8857e643abb45b0baf26fe56c53d
+timeCreated: 1476643054
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Base
+    100002: calf_L
+    100004: calf_R
+    100006: chest
+    100008: chest_0
+    100010: chest_MeshPart0
+    100012: chest_MeshPart1
+    100014: Cylinder_013
+    100016: Cylinder_014
+    100018: foot_L
+    100020: foot_R
+    100022: forearm_L
+    100024: forearm_R
+    100026: hand_L
+    100028: hand_R
+    100030: head
+    100032: hip
+    100034: Mannequin
+    100036: //RootNode
+    100038: Rig
+    100040: shape0
+    100042: shape1
+    100044: shape2
+    100046: shape3
+    100048: shape4
+    100050: shape5
+    100052: Sphere_004
+    100054: Sphere_006
+    100056: Sphere_010
+    100058: thigh_L
+    100060: thigh_R
+    100062: upperarm_L
+    100064: upperarm_R
+    400000: Base
+    400002: calf_L
+    400004: calf_R
+    400006: chest
+    400008: chest_0
+    400010: chest_MeshPart0
+    400012: chest_MeshPart1
+    400014: Cylinder_013
+    400016: Cylinder_014
+    400018: foot_L
+    400020: foot_R
+    400022: forearm_L
+    400024: forearm_R
+    400026: hand_L
+    400028: hand_R
+    400030: head
+    400032: hip
+    400034: Mannequin
+    400036: //RootNode
+    400038: Rig
+    400040: shape0
+    400042: shape1
+    400044: shape2
+    400046: shape3
+    400048: shape4
+    400050: shape5
+    400052: Sphere_004
+    400054: Sphere_006
+    400056: Sphere_010
+    400058: thigh_L
+    400060: thigh_R
+    400062: upperarm_L
+    400064: upperarm_R
+    2300000: Base
+    2300002: chest_MeshPart0
+    2300004: chest_MeshPart1
+    2300006: Cylinder_013
+    2300008: Cylinder_014
+    2300010: shape0
+    2300012: shape1
+    2300014: shape2
+    2300016: shape3
+    2300018: shape4
+    2300020: shape5
+    2300022: Sphere_004
+    2300024: Sphere_006
+    2300026: Sphere_010
+    3300000: Base
+    3300002: chest_MeshPart0
+    3300004: chest_MeshPart1
+    3300006: Cylinder_013
+    3300008: Cylinder_014
+    3300010: shape0
+    3300012: shape1
+    3300014: shape2
+    3300016: shape3
+    3300018: shape4
+    3300020: shape5
+    3300022: Sphere_004
+    3300024: Sphere_006
+    3300026: Sphere_010
+    4300000: shape0
+    4300002: shape5
+    4300004: shape4
+    4300006: shape3
+    4300008: shape2
+    4300010: shape1
+    4300012: Mannequin
+    4300014: chest_MeshPart0
+    4300016: chest_MeshPart1
+    4300018: Sphere_010
+    4300020: Sphere_006
+    4300022: Sphere_004
+    4300024: Cylinder_014
+    4300026: Cylinder_013
+    4300028: Base
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: Mannequin
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

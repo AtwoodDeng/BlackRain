@@ -1,0 +1,178 @@
+fileFormatVersion: 2
+guid: b1948c7b88e08724cb14bb08aba334ad
+timeCreated: 1476643035
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: calf_L
+    100002: calf_R
+    100004: chest
+    100006: chest_0
+    100008: chest_MeshPart0
+    100010: chest_MeshPart1
+    100012: Cylinder_013
+    100014: Cylinder_014
+    100016: //RootNode
+    100018: foot_L
+    100020: foot_R
+    100022: forearm_L
+    100024: forearm_R
+    100026: hand_L
+    100028: hand_R
+    100030: head
+    100032: hip
+    100034: Mannequin
+    100036: Rig
+    100038: shape0
+    100040: shape1
+    100042: shape2
+    100044: shape3
+    100046: shape4
+    100048: shape5
+    100050: Sphere_004
+    100052: Sphere_006
+    100054: Sphere_010
+    100056: thigh_L
+    100058: thigh_R
+    100060: upperarm_L
+    100062: upperarm_R
+    400000: calf_L
+    400002: calf_R
+    400004: chest
+    400006: chest_0
+    400008: chest_MeshPart0
+    400010: chest_MeshPart1
+    400012: Cylinder_013
+    400014: Cylinder_014
+    400016: //RootNode
+    400018: foot_L
+    400020: foot_R
+    400022: forearm_L
+    400024: forearm_R
+    400026: hand_L
+    400028: hand_R
+    400030: head
+    400032: hip
+    400034: Mannequin
+    400036: Rig
+    400038: shape0
+    400040: shape1
+    400042: shape2
+    400044: shape3
+    400046: shape4
+    400048: shape5
+    400050: Sphere_004
+    400052: Sphere_006
+    400054: Sphere_010
+    400056: thigh_L
+    400058: thigh_R
+    400060: upperarm_L
+    400062: upperarm_R
+    2300000: chest_MeshPart0
+    2300002: chest_MeshPart1
+    2300004: Cylinder_013
+    2300006: Cylinder_014
+    2300008: shape0
+    2300010: shape1
+    2300012: shape2
+    2300014: shape3
+    2300016: shape4
+    2300018: shape5
+    2300020: Sphere_004
+    2300022: Sphere_006
+    2300024: Sphere_010
+    3300000: chest_MeshPart0
+    3300002: chest_MeshPart1
+    3300004: Cylinder_013
+    3300006: Cylinder_014
+    3300008: shape0
+    3300010: shape1
+    3300012: shape2
+    3300014: shape3
+    3300016: shape4
+    3300018: shape5
+    3300020: Sphere_004
+    3300022: Sphere_006
+    3300024: Sphere_010
+    4300000: shape0
+    4300002: shape5
+    4300004: shape4
+    4300006: shape3
+    4300008: shape2
+    4300010: shape1
+    4300012: Mannequin
+    4300014: chest_MeshPart0
+    4300016: chest_MeshPart1
+    4300018: Sphere_010
+    4300020: Sphere_006
+    4300022: Sphere_004
+    4300024: Cylinder_014
+    4300026: Cylinder_013
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: Mannequin
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

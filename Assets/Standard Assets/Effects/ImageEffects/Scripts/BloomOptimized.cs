@@ -29,6 +29,11 @@ namespace UnityStandardAssets.ImageEffects
         [Range(0.25f, 5.5f)]
         public float blurSize = 1.0f;
 
+		public bool useSpecifiedColor = false;
+		public Color BloomColor = Color.white;
+		[Range(0,1f)]
+		public float specifiedBloomTolerance = 0.1f;
+
         Resolution resolution = Resolution.Low;
         [Range(1, 4)]
         public int blurIterations = 1;
@@ -68,6 +73,14 @@ namespace UnityStandardAssets.ImageEffects
             float widthMod = resolution == Resolution.Low ? 0.5f : 1.0f;
 
             fastBloomMaterial.SetVector ("_Parameter", new Vector4 (blurSize * widthMod, 0.0f, threshold, intensity));
+			if (useSpecifiedColor) {
+				fastBloomMaterial.SetInt ("_IfShowOneColor" , 1);
+				fastBloomMaterial.SetColor ("_BloomColor", BloomColor);
+				fastBloomMaterial.SetFloat ("_Tolarence", specifiedBloomTolerance);
+			}
+			else
+				fastBloomMaterial.SetInt ("_IfShowOneColor" ,  0);
+			
             source.filterMode = FilterMode.Bilinear;
 
             var rtW= source.width/divider;
@@ -100,6 +113,8 @@ namespace UnityStandardAssets.ImageEffects
             }
 
             fastBloomMaterial.SetTexture ("_Bloom", rt);
+
+
 
             Graphics.Blit (source, destination, fastBloomMaterial, 0);
 

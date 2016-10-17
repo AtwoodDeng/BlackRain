@@ -33,22 +33,22 @@ namespace UnityStandardAssets.Utility
 
         public Vector3 DoHeadBob(float speed)
         {
-            float xPos = m_OriginalCameraPosition.x + (Bobcurve.Evaluate(m_CyclePositionX)*HorizontalBobRange);
-            float yPos = m_OriginalCameraPosition.y + (Bobcurve.Evaluate(m_CyclePositionY)*VerticalBobRange);
+				float xPos = m_OriginalCameraPosition.x + (Bobcurve.Evaluate (m_CyclePositionX) * HorizontalBobRange);
+				float yPos = m_OriginalCameraPosition.y + (Bobcurve.Evaluate (m_CyclePositionY) * VerticalBobRange);
 
-            m_CyclePositionX += (speed*Time.deltaTime)/m_BobBaseInterval;
-            m_CyclePositionY += ((speed*Time.deltaTime)/m_BobBaseInterval)*VerticaltoHorizontalRatio;
+				m_CyclePositionX += (speed * Time.deltaTime) / m_BobBaseInterval;
+				m_CyclePositionY += ((speed * Time.deltaTime) / m_BobBaseInterval) * VerticaltoHorizontalRatio;
 
-            if (m_CyclePositionX > m_Time)
-            {
-                m_CyclePositionX = m_CyclePositionX - m_Time;
-            }
-            if (m_CyclePositionY > m_Time)
-            {
-                m_CyclePositionY = m_CyclePositionY - m_Time;
-            }
+				if (m_CyclePositionX > m_Time) {
+					m_CyclePositionX = m_CyclePositionX - m_Time;
+				}
+				if (m_CyclePositionY > m_Time) {
+					m_CyclePositionY = m_CyclePositionY - m_Time;
+				}
 
-            return new Vector3(xPos, yPos, 0f);
+				return new Vector3 (xPos, yPos, 0f);
+
+			return Vector3.zero;
         }
     }
 }

@@ -237,6 +237,7 @@ Shader "Hidden/EdgeDetect" {
 		float SobelY = dot(SobelV, float4(1,1,1,1));
 		float Sobel = sqrt(SobelX * SobelX + SobelY * SobelY);
 
+
 		Sobel = 1.0-pow(saturate(Sobel), _Exponent);
 		return Sobel * lerp(tex2D(_MainTex, UnityStereoScreenSpaceUVAdjust(i.uv[0].xy, _MainTex_ST)), _BgColor, _BgFade);
 	}
@@ -272,8 +273,19 @@ Shader "Hidden/EdgeDetect" {
 		
 		edge *= CheckSame(centerNormal, centerDepth, sample1);
 		edge *= CheckSame(centerNormal, centerDepth, sample2);
-			
-		return edge * lerp(original, _BgColor, _BgFade);
+
+		half depthEffect = 1 - min ( centerDepth * 8 , 1 );
+
+		if ( edge == 0 )
+			edge = lerp(  0.9 , 0 , depthEffect  );
+
+
+		half BgFade = _BgFade;
+		half affectRange = 0.15;
+		if ( depthEffect <= affectRange && centerDepth < 0.5 )
+			BgFade = lerp(1 , BgFade , depthEffect / affectRange );
+
+		return edge * lerp(original, _BgColor, BgFade);
 	}
 	
 	ENDCG 
