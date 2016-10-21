@@ -28,17 +28,23 @@ Shader "Hidden/FastBlur" {
 			half2 uv21 : TEXCOORD1;
 			half2 uv22 : TEXCOORD2;
 			half2 uv23 : TEXCOORD3;
+
 		};			
 
 		v2f_tap vert4Tap ( appdata_img v )
 		{
 			v2f_tap o;
 
+			float _off = 0;
+
+			if ( _Rate > 0 )
+				_off = 0.5h * _Rate;
+
 			o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
         	o.uv20 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy, _MainTex_ST);
-			o.uv21 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy * half2(-0.5h,-0.5h), _MainTex_ST);
-			o.uv22 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy * half2(0.5h,-0.5h), _MainTex_ST);
-			o.uv23 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy * half2(-0.5h,0.5h), _MainTex_ST);
+			o.uv21 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy * half2(-_off,-_off), _MainTex_ST);
+			o.uv22 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy * half2(_off,-_off), _MainTex_ST);
+			o.uv23 = UnityStereoScreenSpaceUVAdjust(v.texcoord + _MainTex_TexelSize.xy * half2(-_off,_off), _MainTex_ST);
 
 			return o; 
 		}					

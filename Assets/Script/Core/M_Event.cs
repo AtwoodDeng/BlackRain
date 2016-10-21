@@ -10,7 +10,8 @@ public enum LogicEvents
 {
 	None=0,
 	Interact = 1,
-
+	SwitchBGM = 2,
+	SwitchDefaultBGM = 3,
 	/// <summary>
 	/// call to start the death effect
 	/// </summary>
@@ -76,9 +77,9 @@ public class M_Event : MonoBehaviour {
 
 	}
 
-
-	public static string EVENT_DISPLAY_DIALOG_PLOT = "KEY";
-
+	// const string for message
+	public const string EVENT_DISPLAY_DIALOG_PLOT = "KEY";
+	public const string EVENT_SWITCH_BGM_CLIP = "CLIP";
 }
 
 /// <summary>

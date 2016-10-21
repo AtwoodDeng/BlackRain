@@ -3,11 +3,14 @@ using System.Collections;
 
 public class TalkableCharacter : Character {
 
-	[SerializeField] NarrativePlotScriptableObject plot;
+	[SerializeField] NarrativePlotScriptableObject mainPlot;
+	[SerializeField] NarrativePlotScriptableObject[] subPlots;
 
 	[SerializeField] Transform head;
 
-	public bool IsTalking = false;
+	[SerializeField] bool OnlySubPlots;
+	public bool IsMainTalked = false;
+	[HideInInspector] public bool IsTalking = false;
 
 	protected override void MOnEnable ()
 	{
@@ -28,13 +31,21 @@ public class TalkableCharacter : Character {
 
 	public override void Interact ()
 	{
-		base.Interact ();
+		if (!IsTalking) {
+			base.Interact ();
 
-		DisplayDialog ();
+			if (OnlySubPlots || IsMainTalked ) {
+				DisplayDialog (subPlots [Random.Range (0, subPlots.Length)]);
+			} else {
+				DisplayDialog (mainPlot);
+				IsMainTalked = true;
+			}
+		}
 	}
 
-	void DisplayDialog()
+	void DisplayDialog( NarrativePlotScriptableObject plot )
 	{
+		
 		// display dialog
 		LogicArg arg = new LogicArg (this);
 		arg.AddMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT, plot);
