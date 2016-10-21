@@ -27,6 +27,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+		[SerializeField] protected bool m_Move;						// set to true if the character can move
+		[SerializeField] protected bool m_CanJump; 					// set to true if the character can jump
 
 		protected Camera m_Camera;
         private bool m_Jump;
@@ -94,8 +96,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            float speed;
-            GetInput(out speed);
+            float speed = 0 ;
+			if ( m_Move )
+  	          GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
             Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
 
@@ -113,7 +116,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir.y = -m_StickToGroundForce;
 
-                if (m_Jump)
+				if (m_Jump && m_CanJump)
                 {
                     m_MoveDir.y = m_JumpSpeed;
                     PlayJumpSound();

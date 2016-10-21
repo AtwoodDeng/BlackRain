@@ -3,6 +3,7 @@ Shader "Hidden/FastBlur" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_Bloom ("Bloom (RGB)", 2D) = "black" {}
+		_Rate("Rate " , float) = 1
 	}
 	
 	CGINCLUDE
@@ -18,8 +19,7 @@ Shader "Hidden/FastBlur" {
 		half4 _Bloom_ST;
 
 		uniform half4 _Parameter;
-
-		
+		uniform half _Rate;
 
 		struct v2f_tap
 		{
@@ -102,13 +102,15 @@ Shader "Hidden/FastBlur" {
 			half2 coords = uv - netFilterWidth * 3.0;  
 			
 			half4 color = 0;
+			half4 ori_Color = tex2D(_MainTex, uv);
   			for( int l = 0; l < 7; l++ )  
   			{   
 				half4 tap = tex2D(_MainTex, UnityStereoScreenSpaceUVAdjust(coords, _MainTex_ST));
 				color += tap * curve4[l];
 				coords += netFilterWidth;
   			}
-			return color;
+
+			return lerp(ori_Color, color,_Rate);
 		}
 
 
@@ -147,7 +149,8 @@ Shader "Hidden/FastBlur" {
 			half2 uv = i.uv.xy;
 			
 			half4 color = tex2D(_MainTex, i.uv) * curve4[3];
-			
+
+			half4 ori_Color = tex2D(_MainTex, uv);
   			for( int l = 0; l < 3; l++ )  
   			{   
 				half4 tapA = tex2D(_MainTex, i.offs[l].xy);
@@ -155,7 +158,7 @@ Shader "Hidden/FastBlur" {
 				color += (tapA + tapB) * curve4[l];
   			}
 
-			return color;
+			return lerp(ori_Color, color,_Rate);
 
 		}	
 					

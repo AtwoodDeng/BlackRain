@@ -9,8 +9,21 @@ using System;
 public enum LogicEvents
 {
 	None=0,
+	Interact = 1,
 
+	/// <summary>
+	/// call to start the death effect
+	/// </summary>
 	Death = 10,
+
+	BeginDamage = 20,
+	EndDamage = 21,
+
+	DisplayDialog = 30,
+	EndDisplayDialog = 31,
+
+
+
 }
 
 public class M_Event : MonoBehaviour {
@@ -35,7 +48,7 @@ public class M_Event : MonoBehaviour {
 	/// <summary>
 	/// The list of logic events, we assum that the number of total events is less than 9999
 	/// </summary>
-//	public static LogicHandler[] logicEvents = new LogicHandler[System.Enum.GetNames (typeof (LogicEvents)).Length];
+	//	public static LogicHandler[] logicEvents = new LogicHandler[System.Enum.GetNames (typeof (LogicEvents)).Length];
 	public static LogicHandler[] logicEvents = new LogicHandler[9999];
 
 	/// <summary>
@@ -62,6 +75,9 @@ public class M_Event : MonoBehaviour {
 		}
 
 	}
+
+
+	public static string EVENT_DISPLAY_DIALOG_PLOT = "KEY";
 
 }
 

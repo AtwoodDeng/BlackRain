@@ -2,23 +2,23 @@
 using System.Collections;
 using DG.Tweening;
 
+[ExecuteInEditMode]
 public class ASelfRotate : MBehavior {
 
-	[SerializeField] bool ifRotateOnAwake = false;
+	[SerializeField] bool ifRotateOnAwake = true;
 	[SerializeField] Vector3 rotateDirection;
-	[SerializeField] float rotateSpeed = 1;
-	[SerializeField] int loopTime = 1;
+	[Tooltip("The cycle Time to rotate 360 degree")]
+	[SerializeField] float rotateCycleTime = 1f;
+	[SerializeField] bool playOnEditor = true;
 
-	protected override void MAwake ()
+	protected override void MUpdate ()
 	{
-		base.MAwake ();
-		if (ifRotateOnAwake) {
-			BeginRotate ();
+		base.MUpdate ();
+
+		if ( !(Application.isEditor && !playOnEditor) ) {
+			Vector3 rotateAngle = rotateDirection.normalized * (360f / rotateCycleTime);
+			transform.Rotate (rotateAngle * Time.deltaTime);
 		}
 	}
 
-	void BeginRotate()
-	{
-		transform.DOLocalRotate (rotateDirection, 1f / rotateSpeed).SetRelative(true).SetLoops (loopTime, LoopType.Incremental);
-	}
 }

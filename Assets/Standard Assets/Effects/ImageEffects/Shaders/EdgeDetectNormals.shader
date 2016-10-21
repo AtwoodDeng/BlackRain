@@ -33,6 +33,9 @@ Shader "Hidden/EdgeDetect" {
 	uniform half _BgFade;
 	uniform half _SampleDistance;
 	uniform float _Exponent;
+	uniform float _DepthAffect;
+	uniform half4 _LineColor;
+	uniform float _BGAffectRange;
 
 	uniform float _Threshold;
 
@@ -274,14 +277,14 @@ Shader "Hidden/EdgeDetect" {
 		edge *= CheckSame(centerNormal, centerDepth, sample1);
 		edge *= CheckSame(centerNormal, centerDepth, sample2);
 
-		half depthEffect = 1 - min ( centerDepth * 8 , 1 );
+		half depthEffect = 1 - min ( centerDepth * _DepthAffect , 1 );
 
 		if ( edge == 0 )
 			edge = lerp(  0.9 , 0 , depthEffect  );
 
 
 		half BgFade = _BgFade;
-		half affectRange = 0.15;
+		half affectRange = _BGAffectRange;
 		if ( depthEffect <= affectRange && centerDepth < 0.5 )
 			BgFade = lerp(1 , BgFade , depthEffect / affectRange );
 

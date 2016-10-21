@@ -6,7 +6,7 @@ namespace UnityStandardAssets.ImageEffects
     [ExecuteInEditMode]
     [RequireComponent (typeof(Camera))]
     [AddComponentMenu ("Image Effects/Blur/Blur (Optimized)")]
-    public class BlurOptimized : PostEffectsBase
+	public class BlurOptimized : PostEffectsBase 
     {
 
         [Range(0, 2)]
@@ -27,6 +27,9 @@ namespace UnityStandardAssets.ImageEffects
 
         public Shader blurShader = null;
         private Material blurMaterial = null;
+
+		[Range(0,1)]
+		public float rate;
 
 
         public override bool CheckResources () {
@@ -53,6 +56,7 @@ namespace UnityStandardAssets.ImageEffects
             float widthMod = 1.0f / (1.0f * (1<<downsample));
 
             blurMaterial.SetVector ("_Parameter", new Vector4 (blurSize * widthMod, -blurSize * widthMod, 0.0f, 0.0f));
+			blurMaterial.SetFloat ("_Rate", rate);
             source.filterMode = FilterMode.Bilinear;
 
             int rtW = source.width >> downsample;

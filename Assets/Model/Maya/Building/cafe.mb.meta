@@ -1,0 +1,397 @@
+fileFormatVersion: 2
+guid: a708e3092092b7e4d924d654bbd9ded3
+timeCreated: 1476949539
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: glass
+    100004: Roof
+    100006: Wall
+    100008: Wall1
+    100010: Wall2
+    100012: Wall3
+    100014: floor
+    100016: pCube1
+    100018: Wall4
+    100020: Door
+    100022: glass1
+    100024: Door1
+    100026: Bot
+    100028: Desk1
+    100030: Leg
+    100032: glass2
+    100034: Wall5
+    100036: Bot 1
+    100038: Bot 2
+    100040: Desk2
+    100042: Desk3
+    100044: Eames_chair_DSW:Eames_DSW_Legs_001
+    100046: Eames_chair_DSW:Eames_DSW_Top_001
+    100048: Leg 1
+    100050: Leg 2
+    100052: Chair
+    100054: Chair1
+    100056: Chair2
+    100058: Eames_DSW_Legs_001
+    100060: Eames_DSW_Legs_001 1
+    100062: Bar
+    100064: pCube2
+    100066: pCube3
+    100068: pCube4
+    100070: pCube5
+    100072: pCube6
+    100074: Simple_Ceiling_Fan1:polySurface1
+    100076: Fan
+    100078: Wall_Dec
+    100080: Wall_Dec1
+    100082: Wall_Dec2
+    100084: Wall_Dec3
+    100086: Wall_Dec4
+    100088: Walls
+    100090: pCylinder1
+    100092: Wall_Dec5
+    100094: WallDec
+    100096: Chair3
+    100098: Chair4
+    100100: Desk1 1
+    100102: Desk2 1
+    100104: Desk3 1
+    100106: Eames_DSW_Legs_001 2
+    100108: Eames_DSW_Legs_001 3
+    100110: Wall_Circle
+    100112: Wall_Circle2
+    100114: Wall_Dec6
+    100116: Wall_Dec7
+    100118: Wall_Dec8
+    100120: Wall_Dec9
+    100122: Lamp
+    100124: Character
+    100126: CPrintOne:body
+    100128: CPrintOne:Head
+    100130: CPrintOne:Laptop
+    100132: CPrintOne:Laptop1
+    400000: //RootNode
+    400002: glass
+    400004: Roof
+    400006: Wall
+    400008: Wall1
+    400010: Wall2
+    400012: Wall3
+    400014: floor
+    400016: pCube1
+    400018: Wall4
+    400020: Door
+    400022: glass1
+    400024: Door1
+    400026: Bot
+    400028: Desk1
+    400030: Leg
+    400032: glass2
+    400034: Wall5
+    400036: Bot 1
+    400038: Bot 2
+    400040: Desk2
+    400042: Desk3
+    400044: Eames_chair_DSW:Eames_DSW_Legs_001
+    400046: Eames_chair_DSW:Eames_DSW_Top_001
+    400048: Leg 1
+    400050: Leg 2
+    400052: Chair
+    400054: Chair1
+    400056: Chair2
+    400058: Eames_DSW_Legs_001
+    400060: Eames_DSW_Legs_001 1
+    400062: Bar
+    400064: pCube2
+    400066: pCube3
+    400068: pCube4
+    400070: pCube5
+    400072: pCube6
+    400074: Simple_Ceiling_Fan1:polySurface1
+    400076: Fan
+    400078: Wall_Dec
+    400080: Wall_Dec1
+    400082: Wall_Dec2
+    400084: Wall_Dec3
+    400086: Wall_Dec4
+    400088: Walls
+    400090: pCylinder1
+    400092: Wall_Dec5
+    400094: WallDec
+    400096: Chair3
+    400098: Chair4
+    400100: Desk1 1
+    400102: Desk2 1
+    400104: Desk3 1
+    400106: Eames_DSW_Legs_001 2
+    400108: Eames_DSW_Legs_001 3
+    400110: Wall_Circle
+    400112: Wall_Circle2
+    400114: Wall_Dec6
+    400116: Wall_Dec7
+    400118: Wall_Dec8
+    400120: Wall_Dec9
+    400122: Lamp
+    400124: Character
+    400126: CPrintOne:body
+    400128: CPrintOne:Head
+    400130: CPrintOne:Laptop
+    400132: CPrintOne:Laptop1
+    2300000: //RootNode
+    2300002: glass
+    2300004: Roof
+    2300006: Wall
+    2300008: Wall1
+    2300010: Wall2
+    2300012: Wall3
+    2300014: floor
+    2300016: pCube1
+    2300018: Wall4
+    2300020: Door
+    2300022: glass1
+    2300024: Door1
+    2300026: Bot
+    2300028: Desk1
+    2300030: Leg
+    2300032: glass2
+    2300034: Wall5
+    2300036: Bot 1
+    2300038: Bot 2
+    2300040: Desk2
+    2300042: Desk3
+    2300044: Eames_chair_DSW:Eames_DSW_Legs_001
+    2300046: Eames_chair_DSW:Eames_DSW_Top_001
+    2300048: Leg 1
+    2300050: Leg 2
+    2300052: Chair
+    2300054: Chair1
+    2300056: Chair2
+    2300058: Eames_DSW_Legs_001
+    2300060: Eames_DSW_Legs_001 1
+    2300062: Bar
+    2300064: pCube2
+    2300066: pCube3
+    2300068: pCube4
+    2300070: pCube5
+    2300072: pCube6
+    2300074: Simple_Ceiling_Fan1:polySurface1
+    2300076: Fan
+    2300078: Wall_Dec
+    2300080: Wall_Dec1
+    2300082: Wall_Dec2
+    2300084: Wall_Dec3
+    2300086: Wall_Dec4
+    2300088: Walls
+    2300090: pCylinder1
+    2300092: Wall_Dec5
+    2300094: Chair3
+    2300096: Chair4
+    2300098: Desk1 1
+    2300100: Desk2 1
+    2300102: Desk3 1
+    2300104: Eames_DSW_Legs_001 2
+    2300106: Eames_DSW_Legs_001 3
+    2300108: Wall_Circle
+    2300110: Wall_Circle2
+    2300112: Wall_Dec6
+    2300114: Wall_Dec7
+    2300116: Wall_Dec8
+    2300118: Wall_Dec9
+    2300120: Lamp
+    2300122: CPrintOne:body
+    2300124: CPrintOne:Head
+    2300126: CPrintOne:Laptop
+    2300128: CPrintOne:Laptop1
+    3300000: //RootNode
+    3300002: glass
+    3300004: Roof
+    3300006: Wall
+    3300008: Wall1
+    3300010: Wall2
+    3300012: Wall3
+    3300014: floor
+    3300016: pCube1
+    3300018: Wall4
+    3300020: Door
+    3300022: glass1
+    3300024: Door1
+    3300026: Bot
+    3300028: Desk1
+    3300030: Leg
+    3300032: glass2
+    3300034: Wall5
+    3300036: Bot 1
+    3300038: Bot 2
+    3300040: Desk2
+    3300042: Desk3
+    3300044: Eames_chair_DSW:Eames_DSW_Legs_001
+    3300046: Eames_chair_DSW:Eames_DSW_Top_001
+    3300048: Leg 1
+    3300050: Leg 2
+    3300052: Chair
+    3300054: Chair1
+    3300056: Chair2
+    3300058: Eames_DSW_Legs_001
+    3300060: Eames_DSW_Legs_001 1
+    3300062: Bar
+    3300064: pCube2
+    3300066: pCube3
+    3300068: pCube4
+    3300070: pCube5
+    3300072: pCube6
+    3300074: Simple_Ceiling_Fan1:polySurface1
+    3300076: Fan
+    3300078: Wall_Dec
+    3300080: Wall_Dec1
+    3300082: Wall_Dec2
+    3300084: Wall_Dec3
+    3300086: Wall_Dec4
+    3300088: Walls
+    3300090: pCylinder1
+    3300092: Wall_Dec5
+    3300094: Chair3
+    3300096: Chair4
+    3300098: Desk1 1
+    3300100: Desk2 1
+    3300102: Desk3 1
+    3300104: Eames_DSW_Legs_001 2
+    3300106: Eames_DSW_Legs_001 3
+    3300108: Wall_Circle
+    3300110: Wall_Circle2
+    3300112: Wall_Dec6
+    3300114: Wall_Dec7
+    3300116: Wall_Dec8
+    3300118: Wall_Dec9
+    3300120: Lamp
+    3300122: CPrintOne:body
+    3300124: CPrintOne:Head
+    3300126: CPrintOne:Laptop
+    3300128: CPrintOne:Laptop1
+    4300000: floor
+    4300002: Roof
+    4300004: glass
+    4300006: Wall
+    4300008: Wall1
+    4300010: Wall2
+    4300012: Wall3
+    4300014: Wall4
+    4300016: pCube1
+    4300018: Door
+    4300020: glass1
+    4300022: Door1
+    4300024: Desk1
+    4300026: Leg
+    4300028: Bot
+    4300030: glass2
+    4300032: Wall5
+    4300034: Desk2
+    4300036: Leg
+    4300038: Bot
+    4300040: Desk3
+    4300042: Leg
+    4300044: Bot
+    4300046: Eames_chair_DSW:Eames_DSW_Top_001
+    4300048: Eames_chair_DSW:Eames_DSW_Legs_001
+    4300050: Chair
+    4300052: Chair1
+    4300054: Eames_DSW_Legs_001
+    4300056: Chair2
+    4300058: Eames_DSW_Legs_001
+    4300060: Bar
+    4300062: pCube2
+    4300064: pCube3
+    4300066: pCube4
+    4300068: pCube5
+    4300070: pCube6
+    4300072: Simple_Ceiling_Fan1:polySurface1
+    4300074: Fan
+    4300076: Walls
+    4300078: Wall_Dec
+    4300080: Wall_Dec1
+    4300082: Wall_Dec2
+    4300084: Wall_Dec3
+    4300086: Wall_Dec4
+    4300088: Wall_Dec5
+    4300090: pCylinder1
+    4300092: Wall_Dec6
+    4300094: Wall_Dec7
+    4300096: Wall_Circle2
+    4300098: Wall_Circle
+    4300100: Wall_Dec8
+    4300102: Chair4
+    4300104: Eames_DSW_Legs_001
+    4300106: Chair3
+    4300108: Eames_DSW_Legs_001
+    4300110: Wall_Dec9
+    4300112: Lamp
+    4300114: CPrintOne:body
+    4300116: CPrintOne:Head
+    4300118: CPrintOne:Laptop
+    4300120: CPrintOne:Laptop1
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

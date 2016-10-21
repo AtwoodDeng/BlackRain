@@ -21,6 +21,8 @@ namespace UnityStandardAssets.ImageEffects
         SerializedProperty edgeExp;
         SerializedProperty sampleDist;
 
+		SerializedProperty depthEffect;
+		SerializedProperty BGdepthEffectRange;
 
         void OnEnable () {
             serObj = new SerializedObject (target);
@@ -37,6 +39,9 @@ namespace UnityStandardAssets.ImageEffects
 
             edgeExp = serObj.FindProperty("edgeExp");
             sampleDist = serObj.FindProperty("sampleDist");
+
+			depthEffect = serObj.FindProperty ("depthEffect");
+			BGdepthEffectRange = serObj.FindProperty ("BGdepthEffectRange");
         }
 
 
@@ -49,6 +54,8 @@ namespace UnityStandardAssets.ImageEffects
             if (mode.intValue < 2) {
                 EditorGUILayout.PropertyField (sensitivityDepth, new GUIContent(" Depth Sensitivity"));
                 EditorGUILayout.PropertyField (sensitivityNormals, new GUIContent(" Normals Sensitivity"));
+				EditorGUILayout.PropertyField (depthEffect, new GUIContent (" Depth Effect"));
+				EditorGUILayout.PropertyField (BGdepthEffectRange, new GUIContent (" BG Depth Effect Range"));
             }
             else if (mode.intValue < 4) {
                 EditorGUILayout.PropertyField (edgeExp, new GUIContent(" Edge Exponent"));

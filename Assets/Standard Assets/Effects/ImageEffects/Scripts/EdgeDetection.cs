@@ -31,6 +31,9 @@ namespace UnityStandardAssets.ImageEffects
         private Material edgeDetectMaterial = null;
         private EdgeDetectMode oldMode = EdgeDetectMode.SobelDepthThin;
 
+		public float depthEffect;
+		public float BGdepthEffectRange;
+
 
         public override bool CheckResources ()
 		{
@@ -82,6 +85,8 @@ namespace UnityStandardAssets.ImageEffects
             edgeDetectMaterial.SetVector ("_BgColor", edgesOnlyBgColor);
             edgeDetectMaterial.SetFloat ("_Exponent", edgeExp);
             edgeDetectMaterial.SetFloat ("_Threshold", lumThreshold);
+			edgeDetectMaterial.SetFloat ("_DepthAffect", depthEffect);
+			edgeDetectMaterial.SetFloat ("_BGAffectRange", BGdepthEffectRange);
 
             Graphics.Blit (source, destination, edgeDetectMaterial, (int) mode);
         }
