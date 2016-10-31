@@ -7,6 +7,7 @@ public class NarrativePlotScriptableObject : ScriptableObject {
 
 	public List<NarrativeDialog> dialogs;
 
+	public bool lockCamera = true;
 }
 
 
@@ -52,4 +53,5 @@ public class NarrativeDialog
 		Girl,
 	}
 	public SpeakerType type;
+
 }

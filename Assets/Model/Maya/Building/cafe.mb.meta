@@ -72,6 +72,29 @@ ModelImporter:
     100128: CPrintOne:Head
     100130: CPrintOne:Laptop
     100132: CPrintOne:Laptop1
+    100134: pCube7
+    100136: Wall_Circle 1
+    100138: Wall_Circle2 1
+    100140: Wall_Dec 1
+    100142: Wall_Dec10
+    100144: Wall_Dec10 1
+    100146: Wall_Dec2 1
+    100148: Wall_Dec4 1
+    100150: Wall_Dec5 1
+    100152: Wall_Dec6 1
+    100154: Wall_Dec7 1
+    100156: Wall_Dec8 1
+    100158: Wall_Dec9 1
+    100160: WallDec1
+    100162: Cashier
+    100164: Frame
+    100166: FrontDesk
+    100168: Screen
+    100170: Screen1
+    100172: Music
+    100174: barDesk
+    100176: Wall6
+    100178: Wall7
     400000: //RootNode
     400002: glass
     400004: Roof
@@ -139,6 +162,29 @@ ModelImporter:
     400128: CPrintOne:Head
     400130: CPrintOne:Laptop
     400132: CPrintOne:Laptop1
+    400134: pCube7
+    400136: Wall_Circle 1
+    400138: Wall_Circle2 1
+    400140: Wall_Dec 1
+    400142: Wall_Dec10
+    400144: Wall_Dec10 1
+    400146: Wall_Dec2 1
+    400148: Wall_Dec4 1
+    400150: Wall_Dec5 1
+    400152: Wall_Dec6 1
+    400154: Wall_Dec7 1
+    400156: Wall_Dec8 1
+    400158: Wall_Dec9 1
+    400160: WallDec1
+    400162: Cashier
+    400164: Frame
+    400166: FrontDesk
+    400168: Screen
+    400170: Screen1
+    400172: Music
+    400174: barDesk
+    400176: Wall6
+    400178: Wall7
     2300000: //RootNode
     2300002: glass
     2300004: Roof
@@ -204,6 +250,28 @@ ModelImporter:
     2300124: CPrintOne:Head
     2300126: CPrintOne:Laptop
     2300128: CPrintOne:Laptop1
+    2300130: pCube7
+    2300132: Wall_Circle 1
+    2300134: Wall_Circle2 1
+    2300136: Wall_Dec 1
+    2300138: Wall_Dec10
+    2300140: Wall_Dec10 1
+    2300142: Wall_Dec2 1
+    2300144: Wall_Dec4 1
+    2300146: Wall_Dec5 1
+    2300148: Wall_Dec6 1
+    2300150: Wall_Dec7 1
+    2300152: Wall_Dec8 1
+    2300154: Wall_Dec9 1
+    2300156: Cashier
+    2300158: Frame
+    2300160: FrontDesk
+    2300162: Screen
+    2300164: Screen1
+    2300166: Music
+    2300168: barDesk
+    2300170: Wall6
+    2300172: Wall7
     3300000: //RootNode
     3300002: glass
     3300004: Roof
@@ -269,6 +337,28 @@ ModelImporter:
     3300124: CPrintOne:Head
     3300126: CPrintOne:Laptop
     3300128: CPrintOne:Laptop1
+    3300130: pCube7
+    3300132: Wall_Circle 1
+    3300134: Wall_Circle2 1
+    3300136: Wall_Dec 1
+    3300138: Wall_Dec10
+    3300140: Wall_Dec10 1
+    3300142: Wall_Dec2 1
+    3300144: Wall_Dec4 1
+    3300146: Wall_Dec5 1
+    3300148: Wall_Dec6 1
+    3300150: Wall_Dec7 1
+    3300152: Wall_Dec8 1
+    3300154: Wall_Dec9 1
+    3300156: Cashier
+    3300158: Frame
+    3300160: FrontDesk
+    3300162: Screen
+    3300164: Screen1
+    3300166: Music
+    3300168: barDesk
+    3300170: Wall6
+    3300172: Wall7
     4300000: floor
     4300002: Roof
     4300004: glass
@@ -330,6 +420,29 @@ ModelImporter:
     4300116: CPrintOne:Head
     4300118: CPrintOne:Laptop
     4300120: CPrintOne:Laptop1
+    4300122: pCube7
+    4300124: Wall_Dec10
+    4300126: Wall_Dec
+    4300128: Wall_Dec2
+    4300130: Wall_Dec4
+    4300132: Wall_Dec5
+    4300134: Wall_Dec6
+    4300136: Wall_Dec7
+    4300138: Wall_Circle2
+    4300140: Wall_Circle
+    4300142: Wall_Dec8
+    4300144: Wall_Dec9
+    4300146: Wall_Dec10
+    4300148: FrontDesk
+    4300150: Cashier
+    4300152: Screen
+    4300154: Screen1
+    4300156: Frame
+    4300158: Music
+    4300160: barDesk
+    4300162: Wall6
+    4300164: Wall7
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1

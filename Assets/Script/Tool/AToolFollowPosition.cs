@@ -10,11 +10,20 @@ public class AToolFollowPosition : MBehavior {
 	[SerializeField] bool followY;
 	[SerializeField] bool followZ;
 
+	[SerializeField] bool UseOriginalOffest;
+
 	[SerializeField] bool resetOnAwake;
+
+	Vector3 originalOffset;
 
 	protected override void MAwake ()
 	{
 		base.MAwake ();
+
+		if (UseOriginalOffest) {
+			originalOffset = transform.position - target.position;
+		} else
+			originalOffset = Vector3.zero;
 
 		if (resetOnAwake)
 			transform.position = GetTargetPosition ();
@@ -23,9 +32,10 @@ public class AToolFollowPosition : MBehavior {
 	Vector3 GetTargetPosition()
 	{
 		Vector3 res;
-		res.x = followX ? target.position.x : transform.position.x;
-		res.y = followY ? target.position.y : transform.position.y;
-		res.z = followZ ? target.position.z : transform.position.z;
+		Vector3 targetPosition = target.position + originalOffset;
+		res.x = followX ? targetPosition.x : transform.position.x;
+		res.y = followY ? targetPosition.y : transform.position.y;
+		res.z = followZ ? targetPosition.z : transform.position.z;
 		return res;
 	}
 

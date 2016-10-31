@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class MechanismManager : MBehavior {
 	static MechanismManager m_Instance;
@@ -27,6 +28,12 @@ public class MechanismManager : MBehavior {
 		[TooltipAttribute("The precentage of the recover per second.")]
 		[RangeAttribute(0,1f)]
 		public float recover;
+
+		[TooltipAttribute("The precentage of the energy cost pre second.")]
+		public float energyCost;
+
+		[TooltipAttribute("The precentage of the energy recovered pre second.")]
+		public float energyRecover;
 	}
 	[SerializeField] DamageSetting damageSetting;
 
@@ -59,12 +66,21 @@ public class MechanismManager : MBehavior {
 		public const float FullHealth = 1f;
 		public Health(){
 			health = FullHealth;
+			energy = FullEnergy;
 		}
+
+		float energy;
+		public const float FullEnergy = 1f;
+		bool isSpeedUp;
+
 
 		public float HealthValue{ get { return health; } }
 
 		public float HealthRate{ get{ return health / FullHealth;}}
 		public float LostHealthRate { get { return 1f - HealthRate; } }
+
+		public float SpeedUp { get { return isSpeedUp ? Mathf.Sqrt(( Mathf.Max( 0 , energy) / FullEnergy)) : 0 ; } }
+		public float Energy { get { return energy; } }
 
 		public void OnDamage( float dmg )
 		{
@@ -75,6 +91,28 @@ public class MechanismManager : MBehavior {
 		{
 			health += (FullHealth - health) * recoverRate * Time.deltaTime;
 		}
+
+		public void Revive()
+		{
+			health = FullHealth;
+		}
+		public void OnSpeedUp( float energyLostRate )
+		{
+			energy -= energyLostRate * Time.deltaTime;
+			isSpeedUp = true;
+			if (energy < 0) {
+				isSpeedUp = false;
+				energy = 0;
+			}
+		}
+
+		public void RecoverEnergy( float recoverRate )
+		{
+			if (energy < 1f) {
+				energy += recoverRate * Time.deltaTime;
+			}
+			isSpeedUp = false;
+		}
 	};
 
 	Health m_health = new Health();
@@ -83,11 +121,13 @@ public class MechanismManager : MBehavior {
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
+		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
 	}
 
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
+		M_Event.logicEvents [(int)LogicEvents.DeathEnd] -= OnDeathEnd;
 	}
 
 	protected override void MUpdate ()
@@ -95,6 +135,23 @@ public class MechanismManager : MBehavior {
 		base.MUpdate ();
 		UpdateDamageState ();
 		UpdateHealth ();
+		UpdateEnergy ();
+	}
+
+	void UpdateEnergy()
+	{
+//		if (CrossPlatformInputManager.GetButton ("SpeedUp")) {
+		if ( Input.GetKey(KeyCode.LeftShift)) {
+			m_health.OnSpeedUp (damageSetting.energyCost);
+		} else {
+			m_health.RecoverEnergy (damageSetting.energyRecover);
+		}
+	}
+
+	void OnDeathEnd( LogicArg arg )
+	{
+		DamageState = DamageStateType.UnderProtect;
+		m_health.Revive ();
 	}
 
 	void UpdateHealth()

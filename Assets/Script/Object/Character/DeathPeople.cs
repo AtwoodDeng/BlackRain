@@ -39,6 +39,7 @@ public class DeathPeople : MPeople {
 			flashLightAudioSource = gameObject.AddComponent<AudioSource> ();
 			flashLightAudioSource.playOnAwake = false;
 			flashLightAudioSource.Stop ();
+			flashLightAudioSource.volume = 0.5f;
 			flashLightAudioSource.loop = false;
 			flashLightAudioSource.spatialBlend = 1f;
 			flashLightAudioSource.clip = takePhotoSetting.flashLightSound;
@@ -93,7 +94,6 @@ public class DeathPeople : MPeople {
 			lastTime = timer;
 			timer -= Time.deltaTime;
 			if (timer < 0 && lastTime >= 0 ) {
-				Debug.Log ("do flash light");
 				if (takePhotoSetting.flashLight != null)
 					takePhotoSetting.flashLight.enabled = true;
 				if (takePhotoSetting.flashLightPar != null) {

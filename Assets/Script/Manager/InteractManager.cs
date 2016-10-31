@@ -34,6 +34,27 @@ public class InteractManager : MBehavior{
 		get { return tem_Interactable; }
 	}
 
+	/// <summary>
+	/// return the focuse point in screen position
+	/// </summary>
+	/// <returns>The point.</returns>
+	static public Vector2 FocusPoint
+	{
+		get{
+			if ( Application.platform == RuntimePlatform.WindowsPlayer || 
+				Application.platform == RuntimePlatform.OSXPlayer || 
+				Application.platform == RuntimePlatform.LinuxPlayer )
+				return Input.mousePosition;
+			return Input.mousePosition;
+		}
+	}
+
+	protected override void MAwake ()
+	{
+		base.MAwake ();
+
+	}
+
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
@@ -58,13 +79,12 @@ public class InteractManager : MBehavior{
 		UpdateTemInteractable ();
 	}
 
-
-
 	void UpdateTemInteractable()
 	{
-
 		RaycastHit[] hits;
-		Ray mainCharacterRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+//		Ray mainCharacterRay = new Ray (MainCharacter.Instance.transform.position, MainCharacter.Instance.transform.forward);
+//		Ray mainCharacterRay = new Ray( Camera.main.transform.position , Camera.main.transform.forward);
+		Ray mainCharacterRay = Camera.main.ScreenPointToRay(FocusPoint);
 		hits = Physics.RaycastAll (mainCharacterRay, interactRange , interactiveMask.value);
 
 		Interactable target = null;

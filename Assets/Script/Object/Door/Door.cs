@@ -11,6 +11,7 @@ public class Door : Interactable {
 	[Range(0,0.1f)]
 	[SerializeField] float closeSpeed = 0.1f;
 	Rigidbody m_rigidBody;
+	[SerializeField] LogicManager.GameState openState;
 
 	bool opended 
 	{
@@ -46,14 +47,26 @@ public class Door : Interactable {
 
 	public override bool IsInteractable ()
 	{
-		return base.IsInteractable () && !opended;
+		return base.IsInteractable () && !opended && !m_rigidBody.isKinematic;
 	}
+
 
 	protected override void MAwake ()
 	{
 		base.MAwake ();
 		m_rigidBody = GetComponent<Rigidbody> ();
+
+		if (openState != LogicManager.GameState.None) {
+			m_rigidBody.isKinematic = true;
+
+			LogicManager.Instance.RegisterStateChange (delegate(LogicManager.GameState fromState, LogicManager.GameState toState) {
+				if (toState == openState) {
+					m_rigidBody.isKinematic = false;
+				}
+			});
+		}
 	}
+
 
 	protected override void MUpdate ()
 	{

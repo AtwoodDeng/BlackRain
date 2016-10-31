@@ -25,8 +25,12 @@ public class AStateMachine<StateType,EventType>
 			if ( !value.Equals(m_state) && enable) {
 				if ( exitState.ContainsKey(m_state) && exitState [m_state] != null )
 					exitState [m_state]();
-				
+
+				if (stateChangeEvent != null) {
+					stateChangeEvent (m_state, value);
+				}
 				m_state = value;
+
 				if (timeEventDict.ContainsKey (m_state)) {
 					innerTimer = timeEventDict [m_state].Value;
 				} else {
@@ -44,12 +48,16 @@ public class AStateMachine<StateType,EventType>
 	/// </summary>
 	private float innerTimer = -999f;
 
-	public Dictionary<StateType,Action> enterState = new Dictionary<StateType, Action>();
-	public Dictionary<StateType,Action> updateState = new Dictionary<StateType, Action>();
-	public Dictionary<StateType,Action> exitState = new Dictionary<StateType, Action>();
+	private Dictionary<StateType,Action> enterState = new Dictionary<StateType, Action>();
+	private Dictionary<StateType,Action> updateState = new Dictionary<StateType, Action>();
+	private Dictionary<StateType,Action> exitState = new Dictionary<StateType, Action>();
 
-	public Dictionary<EventType,List<KeyValuePair<StateType,StateType>>> eventDict = new Dictionary<EventType, List<KeyValuePair<StateType, StateType>>> ();
-	public Dictionary<StateType,KeyValuePair<StateType, float>> timeEventDict = new Dictionary<StateType, KeyValuePair<StateType, float>>();
+	public delegate void StateChangeHandler( StateType fromState, StateType toState);
+	private event StateChangeHandler stateChangeEvent;
+
+	private Dictionary<EventType,List<KeyValuePair<StateType,StateType>>> eventDict = new Dictionary<EventType, List<KeyValuePair<StateType, StateType>>> ();
+	private Dictionary<StateType,KeyValuePair<StateType, float>> timeEventDict = new Dictionary<StateType, KeyValuePair<StateType, float>>();
+
 
 	/// <summary>
 	/// Adds and enter function for the state
@@ -91,6 +99,11 @@ public class AStateMachine<StateType,EventType>
 		else {
 			exitState [type] = func;
 		}
+	}
+
+	public void AddOnChange(StateChangeHandler func)
+	{
+		stateChangeEvent += func;
 	}
 
 	/// <summary>

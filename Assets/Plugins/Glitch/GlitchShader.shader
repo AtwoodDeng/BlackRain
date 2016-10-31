@@ -52,7 +52,10 @@ SubShader {
 		
 		half4 frag (v2f i) : COLOR
 		{
-	
+			if ( _Intensity == 0 )
+			{
+				return tex2D( _MainTex, i.uv.xy );
+			}
 			half4 normal = tex2D (_DispTex, i.uv.xy * scale);
 			
 			if(i.uv.y < flip_up)

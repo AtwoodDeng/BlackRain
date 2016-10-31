@@ -7,6 +7,7 @@ namespace CF.CameraBot
     /// <see cref="http://www.clonefactor.com"/>
     public partial class CameraBot : MonoBehaviour
     {
+
         #region variable
         /// <summary>Target gameobject want to chase</summary>
         public Transform ChaseTarget;

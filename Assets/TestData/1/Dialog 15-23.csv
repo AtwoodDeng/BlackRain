@@ -1,0 +1,38 @@
+Time,Dialog,Character,LastTime,TimePreWord
+56.11137,It’s raining. You’ll get wet. ,ThisCharacter,8.728577,1.24694
+64.83995,Stay here until the rain stops. ,ThisCharacter,0.2153702,0.02692127
+66.97705,It’s raining. You’ll get wet. ,ThisCharacter,0.8780365,0.1254338
+67.85509,Stay here until the rain stops. ,ThisCharacter,2.684059,0.3355074
+75.8578,It’s raining. You’ll get wet. ,ThisCharacter,0.994133,0.142019
+76.85193,Stay here until the rain stops. ,ThisCharacter,0.4471283,0.05589104
+110.857,Want a cup of coffee?,ThisCharacter,3.760941,0.6268234
+114.618,Latte. Thanks. ,MainCharacter,2.832909,0.7082272
+117.4509,It’s 3.45 dollars. ,ThisCharacter,5.798012,1.159602
+123.2489,Do you have a Reward card? ,ThisCharacter,7.265144,0.908143
+130.514,Yes … damn. I left it in my house. ,MainCharacter,7.222733,0.656612
+137.7368,Don’t worry. Bring it next time.,ThisCharacter,2.717209,0.3881727
+140.454,The reward card is a joke- isn’t it?,ThisCharacter,9.983719,1.109302
+150.4377,The businessman believe it can let people buy more.,ThisCharacter,7.670807,0.7670807
+158.1085,But people just forget the card right after they turn around.,ThisCharacter,9.691803,0.8076503
+167.8003,Well- I do have the card.,MainCharacter,3.686844,0.526692
+171.4871,And I have already collect 9 seals. ,MainCharacter,7.405365,0.8228183
+178.8925,Well- man- don’t take it serious. It's just a joke.,ThisCharacter,6.195953,0.5632685
+185.0885,And- in fact- the reward card always let you buy something you don’t really need. ,ThisCharacter,12.19919,0.7175993
+197.2876,There is nothing about the money.,MainCharacter,2.604324,0.3720463
+199.892,I’ll be back. Bye.,MainCharacter,1.557556,0.3115112
+269.4878,Why the rain is Hallucinogenic? ,MainCharacter,7.836792,1.119542
+277.3246,No one knows.,ThisCharacter,2.186951,0.5467377
+279.5115,When it will stop?,MainCharacter,2.767334,0.5534668
+282.2789,No one knows. ,ThisCharacter,1.723053,0.3446106
+323.9972,Want a cup of coffee? ,ThisCharacter,3.064819,0.4378313
+332.3498,It’s raining. You’ll get wet. ,ThisCharacter,2.471466,0.3530666
+334.8213,Stay here until the rain stops. ,ThisCharacter,2.203491,0.2754364
+383.5481,Why the rain is Hallucinogenic? ,MainCharacter,2.139648,0.3056641
+385.6878,No one knows.,ThisCharacter,0.9778137,0.2444534
+386.6656,When it will stop?,MainCharacter,0.630249,0.1260498
+387.2958,No one knows. ,ThisCharacter,0.5645447,0.1129089
+397.5917,Boy- take care.  It’s not fun to play in the rain. ,ThisCharacter,0.861084,0.061506
+398.4528,I need to go home. Can you help? ,MainCharacter,5.01181,0.501181
+403.4646,I’m working now. ,ThisCharacter,2.228577,0.4457153
+405.6931,But I can send you to the next block. ,ThisCharacter,2.989136,0.2717396
+408.6823,Thank you.,MainCharacter,1.294678,0.4315592

@@ -9,8 +9,15 @@ public class TalkableCharacter : Character {
 	[SerializeField] Transform head;
 
 	[SerializeField] bool OnlySubPlots;
-	public bool IsMainTalked = false;
+	[HideInInspector] public bool IsMainEnded = false;
 	[HideInInspector] public bool IsTalking = false;
+	[HideInInspector] public bool isMainTalking = false;
+	[SerializeField] LogicEvents MainTalkEndEvent;
+
+	static public  Vector3 InteractionPointOffset
+	{
+		get { return Vector3.down * 0.5f; }
+	}
 
 	protected override void MOnEnable ()
 	{
@@ -24,9 +31,20 @@ public class TalkableCharacter : Character {
 		M_Event.logicEvents [(int)LogicEvents.EndDisplayDialog] -= OnEndDisplayDialog;
 	}
 
-	void OnEndDisplayDialog( LogicArg arg )
+
+	virtual protected void OnEndDisplayDialog( LogicArg arg )
 	{
-		IsTalking = false;
+		if (isMainTalking) {
+
+			if (MainTalkEndEvent != LogicEvents.None) {
+				M_Event.FireLogicEvent (MainTalkEndEvent, new LogicArg (this));
+			}
+			isMainTalking = false;
+			IsMainEnded = true;
+		}
+		if (IsTalking) {
+			IsTalking = false;
+		}
 	}
 
 	public override void Interact ()
@@ -34,16 +52,21 @@ public class TalkableCharacter : Character {
 		if (!IsTalking) {
 			base.Interact ();
 
-			if (OnlySubPlots || IsMainTalked ) {
-				DisplayDialog (subPlots [Random.Range (0, subPlots.Length)]);
+			if (OnlySubPlots || IsMainEnded ) {
+				DisplaySubDialog ();
 			} else {
 				DisplayDialog (mainPlot);
-				IsMainTalked = true;
+				isMainTalking = true;
 			}
 		}
 	}
+	protected void DisplaySubDialog()
+	{
+		if ( subPlots.Length > 0 )
+			DisplayDialog (subPlots [Random.Range (0, subPlots.Length)]);
+	}
 
-	void DisplayDialog( NarrativePlotScriptableObject plot )
+	protected void DisplayDialog( NarrativePlotScriptableObject plot )
 	{
 		
 		// display dialog
@@ -67,13 +90,13 @@ public class TalkableCharacter : Character {
 	public override Vector3 GetInteractCenter ()
 	{
 		if (head != null)
-			return head.transform.position + Vector3.down * 0.5f ;
+			return head.transform.position + InteractionPointOffset;
 
 		return base.GetInteractCenter ();
 	}
 
 	public override bool IsInteractable ()
 	{
-		return base.IsInteractable () && !IsTalking;
+		return base.IsInteractable () && !IsTalking && ( mainPlot != null || subPlots.Length > 0 );
 	}
 }

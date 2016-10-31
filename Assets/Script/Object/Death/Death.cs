@@ -9,6 +9,22 @@ public class Death : MObject {
 	[SerializeField] int deathPeopleNumber = 10;
 	[SerializeField] float createInterval = 0.2f;
 
+	protected override void MOnEnable ()
+	{
+		base.MOnEnable ();
+		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
+	}
+
+	protected override void MOnDisable ()
+	{
+		base.MOnDisable ();
+		M_Event.logicEvents [(int)LogicEvents.DeathEnd] -= OnDeathEnd;
+	}
+
+	void OnDeathEnd(LogicArg arg )
+	{
+		Destroy (gameObject);
+	}
 
 	public void InitDeath(Vector3 position)
 	{

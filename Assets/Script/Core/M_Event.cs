@@ -12,17 +12,26 @@ public enum LogicEvents
 	Interact = 1,
 	SwitchBGM = 2,
 	SwitchDefaultBGM = 3,
+	EnterSavePoint = 4,
+	LockCamera = 5,
+	UnlockCamera = 6,
 	/// <summary>
 	/// call to start the death effect
 	/// </summary>
 	Death = 10,
+	DeathEnd = 11,
 
 	BeginDamage = 20,
 	EndDamage = 21,
 
 	DisplayDialog = 30,
 	EndDisplayDialog = 31,
+	DisplayNextDialog = 32,
 
+
+	EndTalkWaiter = 101,
+	GoodManLeave = 102,
+	EndGame = 103,
 
 
 }
@@ -37,8 +46,8 @@ public class M_Event : MonoBehaviour {
 	/// <summary>
 	/// an example for the normal event
 	/// </summary>
-	public static event EventHandler StartApp;
-	public static void FireStartApp(BasicArg arg){if ( StartApp != null ) StartApp(arg) ; }
+//	public static event EventHandler StartApp;
+//	public static void FireStartApp(BasicArg arg){if ( StartApp != null ) StartApp(arg) ; }
 
 
 	/// <summary>
@@ -80,6 +89,7 @@ public class M_Event : MonoBehaviour {
 	// const string for message
 	public const string EVENT_DISPLAY_DIALOG_PLOT = "KEY";
 	public const string EVENT_SWITCH_BGM_CLIP = "CLIP";
+	public const string EVENT_SAVE_POINT = "SAVE";
 }
 
 /// <summary>

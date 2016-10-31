@@ -1,0 +1,239 @@
+fileFormatVersion: 2
+guid: f3f9dd0c0272e094ab89a51ecc38b0e5
+timeCreated: 1477771991
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: body
+    100002: group1
+    100004: Head
+    100006: //RootNode
+    100008: Umbrella2
+    100010: UmbrellaTop:Mesh
+    100012: UMBRELLA:bar
+    100014: UMBRELLA:bar1
+    100016: UMBRELLA:bar2
+    100018: UMBRELLA:bar3
+    100020: UMBRELLA:bar4
+    100022: UMBRELLA:bar5
+    100024: UMBRELLA:bar6
+    100026: UMBRELLA:bar7
+    100028: UMBRELLA:barBot
+    100030: UMBRELLA:barBot 1
+    100032: UMBRELLA:barBot 2
+    100034: UMBRELLA:barBot 3
+    100036: UMBRELLA:barBot 4
+    100038: UMBRELLA:barBot 5
+    100040: UMBRELLA:barBot 6
+    100042: UMBRELLA:barBot 7
+    100044: UMBRELLA:group1
+    100046: UMBRELLA:top1
+    100048: UMBRELLA:top2
+    100050: UMBRELLA:TopShadow
+    100052: UMBRELLA:UmbrellaBot
+    400000: body
+    400002: group1
+    400004: Head
+    400006: //RootNode
+    400008: Umbrella2
+    400010: UmbrellaTop:Mesh
+    400012: UMBRELLA:bar
+    400014: UMBRELLA:bar1
+    400016: UMBRELLA:bar2
+    400018: UMBRELLA:bar3
+    400020: UMBRELLA:bar4
+    400022: UMBRELLA:bar5
+    400024: UMBRELLA:bar6
+    400026: UMBRELLA:bar7
+    400028: UMBRELLA:barBot
+    400030: UMBRELLA:barBot 1
+    400032: UMBRELLA:barBot 2
+    400034: UMBRELLA:barBot 3
+    400036: UMBRELLA:barBot 4
+    400038: UMBRELLA:barBot 5
+    400040: UMBRELLA:barBot 6
+    400042: UMBRELLA:barBot 7
+    400044: UMBRELLA:group1
+    400046: UMBRELLA:top1
+    400048: UMBRELLA:top2
+    400050: UMBRELLA:TopShadow
+    400052: UMBRELLA:UmbrellaBot
+    2300000: body
+    2300002: Head
+    2300004: Umbrella2
+    2300006: UmbrellaTop:Mesh
+    2300008: UMBRELLA:bar
+    2300010: UMBRELLA:bar1
+    2300012: UMBRELLA:bar2
+    2300014: UMBRELLA:bar3
+    2300016: UMBRELLA:bar4
+    2300018: UMBRELLA:bar5
+    2300020: UMBRELLA:bar6
+    2300022: UMBRELLA:bar7
+    2300024: UMBRELLA:barBot
+    2300026: UMBRELLA:barBot 1
+    2300028: UMBRELLA:barBot 2
+    2300030: UMBRELLA:barBot 3
+    2300032: UMBRELLA:barBot 4
+    2300034: UMBRELLA:barBot 5
+    2300036: UMBRELLA:barBot 6
+    2300038: UMBRELLA:barBot 7
+    2300040: UMBRELLA:top1
+    2300042: UMBRELLA:top2
+    2300044: UMBRELLA:TopShadow
+    2300046: UMBRELLA:UmbrellaBot
+    3300000: body
+    3300002: Head
+    3300004: Umbrella2
+    3300006: UmbrellaTop:Mesh
+    3300008: UMBRELLA:bar
+    3300010: UMBRELLA:bar1
+    3300012: UMBRELLA:bar2
+    3300014: UMBRELLA:bar3
+    3300016: UMBRELLA:bar4
+    3300018: UMBRELLA:bar5
+    3300020: UMBRELLA:bar6
+    3300022: UMBRELLA:bar7
+    3300024: UMBRELLA:barBot
+    3300026: UMBRELLA:barBot 1
+    3300028: UMBRELLA:barBot 2
+    3300030: UMBRELLA:barBot 3
+    3300032: UMBRELLA:barBot 4
+    3300034: UMBRELLA:barBot 5
+    3300036: UMBRELLA:barBot 6
+    3300038: UMBRELLA:barBot 7
+    3300040: UMBRELLA:top1
+    3300042: UMBRELLA:top2
+    3300044: UMBRELLA:TopShadow
+    3300046: UMBRELLA:UmbrellaBot
+    4300000: Umbrella2
+    4300002: UmbrellaTop:Mesh
+    4300004: body
+    4300006: Head
+    4300008: UMBRELLA:UmbrellaBot
+    4300010: UMBRELLA:top1
+    4300012: UMBRELLA:top2
+    4300014: UMBRELLA:TopShadow
+    4300016: UMBRELLA:bar
+    4300018: UMBRELLA:barBot
+    4300020: UMBRELLA:bar1
+    4300022: UMBRELLA:barBot
+    4300024: UMBRELLA:bar2
+    4300026: UMBRELLA:barBot
+    4300028: UMBRELLA:bar3
+    4300030: UMBRELLA:barBot
+    4300032: UMBRELLA:bar4
+    4300034: UMBRELLA:barBot
+    4300036: UMBRELLA:bar5
+    4300038: UMBRELLA:barBot
+    4300040: UMBRELLA:bar6
+    4300042: UMBRELLA:barBot
+    4300044: UMBRELLA:bar7
+    4300046: UMBRELLA:barBot
+    7400000: LadyWalk
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: LadyWalk
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 122
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/body
+        weight: 1
+      - path: group1/Head
+        weight: 1
+      - path: group1/Umbrella2
+        weight: 1
+      - path: group1/Umbrella2/UmbrellaTop:Mesh
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
