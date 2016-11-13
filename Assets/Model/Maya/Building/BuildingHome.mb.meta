@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 7a046220bed96744183ed061e1b82898
+timeCreated: 1478855340
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: BCubeOne:Building
+    100002: //RootNode
+    100004: FrontDoor:aldoor
+    100006: FrontDoor:door
+    100008: FrontDoor:door 1
+    100010: FrontDoor:door 2
+    100012: FrontDoor:door 3
+    100014: FrontDoor:doorhendle
+    100016: FrontDoor:portal_OBJ:portal008
+    100018: FrontDoor:stair
+    100020: FrontDoor:stair1
+    100022: FrontDoor:stair2
+    100024: FrontDoor:wall
+    100026: Stair:fire_escape:Mesh
+    100028: BCubeOne1:Building
+    100030: BCubeOne1:transform1
+    100032: BCubeOne1:transform2
+    100034: BCubeOne:Building 1
+    100036: BCubeOne:transform1
+    100038: BCubeOne:transform2
+    100040: Home
+    100042: pCube1
+    100044: pCube2
+    400000: BCubeOne:Building
+    400002: //RootNode
+    400004: FrontDoor:aldoor
+    400006: FrontDoor:door
+    400008: FrontDoor:door 1
+    400010: FrontDoor:door 2
+    400012: FrontDoor:door 3
+    400014: FrontDoor:doorhendle
+    400016: FrontDoor:portal_OBJ:portal008
+    400018: FrontDoor:stair
+    400020: FrontDoor:stair1
+    400022: FrontDoor:stair2
+    400024: FrontDoor:wall
+    400026: Stair:fire_escape:Mesh
+    400028: BCubeOne1:Building
+    400030: BCubeOne1:transform1
+    400032: BCubeOne1:transform2
+    400034: BCubeOne:Building 1
+    400036: BCubeOne:transform1
+    400038: BCubeOne:transform2
+    400040: Home
+    400042: pCube1
+    400044: pCube2
+    2300000: BCubeOne:Building
+    2300002: FrontDoor:aldoor
+    2300004: FrontDoor:door 3
+    2300006: FrontDoor:doorhendle
+    2300008: FrontDoor:portal_OBJ:portal008
+    2300010: FrontDoor:stair
+    2300012: FrontDoor:stair1
+    2300014: FrontDoor:stair2
+    2300016: FrontDoor:wall
+    2300018: Stair:fire_escape:Mesh
+    2300020: BCubeOne1:Building
+    3300000: BCubeOne:Building
+    3300002: FrontDoor:aldoor
+    3300004: FrontDoor:door 3
+    3300006: FrontDoor:doorhendle
+    3300008: FrontDoor:portal_OBJ:portal008
+    3300010: FrontDoor:stair
+    3300012: FrontDoor:stair1
+    3300014: FrontDoor:stair2
+    3300016: FrontDoor:wall
+    3300018: Stair:fire_escape:Mesh
+    3300020: BCubeOne1:Building
+    4300000: BCubeOne:Building
+    4300002: FrontDoor:portal_OBJ:portal008
+    4300004: FrontDoor:aldoor
+    4300006: FrontDoor:door
+    4300008: FrontDoor:doorhendle
+    4300010: FrontDoor:wall
+    4300012: FrontDoor:stair
+    4300014: FrontDoor:stair1
+    4300016: FrontDoor:stair2
+    4300018: Stair:fire_escape:Mesh
+    4300020: BCubeOne1:Building
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

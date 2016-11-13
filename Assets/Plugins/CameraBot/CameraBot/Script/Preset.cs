@@ -21,8 +21,8 @@ namespace CF.CameraBot
 		public Vector3
 			m_LastFrameTargetPosition = Vector3.zero;
 
-		//public ReboundData m_ReboundYaw = new ReboundData();
-		//public ReboundData m_ReboundPitch = new ReboundData();
+		public ReboundData m_ReboundYaw = new ReboundData();
+		public ReboundData m_ReboundPitch = new ReboundData();
 	}
     #endregion
 
@@ -70,6 +70,8 @@ namespace CF.CameraBot
 					// backup default values
 					m_InitReference = new InitReference();
 					m_InitReference.m_VirtualPosition = (VirtualPosition)m_VirtualPosition.Clone();
+					m_InitReference.m_Zoom = (Zoom)m_Zoom.Clone();
+					m_InitReference.m_ClampAngle = (ClampAngle)m_ClampAngle.Clone();
 					m_InitReference.m_Method = (Method)m_Method.Clone();
 				}
 				return m_InitReference;
@@ -104,6 +106,7 @@ namespace CF.CameraBot
 				Instance.YawLookAtDegree = m_VirtualPosition.m_LookTarget.m_Coordinates.Yaw;
 				Instance.PitchLookAtDegree = m_VirtualPosition.m_LookTarget.m_Coordinates.Pitch;
 				Instance.OrbitLookAtDistance = m_VirtualPosition.m_LookTarget.m_Coordinates.radius;
+				m_PositionOverrider.Update(this);
 			}
 #endif
 		}
@@ -170,7 +173,7 @@ namespace CF.CameraBot
 
 		#region API
 		public Transform ChaseTarget { get { return m_Host.ChaseTarget; } }
-		public Transform ChaseTargetRotation { get { return m_Host.TargetForward != null ? m_Host.TargetForward : ChaseTarget; } }
+		public Transform ChaseTargetRotation { get { return (m_ClampAngle.m_ForwardReference != null) ? m_ClampAngle.m_ForwardReference : (m_Host.TargetForward != null) ? m_Host.TargetForward : ChaseTarget; } }
 		public Transform TargetForward { get { return m_Host.TargetForward; } }
 		public Transform ControlPosition { get { return m_Host.ControlPosition; } }
 		public Transform ControlRotation { get { return m_Host.ControlRotation; } }
@@ -180,6 +183,8 @@ namespace CF.CameraBot
 			Instance.ResetToInit();
 
 			m_VirtualPosition = (VirtualPosition)InitReference.m_VirtualPosition.Clone();
+			m_Zoom = (Zoom)InitReference.m_Zoom.Clone();
+			m_ClampAngle = (ClampAngle)InitReference.m_ClampAngle.Clone();
 			m_Method = (Method)InitReference.m_Method.Clone();
 		}
 		#endregion
@@ -201,17 +206,39 @@ namespace CF.CameraBot
 
 		#region Dataset
 		public VirtualPosition m_VirtualPosition = new VirtualPosition();
-		// public Zoom m_Zoom = new Zoom(){};
-		// public ClampAngle m_ClampAngle = new ClampAngle(){};
+		public Zoom m_Zoom = new Zoom()
+		{
+			m_Distance = 1f,
+			m_ForwardLimit = -.5f,
+			m_BackwardLimit = .5f,
+			m_Speed = 1f,
+			m_Rebound = true,
+			m_ReboundDelay = 1f,
+			m_ReboundPeriod = 1.5f,
+			m_ReboundCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f)
+		};
+		public ClampAngle m_ClampAngle = new ClampAngle()
+		{
+			m_UpwardReferenceMethod = UpwardReferenceMethod.World,
+			m_PolarLeftRange = 180f,
+			m_PolarRightRange = 180f,
+			m_ElevationDownRange = 50f,
+			m_ElevationUpRange = 50f,
+			m_Rebound = true,
+			m_ReboundDelay = 1f,
+			m_ReboundPeriod = 1.5f,
+			m_ReboundCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f)
+		};
 		public Method m_Method = new Method()
 		{
 			m_MoveMethod = MoveMethod.OrbitLerp,
 			m_PositionSpeed = 8f,
 			m_RotationMethod = RotationMethod.LerpUnclamped,
 			m_RotationSpeed = 8f,
+			m_ImproveAccuracy = 90f,
 			m_IsRelatedAngle = false
 		};
-		// public PositionOverrider m_PositionOverrider = new PositionOverrider();
+		public PositionOverrider m_PositionOverrider = new PositionOverrider();
 		#endregion
 	}
 }

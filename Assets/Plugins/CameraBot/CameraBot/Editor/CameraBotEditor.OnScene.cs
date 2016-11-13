@@ -93,6 +93,8 @@ namespace CF.CameraBot
 
 			PresetEditor.OnSceneTargetForwardReference(controlId, preset);
 			OnSceneHandleCoordinatesTools(preset);
+			PresetEditor.OnSceneRotationHints(controlId, preset, delta5sec);
+			PresetEditor.OnSceneZoomRange(preset);
 		}
 		/// <summary>Draw a set of camera preview on left-top</summary>
 		private void OnSceneDrawCameraSets()
@@ -185,7 +187,16 @@ namespace CF.CameraBot
 			if (TmpCamera.ContainsKey(preset))
 			{
 				TmpCamera[preset].transform.position = preset.Instance.GetCameraPivot().position;
-				TmpCamera[preset].transform.LookAt(preset.Instance.GetCameraLookAt());
+				Vector3 upward;
+				switch(preset.m_ClampAngle.m_UpwardReferenceMethod)
+				{
+					default:
+					case UpwardReferenceMethod.World: upward = Vector3.up; break;
+					case UpwardReferenceMethod.Custom: upward = (preset.m_ClampAngle.m_UpReference == null)? Vector3.up : preset.m_ClampAngle.m_UpReference.up; break;
+					case UpwardReferenceMethod.Local: upward = Vector3.Lerp(Vector3.Project(preset.Instance.m_CameraPivot.transform.up, preset.Instance.transform.up), preset.Instance.transform.up, .5f); break;
+					case UpwardReferenceMethod.RealLocal: upward = preset.Instance.CameraPivot.transform.up; break;
+				}
+				TmpCamera[preset].transform.LookAt(preset.Instance.GetCameraLookAt(), upward);
 			}
 		}
 		#endregion

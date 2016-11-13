@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 2ad3ee4dfadd4804984d1a98795efaa3
+timeCreated: 1478217347
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bar
+    100002: bar1
+    100004: bar2
+    100006: bar3
+    100008: bar4
+    100010: bar5
+    100012: bar6
+    100014: bar7
+    100016: barBot
+    100018: barBot 1
+    100020: barBot 2
+    100022: barBot 3
+    100024: barBot 4
+    100026: barBot 5
+    100028: barBot 6
+    100030: barBot 7
+    100032: top1
+    100034: top2
+    100036: TopShadow
+    100038: //RootNode
+    100040: UmbrellaBot
+    400000: bar
+    400002: bar1
+    400004: bar2
+    400006: bar3
+    400008: bar4
+    400010: bar5
+    400012: bar6
+    400014: bar7
+    400016: barBot
+    400018: barBot 1
+    400020: barBot 2
+    400022: barBot 3
+    400024: barBot 4
+    400026: barBot 5
+    400028: barBot 6
+    400030: barBot 7
+    400032: top1
+    400034: top2
+    400036: TopShadow
+    400038: //RootNode
+    400040: UmbrellaBot
+    2300000: bar
+    2300002: bar1
+    2300004: bar2
+    2300006: bar3
+    2300008: bar4
+    2300010: bar5
+    2300012: bar6
+    2300014: bar7
+    2300016: barBot
+    2300018: barBot 1
+    2300020: barBot 2
+    2300022: barBot 3
+    2300024: barBot 4
+    2300026: barBot 5
+    2300028: barBot 6
+    2300030: barBot 7
+    2300032: top1
+    2300034: top2
+    2300036: TopShadow
+    2300038: UmbrellaBot
+    3300000: bar
+    3300002: bar1
+    3300004: bar2
+    3300006: bar3
+    3300008: bar4
+    3300010: bar5
+    3300012: bar6
+    3300014: bar7
+    3300016: barBot
+    3300018: barBot 1
+    3300020: barBot 2
+    3300022: barBot 3
+    3300024: barBot 4
+    3300026: barBot 5
+    3300028: barBot 6
+    3300030: barBot 7
+    3300032: top1
+    3300034: top2
+    3300036: TopShadow
+    3300038: UmbrellaBot
+    4300000: UmbrellaBot
+    4300002: top1
+    4300004: top2
+    4300006: TopShadow
+    4300008: bar
+    4300010: barBot
+    4300012: bar1
+    4300014: barBot
+    4300016: bar2
+    4300018: barBot
+    4300020: bar3
+    4300022: barBot
+    4300024: bar4
+    4300026: barBot
+    4300028: bar5
+    4300030: barBot
+    4300032: bar6
+    4300034: barBot
+    4300036: bar7
+    4300038: barBot
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

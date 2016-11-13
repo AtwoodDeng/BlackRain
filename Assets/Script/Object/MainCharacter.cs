@@ -7,7 +7,6 @@ using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CharacterController))]
-
 public class MainCharacter : MonoBehaviour {
 
 	[System.Serializable]
@@ -28,7 +27,8 @@ public class MainCharacter : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] Transform m_Cam;                  // A reference to the main camera in the scenes transform
+	[SerializeField] Transform m_CamTransform;                  // A reference to the main camera in the scenes transform
+	Camera m_MainCamera;
 
 	Rigidbody m_Rigidbody;
 	CharacterController m_CharacterController;
@@ -51,13 +51,19 @@ public class MainCharacter : MonoBehaviour {
 	[SerializeField] float m_RunSpeedMultiplier = 3f;
 	public float RunSpeed
 	{
-		get { return m_RunSpeedMultiplier * MechanismManager.health.HealthRate; }
+		get { return m_RunSpeedMultiplier * ( 0.6f + MechanismManager.health.HealthRate * 0.4f ) ; }
 	}
 	[SerializeField] CF.CameraBot.CameraBot cameraBot;
 	private float oriCamBotSensity;
 	SavePointData lastSavePoint;
+	[SerializeField] float CameraSensity = 3.3f;
+	private float CameraMechanismSensity = 1f;
+	private float CameraNarrativeSensity = 1f;
 
-	private float CameraSensity;
+	[SerializeField] Transform headTransform;
+	public Vector3 GetInteractiveCenter() {
+		return headTransform.position + TalkableCharacter.InteractionPointOffset;
+	}
 
 	private bool m_Moveable = true;
 	public bool Moveable
@@ -95,16 +101,22 @@ public class MainCharacter : MonoBehaviour {
 		m_Rigidbody = GetComponent<Rigidbody> ();
 		m_CharacterController = GetComponent<CharacterController> ();
 
-		if (m_Cam == null && Camera.main != null)
+		if (m_CamTransform == null && Camera.main != null)
 		{
-			m_Cam = Camera.main.transform;
+			m_CamTransform = Camera.main.transform;
 		}
-		CameraSensity = cameraBot.InputSetting.Sensitive;
 
+		if (m_CamTransform != null)
+			m_MainCamera = m_CamTransform.GetComponent<Camera> ();
+		
+		if (cameraBot == null)
+			cameraBot = FindObjectOfType<CF.CameraBot.CameraBot> ();
+		
 		if ( m_animator != null )
 			m_animator = GetComponentInChildren<Animator> ();
 
-		oriCamBotSensity = cameraBot.InputSetting.BasicSensity;
+		cameraBot.InputSetting.Sensitive = CameraSensity;
+		oriCamBotSensity = CameraSensity;
 	}
 
 	void OnEnable()
@@ -115,6 +127,8 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.EnterSavePoint] += OnEnterSavePoint;
 		M_Event.logicEvents [(int)LogicEvents.LockCamera] += OnLockCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnlockCamera] += OnUnlockCamer;
+		M_Event.logicEvents [(int)LogicEvents.FocusCamera] += OnFocusCamera;
+		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] += OnUnfocusCamera;
 	}
 
 	void OnDisable()
@@ -125,7 +139,23 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.EnterSavePoint] -= OnEnterSavePoint;
 		M_Event.logicEvents [(int)LogicEvents.LockCamera] -= OnLockCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnlockCamera] -= OnUnlockCamer;
+		M_Event.logicEvents [(int)LogicEvents.FocusCamera] -= OnFocusCamera;
+		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
 	}
+
+	void OnFocusCamera( LogicArg arg )
+	{
+		
+		cameraBot.enabled = false;
+		Moveable = false;
+	}
+
+	void OnUnfocusCamera( LogicArg arg )
+	{
+		cameraBot.enabled = true;
+		Moveable = true;
+	}
+
 
 	void OnEnterSavePoint(LogicArg arg)
 	{
@@ -135,21 +165,33 @@ public class MainCharacter : MonoBehaviour {
 
 	void OnLockCamera( LogicArg arg )
 	{
-		cameraBot.InputSetting.BasicSensity = 0;
+		CameraSensity = 0;
 	}
 
 	void OnUnlockCamer( LogicArg arg )
 	{
-		cameraBot.InputSetting.BasicSensity = oriCamBotSensity;
+		CameraSensity = oriCamBotSensity;
 	}
 
 
 	void OnDisplay( LogicArg arg )
 	{
+		TalkableCharacter character = (TalkableCharacter)arg.sender;
 		NarrativePlotScriptableObject plot = (NarrativePlotScriptableObject)arg.GetMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT);
-		if (plot != null && plot.lockCamera) {
-			Moveable = false;
-			cameraBot.InputSetting.NarrativeSensityMutiple = 0.03f;
+
+		if (plot.important) {
+			if (character != null && character.NeedMoveCamera ()) {
+				character.MoveCamera (m_MainCamera);
+				cameraBot.enabled = false;
+				Moveable = false;
+			} else {
+			
+				if (plot != null && plot.lockCamera) {
+					Moveable = false;
+					CameraNarrativeSensity = 0.03f;
+
+				}
+			}
 		}
 //		m_UseHeadBob = false;
 //		m_Move = false;
@@ -158,8 +200,10 @@ public class MainCharacter : MonoBehaviour {
 
 	void OnEndDisplay( LogicArg arg )
 	{
+//		Debug.Log ("Camerabot enable");
 		Moveable = true;
-		cameraBot.InputSetting.NarrativeSensityMutiple = 1f;
+		cameraBot.enabled = true;
+		CameraNarrativeSensity = 1f;
 //		m_UseHeadBob = true;
 //		m_Move = true;
 //		m_CanJump = true;
@@ -176,8 +220,8 @@ public class MainCharacter : MonoBehaviour {
 //		m_FovKick.enable = false;
 //		m_UseHeadBob = false;
 		cameraBot.enabled = false;
-		m_Cam.DOMoveY (deathSetting.deathFloatHeight , deathSetting.deathFloatTime).SetRelative (true).OnComplete(OnDeathEnd);
-		m_Cam.DORotate (new Vector3 (75f, 0, 0), deathSetting.deathFloatTime / 3f ).SetEase(Ease.OutCubic);
+		m_CamTransform.DOMoveY (deathSetting.deathFloatHeight , deathSetting.deathFloatTime).SetRelative (true).OnComplete(OnDeathEnd);
+		m_CamTransform.DORotate (new Vector3 (75f, 0, 0), deathSetting.deathFloatTime / 3f ).SetEase(Ease.OutCubic);
 
 	}
 
@@ -189,9 +233,10 @@ public class MainCharacter : MonoBehaviour {
 		transform.position = lastSavePoint.trans.position;
 		transform.forward = lastSavePoint.trans.forward;
 
+		Debug.Log ("Came enable death");
 		cameraBot.enabled = true;
-		cameraBot.InputSetting.DamageSensityMutiple = 1f;
-		m_Cam.DOKill ();
+		CameraMechanismSensity = 1f;
+		m_CamTransform.DOKill ();
 
 		M_Event.FireLogicEvent (LogicEvents.DeathEnd, new LogicArg (this));
 	}
@@ -223,11 +268,11 @@ public class MainCharacter : MonoBehaviour {
 //		bool crouch = Input.GetKey(KeyCode.C);
 
 		// calculate move direction to pass to character
-		if (m_Cam != null)
+		if (m_CamTransform != null)
 		{
 			// calculate camera relative direction to move:
-			m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-			 m_Move = v * m_CamForward + h * m_Cam.right;
+			m_CamForward = Vector3.Scale(m_CamTransform.forward, new Vector3(1, 0, 1)).normalized;
+			 m_Move = v * m_CamForward + h * m_CamTransform.right;
 		}
 		else
 		{
@@ -252,8 +297,13 @@ public class MainCharacter : MonoBehaviour {
 		}
 
 		// update the sensity
-		if ( MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.UnderDamage )
-			cameraBot.InputSetting.DamageSensityMutiple = CameraSensity * ( MechanismManager.health.HealthRate * 0.7f + 0.3f );
+		if (MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.UnderDamage) {
+			CameraMechanismSensity = (MechanismManager.health.HealthRateZeroOne * 0.2f + 0.8f);
+		}
+		else
+			CameraMechanismSensity = 1f;
+
+		cameraBot.InputSetting.Sensitive = CameraSensity * CameraNarrativeSensity * CameraMechanismSensity;
 	}
 
 	void Move( Vector3 move )

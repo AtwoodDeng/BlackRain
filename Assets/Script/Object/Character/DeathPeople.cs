@@ -27,9 +27,15 @@ public class DeathPeople : MPeople {
 		public float flashLightTime;
 	}
 	[SerializeField] TakePhotoSetting takePhotoSetting;
+	[SerializeField] bool StartTakePhotoOnAwake;
+	[SerializeField] Transform focusTransform;
+	[SerializeField] Gradient umbrellaColor;
+	[SerializeField] MeshRenderer umbrellaUp;
 
 	private Vector3 destination;
-	private Vector3 bodyPosition;
+	private Vector3 focusPosition{
+		get { return focusTransform.position; }
+	}
 	private float takePhotoRange;
 
 	AudioSource flashLightAudioSource;
@@ -39,27 +45,55 @@ public class DeathPeople : MPeople {
 			flashLightAudioSource = gameObject.AddComponent<AudioSource> ();
 			flashLightAudioSource.playOnAwake = false;
 			flashLightAudioSource.Stop ();
-			flashLightAudioSource.volume = 0.5f;
+			flashLightAudioSource.volume = 0.35f;
 			flashLightAudioSource.loop = false;
 			flashLightAudioSource.spatialBlend = 1f;
 			flashLightAudioSource.clip = takePhotoSetting.flashLightSound;
+			flashLightAudioSource.maxDistance = 5f;
+			flashLightAudioSource.minDistance = 0.1f;
+		}
+
+
+		if (umbrellaUp != null ) {
+			Color color = umbrellaColor.Evaluate (Random.Range (0, 1f));
+			color.a = 0.55f;
+			umbrellaUp.material = new Material (Shader.Find ("AlphaSelfIllum_NoFog"));
+			umbrellaUp.material.SetColor ("_Color", color);
 		}
 
 	}
 
-	public void Init( Vector3 _destination, Vector3 _bodyPosition , float _TakePhotoRange )
+	protected override void MOnEnable ()
+	{
+		base.MOnEnable ();
+		if (StartTakePhotoOnAwake) {
+			
+			StartTakingPhoto ();
+		}
+	}
+
+	protected override void MOnDisable ()
+	{
+		base.MOnDisable ();
+
+		StopAllCoroutines ();
+		isTakingPhoto = false;
+	}
+
+	public void Init( Vector3 _destination, Transform _bodyPosition , float _TakePhotoRange )
 	{
 		destination = _destination;
+		if ( Agent.enabled )
 		Agent.destination = destination;
 
-		bodyPosition = _bodyPosition;
+		focusTransform = _bodyPosition;
 
 		takePhotoRange = _TakePhotoRange;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if ( (transform.position - bodyPosition).magnitude < takePhotoRange ) {
+		if ( (transform.position - focusPosition).magnitude < takePhotoRange ) {
 			StartTakingPhoto ();
 		}
 	}
@@ -70,9 +104,9 @@ public class DeathPeople : MPeople {
 		if (!isTakingPhoto) {
 			Agent.enabled = false;
 
-			Vector3 lookAt = bodyPosition;
-			lookAt.y = transform.position.y;
-			transform.LookAt (lookAt);
+				Vector3 lookAt = focusPosition;
+				lookAt.y = transform.position.y;
+				transform.LookAt (lookAt);
 
 			takePhotoSetting.cellPhone.DOLocalMove (takePhotoSetting.cellphoneEndPosition, takePhotoSetting.takeOutPhoneTime).SetEase (Ease.InOutCirc).OnComplete (AfterTakeOutCellPhone);
 			takePhotoSetting.cellPhone.DOLocalRotate (takePhotoSetting.cellphoneEndRotation, takePhotoSetting.takeOutPhoneTime).SetEase (Ease.InOutCirc);
@@ -82,14 +116,16 @@ public class DeathPeople : MPeople {
 
 	void AfterTakeOutCellPhone()
 	{
-		StartCoroutine (TakePhoto ());
+		if ( gameObject.activeInHierarchy )
+			StartCoroutine (TakePhoto ());
 	}
 
 	IEnumerator TakePhoto()
 	{
 		
-		float timer = 0.1f;
+		float timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
 		float lastTime = 0;
+
 		while (true) {
 			lastTime = timer;
 			timer -= Time.deltaTime;

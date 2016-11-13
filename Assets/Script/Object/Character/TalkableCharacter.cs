@@ -1,18 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class TalkableCharacter : Character {
 
-	[SerializeField] NarrativePlotScriptableObject mainPlot;
-	[SerializeField] NarrativePlotScriptableObject[] subPlots;
+	[SerializeField] protected NarrativePlotScriptableObject mainPlot;
+	[SerializeField] protected NarrativePlotScriptableObject[] subPlots;
 
 	[SerializeField] Transform head;
 
 	[SerializeField] bool OnlySubPlots;
 	[HideInInspector] public bool IsMainEnded = false;
 	[HideInInspector] public bool IsTalking = false;
+	float becomeTalkableDelay = 2f;
 	[HideInInspector] public bool isMainTalking = false;
 	[SerializeField] LogicEvents MainTalkEndEvent;
+	[SerializeField] Transform talkCamera;
+	[SerializeField] float talkCameraChangeDuration = 1f;
 
 	static public  Vector3 InteractionPointOffset
 	{
@@ -31,20 +35,54 @@ public class TalkableCharacter : Character {
 		M_Event.logicEvents [(int)LogicEvents.EndDisplayDialog] -= OnEndDisplayDialog;
 	}
 
+	protected override void MAwake ()
+	{
+		base.MAwake ();
+		if (interactTips.wordEng == "")
+			interactTips.wordEng = "Talk";
+		if (interactTips.wordChinese == "")
+			interactTips.wordChinese = "交谈";
+		if (mainPlot != null)
+			mainPlot.important = true;
+
+
+		foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>()) {
+			if (trans.name == "Head" && head == null)
+				head = trans;
+//			if (trans.name == "body") {
+//				if (trans.GetComponent<Collider> () == null) {
+//					trans.gameObject.AddComponent<CapsuleCollider> ();
+//					trans.gameObject.layer = LayerMask.NameToLayer ("PasserByBody");
+//				}
+//			}
+		}
+	}
 
 	virtual protected void OnEndDisplayDialog( LogicArg arg )
 	{
-		if (isMainTalking) {
+		TalkableCharacter character = (TalkableCharacter)arg.GetMessage (M_Event.EVENT_END_DISPLAY_SENDER);
 
-			if (MainTalkEndEvent != LogicEvents.None) {
-				M_Event.FireLogicEvent (MainTalkEndEvent, new LogicArg (this));
+		if (character == this) {
+			if (isMainTalking) {
+
+				if (MainTalkEndEvent != LogicEvents.None) {
+					M_Event.FireLogicEvent (MainTalkEndEvent, new LogicArg (this));
+				}
+				isMainTalking = false;
+				IsMainEnded = true;
 			}
-			isMainTalking = false;
-			IsMainEnded = true;
+
+			if (IsTalking) {
+				StartCoroutine (DelayBecomeTalkable (becomeTalkableDelay));
+			}
 		}
-		if (IsTalking) {
-			IsTalking = false;
-		}
+	}
+
+	IEnumerator DelayBecomeTalkable( float delay )
+	{
+		yield return new WaitForSeconds (delay);
+
+		IsTalking = false;
 	}
 
 	public override void Interact ()
@@ -66,25 +104,30 @@ public class TalkableCharacter : Character {
 			DisplayDialog (subPlots [Random.Range (0, subPlots.Length)]);
 	}
 
-	protected void DisplayDialog( NarrativePlotScriptableObject plot )
+	virtual protected void DisplayDialog( NarrativePlotScriptableObject plot )
 	{
-		
-		// display dialog
-		LogicArg arg = new LogicArg (this);
-		arg.AddMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT, plot);
-		M_Event.FireLogicEvent (LogicEvents.DisplayDialog, arg);
+		if (plot !=null && plot.dialogs != null && plot.dialogs.Count > 0) {
+			if (plot.dialogs.Count > 1)
+				plot.important = true;
 
-		IsTalking = true;
+			// display dialog
+			LogicArg arg = new LogicArg (this);
+			arg.AddMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT, plot);
+			M_Event.FireLogicEvent (LogicEvents.DisplayDialog, arg);
+
+			IsTalking = true;
+		}
 	}
 
-
-	public override string GetInteractTips ()
+	public virtual bool NeedMoveCamera()
 	{
-		if (LogicManager.Language == LogicManager.GameLanguage.English)
-			return "To Talk";
-		if (LogicManager.Language == LogicManager.GameLanguage.Chinese)
-			return "交谈";
-		return "";
+		return talkCamera != null && !IsMainEnded;
+	}
+
+	public virtual void MoveCamera( Camera cam )
+	{
+		cam.transform.DOMove (talkCamera.position, talkCameraChangeDuration);
+		cam.transform.DORotate (talkCamera.eulerAngles, talkCameraChangeDuration);
 	}
 
 	public override Vector3 GetInteractCenter ()

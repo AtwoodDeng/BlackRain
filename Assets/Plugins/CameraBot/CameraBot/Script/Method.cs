@@ -38,7 +38,10 @@ namespace CF.CameraBot
         public RotationMethod m_RotationMethod = RotationMethod.Lerp;
         [Range(0.0001f, 30f)]
         public float m_RotationSpeed = 4f;
-		
+
+        [Range(0f, 360f)]
+        public float m_ImproveAccuracy = 90f;
+
 		public bool m_IsRelatedAngle = false;
 
 		public object Clone()
@@ -50,6 +53,7 @@ namespace CF.CameraBot
 				m_PositionSpeed = this.m_PositionSpeed,
 				m_RotationMethod = this.m_RotationMethod,
 				m_RotationSpeed = this.m_RotationSpeed,
+				m_ImproveAccuracy = this.m_ImproveAccuracy,
 				m_IsRelatedAngle = this.m_IsRelatedAngle
 			};
 		}

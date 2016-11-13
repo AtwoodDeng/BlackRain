@@ -18,14 +18,8 @@ namespace CF.CameraBot
         [Tooltip("Flip mouse wheel direction.")]
         public bool FlipMouseWheel = false;
         /// <summary>The wheel sensitive</summary>
-		public float Sensitive{
-			get { return DamageSensityMutiple * NarrativeSensityMutiple * BasicSensity; }
-		}
-
-		public float DamageSensityMutiple = 1f;
-		public float NarrativeSensityMutiple = 1f;
-		[Tooltip("Mouse sensitive")]
-		public float BasicSensity = 0.8f;
+        [Tooltip("Wheel sensitive")]
+        public float Sensitive = 0.8f;
         /// <summary>The wheel scroll amount for each sector.</summary>
         [Tooltip("Mouse wheel speed, magnitude input value.")]
         public float WheelSpeed = 200f;

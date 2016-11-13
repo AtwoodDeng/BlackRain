@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using DG.Tweening;
 
 public class MechanismManager : MBehavior {
 	static MechanismManager m_Instance;
@@ -34,6 +35,10 @@ public class MechanismManager : MBehavior {
 
 		[TooltipAttribute("The precentage of the energy recovered pre second.")]
 		public float energyRecover;
+
+		[TooltipAttribute("The precentage of the minHealth of the character.")]
+		[RangeAttribute(0,1f)]
+		public float minHealth;
 	}
 	[SerializeField] DamageSetting damageSetting;
 
@@ -69,27 +74,39 @@ public class MechanismManager : MBehavior {
 			energy = FullEnergy;
 		}
 
-		float energy;
+		private float energy;
 		public const float FullEnergy = 1f;
-		bool isSpeedUp;
+		private bool isSpeedUp;
+		private float minHealth = 0;
 
 
 		public float HealthValue{ get { return health; } }
 
 		public float HealthRate{ get{ return health / FullHealth;}}
+		public float HealthRateZeroOne{ get { return (health - minHealth) / (FullHealth - minHealth); } }
 		public float LostHealthRate { get { return 1f - HealthRate; } }
 
-		public float SpeedUp { get { return isSpeedUp ? Mathf.Sqrt(( Mathf.Max( 0 , energy) / FullEnergy)) : 0 ; } }
+		public float SpeedUp { get { return isSpeedUp ? ( energy > 0 ? 1f : 0 ) : 0; } }// Mathf.Sqrt(( Mathf.Max( 0 , energy) / FullEnergy)) : 0 ; } }
 		public float Energy { get { return energy; } }
+		public float EnergyRate { get { return energy / FullEnergy; } }
+
+		public bool IsMinHealth{ get { return health < FullHealth * minHealth; } }
+
+		public void SetHealthToMin()
+		{
+			DOTween.To (() => health, (x) => health = x, minHealth, 0.5f);
+		}
 
 		public void OnDamage( float dmg )
 		{
-			health -= dmg * Time.deltaTime;
+			if ( health > minHealth * FullHealth )
+				health -= dmg * Time.deltaTime;
 		}
 
 		public void OnRecover( float recoverRate )
 		{
-			health += (FullHealth - health) * recoverRate * Time.deltaTime;
+			if ( health < FullHealth )
+				health += (FullHealth - health) * recoverRate * Time.deltaTime;
 		}
 
 		public void Revive()
@@ -113,10 +130,21 @@ public class MechanismManager : MBehavior {
 			}
 			isSpeedUp = false;
 		}
+
+		public void SetMinHealth( float min )
+		{
+			minHealth = min;
+		}
 	};
 
 	Health m_health = new Health();
 	static public Health health { get { return Instance.m_health;}}
+
+	protected override void MAwake ()
+	{
+		base.MAwake ();
+		m_health.SetMinHealth (damageSetting.minHealth);
+	}
 
 	protected override void MOnEnable ()
 	{
@@ -140,11 +168,18 @@ public class MechanismManager : MBehavior {
 
 	void UpdateEnergy()
 	{
-//		if (CrossPlatformInputManager.GetButton ("SpeedUp")) {
-		if ( Input.GetKey(KeyCode.LeftShift)) {
+		if ( CrossPlatformInputManager.GetButton("SpeedUp") && MainCharacter.Instance.m_IsMoving ) {
 			m_health.OnSpeedUp (damageSetting.energyCost);
 		} else {
 			m_health.RecoverEnergy (damageSetting.energyRecover);
+		}
+
+		if ( CrossPlatformInputManager.GetButtonDown("SpeedUp")) {
+			M_Event.FireLogicEvent (LogicEvents.BeginRun, new LogicArg (this));
+		}
+
+		if ( CrossPlatformInputManager.GetButtonUp("SpeedUp")) {
+			M_Event.FireLogicEvent (LogicEvents.EndRun, new LogicArg (this));
 		}
 	}
 

@@ -117,7 +117,16 @@ namespace CF.CameraBot
 
 		public Vector3 GetCameraUpward()
 		{
-			return Vector3.up;
+			Vector3 upward;
+			switch (m_Preset.m_ClampAngle.m_UpwardReferenceMethod)
+			{
+				default:
+				case UpwardReferenceMethod.World: upward = Vector3.up; break;
+				case UpwardReferenceMethod.Custom: upward = (m_Preset.m_ClampAngle.m_UpReference == null) ? Vector3.up : m_Preset.m_ClampAngle.m_UpReference.up; break;
+				case UpwardReferenceMethod.Local: upward = Vector3.Lerp(Vector3.Project(CameraPivot.transform.up, transform.up), CameraPivot.transform.up, .5f); break;
+				case UpwardReferenceMethod.RealLocal: upward = CameraPivot.transform.up; break;
+			}
+			return upward;
 		}
 		#endregion
 

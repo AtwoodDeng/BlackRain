@@ -1,28 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.ImageEffects;
+using DG.Tweening;
 
 public class EffectManager : MBehavior {
 
 	[SerializeField] GameObject deathPrefab;
 	[SerializeField] CameraFilterPack_AAA_WaterDropPro waterDropEffect;
 	[SerializeField] BlurOptimized BlurEffect;
-	[SerializeField] GlitchEffect glitchEffect;
+	[SerializeField] CameraFilterPack_Color_BrightContrastSaturation saturationEffect;
+	[SerializeField] CameraFilterPack_Colors_Adjust_PreFilters photoShopEffect;
 	[Range(0,1f)]
 	[SerializeField] float damgeAffectThreshod = 0.1f;
 	[Range(0,1f)]
 	[SerializeField] float illusionAffectThreshod = 0.3f;
 	// Use this for initialization
+
+	protected override void MAwake ()
+	{
+		base.MAwake ();
+		if (waterDropEffect == null)
+			waterDropEffect = Camera.main.GetComponent<CameraFilterPack_AAA_WaterDropPro> ();
+		if (BlurEffect == null)
+			BlurEffect = Camera.main.GetComponent<BlurOptimized> ();
+		if (saturationEffect == null)
+			saturationEffect = Camera.main.GetComponent<CameraFilterPack_Color_BrightContrastSaturation> ();
+		if (photoShopEffect == null) {
+			photoShopEffect = Camera.main.GetComponent<CameraFilterPack_Colors_Adjust_PreFilters> ();
+			photoShopEffect.enabled = false;
+		}
+	}
+
 	protected override void MStart ()
 	{
 		base.MStart ();
+
+		LogicManager.Instance.RegisterStateChange (OnStateChange);
+	}
+
+	void OnStateChange( LogicManager.GameState fromState , LogicManager.GameState toState )
+	{
+//		Debug.Log("To state effect" + toState);
+//		if ( toState == LogicManager.GameState.WalkInStreetColorful )
+//		{
+//			saturationEffect.enabled = true;
+//			saturationEffect.Brightness = 1f;
+//			saturationEffect.Contrast = 1f;
+//			DOTween.To (() => saturationEffect.Saturation, (x) => saturationEffect.Saturation = x, 2f, 30f);
+//		}
+
+		Debug.Log("To state effect" + toState);
+		if (toState == LogicManager.GameState.BeginShip) {
+			photoShopEffect.enabled = true;
+			DOTween.To (() => photoShopEffect.FadeFX, (x) => photoShopEffect.FadeFX = x, 0.3f, 15f);
+		}
 	}
 	
 	// Update is called once per frame
 	protected override void MUpdate ()
 	{
-		if (Input.GetKeyDown (KeyCode.C) && Input.GetKey (KeyCode.LeftControl))
-			M_Event.FireLogicEvent (LogicEvents.Death, new LogicArg (this));
+//		if (Input.GetKeyDown (KeyCode.C) && Input.GetKey (KeyCode.LeftControl))
+//			M_Event.FireLogicEvent (LogicEvents.Death, new LogicArg (this));
 		
 		OnUpdateDamageEffect ();
 	}
@@ -33,6 +71,9 @@ public class EffectManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.Death] += OnDeath;
 		M_Event.logicEvents [(int)LogicEvents.BeginDamage] += OnBeginDamage;
 		M_Event.logicEvents [(int)LogicEvents.EndDamage] += OnEndDamge;
+		M_Event.logicEvents [(int)LogicEvents.DisPlayClimaxEffect] += OnClimax;
+		M_Event.logicEvents [(int)LogicEvents.FocusCamera] += OnFocusCamera;
+		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] += OnUnfocusCamera;
 	}
 
 	protected override void MOnDisable ()
@@ -41,7 +82,39 @@ public class EffectManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.Death] -= OnDeath;
 		M_Event.logicEvents [(int)LogicEvents.BeginDamage] -= OnBeginDamage;
 		M_Event.logicEvents [(int)LogicEvents.EndDamage] -= OnEndDamge;
+		M_Event.logicEvents [(int)LogicEvents.DisPlayClimaxEffect] -= OnClimax;
+		M_Event.logicEvents [(int)LogicEvents.FocusCamera] -= OnFocusCamera;
+		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
 	}
+
+	bool isCameraLocked = false;
+
+	void OnFocusCamera( LogicArg arg )
+	{
+		Debug.Log ("On Lock Camera");
+		isCameraLocked = true;
+
+		if (waterDropEffect != null) {
+			waterDropEffect.enabled = false;
+		}
+	}
+
+	void OnUnfocusCamera( LogicArg arg )
+	{
+		Debug.Log ("On UnLock Camera");
+		isCameraLocked = false;
+		if (waterDropEffect != null && IsInDamage) {
+			waterDropEffect.enabled = true;
+		}
+	}
+
+	void OnClimax( LogicArg arg )
+	{
+		Debug.Log ("Effect Manager On Climax");
+		photoShopEffect.enabled = true;
+		DOTween.To (() => photoShopEffect.FadeFX, (x) => photoShopEffect.FadeFX = x, 0.3f, 20f);
+	}
+
 
 	void OnDeath(LogicArg arg )
 	{
@@ -56,29 +129,27 @@ public class EffectManager : MBehavior {
 				BlurEffect.enabled = false;
 			if ( waterDropEffect != null )
 				waterDropEffect.enabled = false;
-			if (glitchEffect != null)
-				glitchEffect.enabled = false;
 		}
 	}
 
 	bool IsInDamage = false;
 	void OnBeginDamage(LogicArg arg)
 	{
-		if ( waterDropEffect != null )
+		if (waterDropEffect != null && !isCameraLocked) {
 			waterDropEffect.enabled = true;
+			DOTween.To( () => waterDropEffect.rate , (x) => waterDropEffect.rate = x , 1f , 0.2f );
+		}
 
-		if ( glitchEffect != null )
-			glitchEffect.enabled = true;
 		
 	}
 
 	void OnEndDamge(LogicArg arg)
 	{
-		if ( waterDropEffect != null )
-		waterDropEffect.enabled = false;
-
-		if ( glitchEffect != null )
-			glitchEffect.enabled = false;
+		if (waterDropEffect != null) {
+			DOTween.To (() => waterDropEffect.rate, (x) => waterDropEffect.rate = x, 0f, 0.2f).OnComplete (delegate() {
+				waterDropEffect.enabled = false;
+			});
+		}
 		
 	}
 
@@ -90,11 +161,14 @@ public class EffectManager : MBehavior {
 //			else
 			{
 //				waterDropEffect.enabled = true;
-				waterDropEffect.rate = Mathf.Sqrt( (MechanismManager.health.LostHealthRate - damgeAffectThreshod) / ( 1f - damgeAffectThreshod) + 0.5f ) ;
+//				waterDropEffect.rate = Mathf.Sqrt( (MechanismManager.health.LostHealthRate - damgeAffectThreshod) / ( 1f - damgeAffectThreshod) + 0.5f ) ;
 			}
+
 		}
 		if (BlurEffect != null) {
-			if (MechanismManager.health.LostHealthRate < damgeAffectThreshod )
+			if (isCameraLocked) {
+				BlurEffect.enabled = false;
+			}else if (MechanismManager.health.LostHealthRate < damgeAffectThreshod )
 				BlurEffect.enabled = false;
 			else if ( !(MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.Dead) )
 			{
@@ -102,17 +176,7 @@ public class EffectManager : MBehavior {
 				BlurEffect.rate = (MechanismManager.health.LostHealthRate - damgeAffectThreshod) / ( 1f - damgeAffectThreshod ) ;
 			}
 		}
-		if (glitchEffect != null) {
-
-			if (MechanismManager.health.LostHealthRate < illusionAffectThreshod)
-			{
-				glitchEffect.intensity = 0;
-			}
-			else
-			{
-				glitchEffect.intensity = (MechanismManager.health.LostHealthRate - damgeAffectThreshod) / ( 1f - damgeAffectThreshod ) * 2f + 0.5f ;
-			}
-		}
 	}
+
 
 }

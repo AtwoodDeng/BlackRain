@@ -1,0 +1,196 @@
+fileFormatVersion: 2
+guid: e1f7bebc6da2ec34f8d13a5697dd1aaa
+timeCreated: 1477988126
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bar
+    100002: barChair
+    100004: barDesk
+    100006: bot
+    100008: //RootNode
+    100010: Door
+    100012: floor
+    100014: glass
+    100016: glass1
+    100018: glass2
+    100020: Lamp
+    100022: Music
+    100024: pCylinder1
+    100026: pCylinder2
+    100028: pTorus1
+    100030: top1
+    100032: Wall
+    100034: Wall1
+    100036: Wall3
+    100038: Wall4
+    100040: Wall5
+    100042: Wall6
+    100044: Wall7
+    100046: Walls
+    100048: MainCharacterRig:left1
+    100050: MainCharacterRig:right1
+    100052: Wall8
+    400000: bar
+    400002: barChair
+    400004: barDesk
+    400006: bot
+    400008: //RootNode
+    400010: Door
+    400012: floor
+    400014: glass
+    400016: glass1
+    400018: glass2
+    400020: Lamp
+    400022: Music
+    400024: pCylinder1
+    400026: pCylinder2
+    400028: pTorus1
+    400030: top1
+    400032: Wall
+    400034: Wall1
+    400036: Wall3
+    400038: Wall4
+    400040: Wall5
+    400042: Wall6
+    400044: Wall7
+    400046: Walls
+    400048: MainCharacterRig:left1
+    400050: MainCharacterRig:right1
+    400052: Wall8
+    2300000: bar
+    2300002: barDesk
+    2300004: bot
+    2300006: Door
+    2300008: floor
+    2300010: glass
+    2300012: glass1
+    2300014: glass2
+    2300016: Lamp
+    2300018: Music
+    2300020: pCylinder1
+    2300022: pCylinder2
+    2300024: pTorus1
+    2300026: top1
+    2300028: Wall
+    2300030: Wall1
+    2300032: Wall3
+    2300034: Wall4
+    2300036: Wall5
+    2300038: Wall6
+    2300040: Wall7
+    2300042: Walls
+    2300044: Wall8
+    3300000: bar
+    3300002: barDesk
+    3300004: bot
+    3300006: Door
+    3300008: floor
+    3300010: glass
+    3300012: glass1
+    3300014: glass2
+    3300016: Lamp
+    3300018: Music
+    3300020: pCylinder1
+    3300022: pCylinder2
+    3300024: pTorus1
+    3300026: top1
+    3300028: Wall
+    3300030: Wall1
+    3300032: Wall3
+    3300034: Wall4
+    3300036: Wall5
+    3300038: Wall6
+    3300040: Wall7
+    3300042: Walls
+    3300044: Wall8
+    4300000: floor
+    4300002: barDesk
+    4300004: Music
+    4300006: Walls
+    4300008: Wall4
+    4300010: Wall
+    4300012: Door
+    4300014: glass1
+    4300016: Wall1
+    4300018: Wall3
+    4300020: glass2
+    4300022: Wall5
+    4300024: glass
+    4300026: Wall6
+    4300028: Wall7
+    4300030: Lamp
+    4300032: bar
+    4300034: top1
+    4300036: bot
+    4300038: pTorus1
+    4300040: pCylinder1
+    4300042: pCylinder2
+    4300044: Wall8
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

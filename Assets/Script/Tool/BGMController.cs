@@ -14,13 +14,17 @@ public class BGMController : MBehavior {
 
 	void OnTriggerEnter(Collider col)
 	{
-		LogicArg arg = new LogicArg (this);
-		arg.AddMessage (M_Event.EVENT_SWITCH_BGM_CLIP, switchBGM);
-		M_Event.FireLogicEvent (LogicEvents.SwitchBGM, arg);
+		if (col.tag == "MainCamera") {
+			LogicArg arg = new LogicArg (this);
+			arg.AddMessage (M_Event.EVENT_SWITCH_BGM_CLIP, switchBGM);
+			M_Event.FireLogicEvent (LogicEvents.SwitchBGM, arg);
+		}
 	}
 
 	void OnTriggerExit(Collider col)
 	{
-		M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM , new LogicArg(this));
+		if (col.tag == "MainCamera") {
+			M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM, new LogicArg (this));
+		}
 	}
 }

@@ -1,0 +1,592 @@
+fileFormatVersion: 2
+guid: 583731a3c059f9f49b4c51d4ee617418
+timeCreated: 1478141739
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: body
+    100002: group1
+    100004: Head
+    100006: //RootNode
+    100008: UMBRELLA:bar
+    100010: UMBRELLA:bar1
+    100012: UMBRELLA:bar2
+    100014: UMBRELLA:bar3
+    100016: UMBRELLA:bar4
+    100018: UMBRELLA:bar5
+    100020: UMBRELLA:bar6
+    100022: UMBRELLA:bar7
+    100024: UMBRELLA:barBot
+    100026: UMBRELLA:barBot 1
+    100028: UMBRELLA:barBot 2
+    100030: UMBRELLA:barBot 3
+    100032: UMBRELLA:barBot 4
+    100034: UMBRELLA:barBot 5
+    100036: UMBRELLA:barBot 6
+    100038: UMBRELLA:barBot 7
+    100040: UMBRELLA:group1
+    100042: UMBRELLA:top1
+    100044: UMBRELLA:top2
+    100046: UMBRELLA:TopShadow
+    100048: UMBRELLA:UmbrellaBot
+    100050: Character
+    100052: twist1Handle
+    100054: UMBRELLA1:bar
+    400000: body
+    400002: group1
+    400004: Head
+    400006: //RootNode
+    400008: UMBRELLA:bar
+    400010: UMBRELLA:bar1
+    400012: UMBRELLA:bar2
+    400014: UMBRELLA:bar3
+    400016: UMBRELLA:bar4
+    400018: UMBRELLA:bar5
+    400020: UMBRELLA:bar6
+    400022: UMBRELLA:bar7
+    400024: UMBRELLA:barBot
+    400026: UMBRELLA:barBot 1
+    400028: UMBRELLA:barBot 2
+    400030: UMBRELLA:barBot 3
+    400032: UMBRELLA:barBot 4
+    400034: UMBRELLA:barBot 5
+    400036: UMBRELLA:barBot 6
+    400038: UMBRELLA:barBot 7
+    400040: UMBRELLA:group1
+    400042: UMBRELLA:top1
+    400044: UMBRELLA:top2
+    400046: UMBRELLA:TopShadow
+    400048: UMBRELLA:UmbrellaBot
+    400050: Character
+    400052: twist1Handle
+    400054: UMBRELLA1:bar
+    2300000: body
+    2300002: Head
+    2300004: UMBRELLA:bar
+    2300006: UMBRELLA:bar1
+    2300008: UMBRELLA:bar2
+    2300010: UMBRELLA:bar3
+    2300012: UMBRELLA:bar4
+    2300014: UMBRELLA:bar5
+    2300016: UMBRELLA:bar6
+    2300018: UMBRELLA:bar7
+    2300020: UMBRELLA:barBot
+    2300022: UMBRELLA:barBot 1
+    2300024: UMBRELLA:barBot 2
+    2300026: UMBRELLA:barBot 3
+    2300028: UMBRELLA:barBot 4
+    2300030: UMBRELLA:barBot 5
+    2300032: UMBRELLA:barBot 6
+    2300034: UMBRELLA:barBot 7
+    2300036: UMBRELLA:top1
+    2300038: UMBRELLA:top2
+    2300040: UMBRELLA:TopShadow
+    2300042: UMBRELLA:UmbrellaBot
+    2300044: UMBRELLA1:bar
+    3300000: body
+    3300002: Head
+    3300004: UMBRELLA:bar
+    3300006: UMBRELLA:bar1
+    3300008: UMBRELLA:bar2
+    3300010: UMBRELLA:bar3
+    3300012: UMBRELLA:bar4
+    3300014: UMBRELLA:bar5
+    3300016: UMBRELLA:bar6
+    3300018: UMBRELLA:bar7
+    3300020: UMBRELLA:barBot
+    3300022: UMBRELLA:barBot 1
+    3300024: UMBRELLA:barBot 2
+    3300026: UMBRELLA:barBot 3
+    3300028: UMBRELLA:barBot 4
+    3300030: UMBRELLA:barBot 5
+    3300032: UMBRELLA:barBot 6
+    3300034: UMBRELLA:barBot 7
+    3300036: UMBRELLA:top1
+    3300038: UMBRELLA:top2
+    3300040: UMBRELLA:TopShadow
+    3300042: UMBRELLA:UmbrellaBot
+    3300044: UMBRELLA1:bar
+    4300000: UMBRELLA:UmbrellaBot
+    4300002: UMBRELLA:top1
+    4300004: UMBRELLA:top2
+    4300006: UMBRELLA:TopShadow
+    4300008: UMBRELLA:bar
+    4300010: UMBRELLA:barBot
+    4300012: UMBRELLA:bar1
+    4300014: UMBRELLA:barBot
+    4300016: UMBRELLA:bar2
+    4300018: UMBRELLA:barBot
+    4300020: UMBRELLA:bar3
+    4300022: UMBRELLA:barBot
+    4300024: UMBRELLA:bar4
+    4300026: UMBRELLA:barBot
+    4300028: UMBRELLA:bar5
+    4300030: UMBRELLA:barBot
+    4300032: UMBRELLA:bar6
+    4300034: UMBRELLA:barBot
+    4300036: UMBRELLA:bar7
+    4300038: UMBRELLA:barBot
+    4300040: body
+    4300042: Head
+    4300044: UMBRELLA1:bar
+    7400000: WalkHappy
+    7400002: TakeOutUmbrellaHappy
+    7400004: HoldUmbrellaHappy
+    7400006: WalkNoUmbreHappy
+    7400008: TakeOffUmbrellaHappy
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: WalkHappy
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/body
+        weight: 1
+      - path: group1/Head
+        weight: 1
+      - path: group1/UMBRELLA:group1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar/UMBRELLA:barBot
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1/UMBRELLA:barBot 1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2/UMBRELLA:barBot 2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3/UMBRELLA:barBot 3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4/UMBRELLA:barBot 4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5/UMBRELLA:barBot 5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6/UMBRELLA:barBot 6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7/UMBRELLA:barBot 7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:UmbrellaBot
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: TakeOutUmbrellaHappy
+      takeName: Take 001
+      firstFrame: 65
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/body
+        weight: 1
+      - path: group1/Head
+        weight: 1
+      - path: group1/UMBRELLA:group1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar/UMBRELLA:barBot
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1/UMBRELLA:barBot 1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2/UMBRELLA:barBot 2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3/UMBRELLA:barBot 3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4/UMBRELLA:barBot 4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5/UMBRELLA:barBot 5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6/UMBRELLA:barBot 6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7/UMBRELLA:barBot 7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:UmbrellaBot
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: HoldUmbrellaHappy
+      takeName: Take 001
+      firstFrame: 55
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/body
+        weight: 1
+      - path: group1/Head
+        weight: 1
+      - path: group1/UMBRELLA:group1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar/UMBRELLA:barBot
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1/UMBRELLA:barBot 1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2/UMBRELLA:barBot 2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3/UMBRELLA:barBot 3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4/UMBRELLA:barBot 4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5/UMBRELLA:barBot 5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6/UMBRELLA:barBot 6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7/UMBRELLA:barBot 7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:UmbrellaBot
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: WalkNoUmbreHappy
+      takeName: Take 001
+      firstFrame: 110
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/body
+        weight: 1
+      - path: group1/Head
+        weight: 1
+      - path: group1/UMBRELLA:group1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar/UMBRELLA:barBot
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1/UMBRELLA:barBot 1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2/UMBRELLA:barBot 2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3/UMBRELLA:barBot 3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4/UMBRELLA:barBot 4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5/UMBRELLA:barBot 5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6/UMBRELLA:barBot 6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7/UMBRELLA:barBot 7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:UmbrellaBot
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: TakeOffUmbrellaHappy
+      takeName: Take 001
+      firstFrame: 170
+      lastFrame: 205
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/body
+        weight: 1
+      - path: group1/Head
+        weight: 1
+      - path: group1/UMBRELLA:group1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar/UMBRELLA:barBot
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar1/UMBRELLA:barBot 1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar2/UMBRELLA:barBot 2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar3/UMBRELLA:barBot 3
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar4/UMBRELLA:barBot 4
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar5/UMBRELLA:barBot 5
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar6/UMBRELLA:barBot 6
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:bar7/UMBRELLA:barBot 7
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      - path: group1/UMBRELLA:group1/UMBRELLA:UmbrellaBot
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

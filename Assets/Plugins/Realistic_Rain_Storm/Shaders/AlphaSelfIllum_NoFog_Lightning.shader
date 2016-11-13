@@ -10,7 +10,7 @@ SubShader {
 		Tags { "LightMode" = "Vertex" }
         Fog { Mode Off }
 		
-		Cull Back
+		Cull Off
         Blend SrcAlpha OneMinusSrcAlpha 
         
 		

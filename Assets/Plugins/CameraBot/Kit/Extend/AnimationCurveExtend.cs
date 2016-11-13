@@ -38,12 +38,12 @@ namespace Kit.Extend
 
 		public static Keyframe FirstKey(this AnimationCurve self)
 		{
-			return self.length == 0 ? new Keyframe() : self.keys[0];
+			return self.keys[0];
 		}
 
 		public static Keyframe LastKey(this AnimationCurve self)
 		{
-			return self.length == 0 ? new Keyframe() : self.keys[self.keys.Length - 1];
+			return self.keys[self.keys.Length - 1];
 		}
 
 		public static bool MatchStartEndKeysValues(this AnimationCurve curve, float start = 0f, float end = 1f)

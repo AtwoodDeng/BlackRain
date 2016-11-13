@@ -22,7 +22,7 @@ public class GoodMan : TalkableCharacter {
 		Leave,
 	}
 
-	AStateMachine<GoodManState,LogicEvents> m_stateMachine = new AStateMachine<GoodManState, LogicEvents>();
+	AStateMachine<GoodManState,LogicEvents> m_stateMachine;
 	public GoodManState State{ get { return m_stateMachine.State; } }
 	private bool isTalkedSub = false;
 
@@ -68,7 +68,7 @@ public class GoodMan : TalkableCharacter {
 		m_stateMachine.AddEnter (GoodManState.Leave, delegate() {
 
 			agent.destination = goAwayDes;
-			M_Event.FireLogicEvent(LogicEvents.GoodManLeave,new LogicArg(this));
+//			M_Event.FireLogicEvent(LogicEvents.GoodManLeave,new LogicArg(this));
 			MainCharacter.Instance.transform.SetParent(null);
 		});
 	}
@@ -89,9 +89,9 @@ public class GoodMan : TalkableCharacter {
 	static int hurtTime = 0;
 	void OnBeginDamage( LogicArg arg )
 	{
-		if ((int)LogicManager.Instance.State >= (int)LogicManager.GameState.GoWithGoodMan) {
-			hurtTime++;
-		}
+//		if ((int)LogicManager.Instance.State >= (int)LogicManager.GameState.GoWithGoodMan) {
+//			hurtTime++;
+//		}
 		if (hurtTime >= hurtBeforeShowUp && State == GoodManState.Hide ) {
 			m_stateMachine.State = GoodManState.ShowUp;
 		}

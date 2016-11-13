@@ -7,7 +7,6 @@ namespace CF.CameraBot
     /// <see cref="http://www.clonefactor.com"/>
     public partial class CameraBot : MonoBehaviour
     {
-
         #region variable
         /// <summary>Target gameobject want to chase</summary>
         public Transform ChaseTarget;
@@ -42,23 +41,30 @@ namespace CF.CameraBot
         {
             mouseHorizontal = InputSetting.FlipMouseX ? -mouseHorizontal : mouseHorizontal;
             mouseVertical = InputSetting.FlipMouseY ? -mouseVertical : mouseVertical;
-            // mouseWheel = InputSetting.FlipMouseWheel ? -mouseWheel : mouseWheel;
+            mouseWheel = InputSetting.FlipMouseWheel ? -mouseWheel : mouseWheel;
             
             // we only care the angle.
             // combine keyboard & mouse value into one value,
             float
 				horizontal = keyHorizontal * keyHorizontal > mouseHorizontal * mouseHorizontal ? keyHorizontal : mouseHorizontal,
 				vertical = keyVertical * keyVertical > mouseVertical * mouseVertical ? keyVertical : mouseVertical,
-				// wheel = ((Mathf.Abs(mouseWheel) > float.MinValue) ? mouseWheel * Time.deltaTime * InputSetting.WheelSpeed : 0f),
-				amount = (InputSetting.Sensitive * Time.fixedDeltaTime);
+				wheel = ((Mathf.Abs(mouseWheel) > float.MinValue) ? mouseWheel * Time.deltaTime * InputSetting.WheelSpeed : 0f),
+				amount = OverTurnAngleAccuracy(InputSetting.Sensitive * Time.fixedDeltaTime);
 
 			bool
-				updateAngle = (horizontal * horizontal > InputSetting.Threshold || vertical * vertical > InputSetting.Threshold); ;
+				updateAngle = (horizontal * horizontal > InputSetting.Threshold || vertical * vertical > InputSetting.Threshold),
+				updateZoom = !Mathf.Approximately(wheel, 0f);
 
 			// apply change on active camera coordinate.
 			if (updateAngle)
 			{
+				PlayerTriggerAngleChange();
 				UpdateOrbitCoordinateData(mouseVertical, horizontal, amount, activePreset);
+			}
+			if (updateZoom)
+			{
+				PlayerTriggerZoomChange();
+				UpdateZoomSectionData(activePreset, wheel);
 			}
 			
 			// update Spherical Coordinates in memory.
@@ -69,6 +75,9 @@ namespace CF.CameraBot
 
 				if (updateAngle)
 					UpdateOrbitCoordinateData(mouseVertical, horizontal, amount, PresetList[i]);
+
+				if (updateZoom)
+					UpdateZoomSectionData(PresetList[i], wheel);
             }
         }
         /// <summary>Select Camera preset by giving name.</summary>

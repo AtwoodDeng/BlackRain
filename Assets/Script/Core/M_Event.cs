@@ -15,6 +15,7 @@ public enum LogicEvents
 	EnterSavePoint = 4,
 	LockCamera = 5,
 	UnlockCamera = 6,
+
 	/// <summary>
 	/// call to start the death effect
 	/// </summary>
@@ -23,16 +24,70 @@ public enum LogicEvents
 
 	BeginDamage = 20,
 	EndDamage = 21,
+	BeginRun = 22,
+	EndRun = 23,
 
 	DisplayDialog = 30,
 	EndDisplayDialog = 31,
 	DisplayNextDialog = 32,
 
+	DisplayThought = 40,
+	SwitchThoughtBox = 41,
 
-	EndTalkWaiter = 101,
-	GoodManLeave = 102,
-	EndGame = 103,
+	FocusCamera = 42,
+	UnfocusCamera = 43,
 
+	HideThought = 45,
+
+	PlayMusic = 50,
+
+	EndGame = 99,
+
+	EndTalkManInCafe = 100,
+	EnterStreetOne = 101,
+	EnterRotateBuilding = 102,
+	EnterStreetTwo = 103,
+	EnterStreetThree = 104,
+	EnterTakePhoto = 105,
+	SeeGirlStreetTwo = 106,
+	EnterBorrowUmbrella = 107,
+	EnterStreetThreeEnd = 108,
+
+	EnterBusStop = 110,
+	BusStopEndTalkGirl = 111,
+	BustStopTalkPointOne = 112,
+	BustStopTalkPointTwo = 113,
+
+	TrafficRedLight = 120,
+	TrafficGreenLight = 121,
+	InvisibleFromPlayer = 122,
+	EnterStreetFour = 123,
+	EnterStreetFourEnd = 124,
+	ForceGirlLeave = 125,
+	GirlSayPlayMusic = 126,
+	GirlJudgeMusic = 127,
+
+	EnterStreetColorful = 130,
+	EndTalkWithGirl = 131,
+	ExitStreetColorful = 132,
+	EnterApartment = 133,
+
+	OpenApartmentDoor = 134,
+	WalkInApartment = 135,
+	EndHitOne = 136,
+	EndHitTwo = 137,
+	EndHitThree = 138,
+	EndHitFour = 139,
+	DisPlayClimaxEffect = 141,
+	PickUpMusicPlayer = 142,
+
+	PlayEndBGM = 145,
+
+
+	EnterEnd = 140,
+
+	WatchShipOne = 150,
+	WatchShipTwo = 151,
 
 }
 
@@ -86,10 +141,54 @@ public class M_Event : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Registers the event according to the event type
+	/// </summary>
+	/// <param name="type">Type.</param>
+	/// <param name="handler">Handler.</param>
+	public static void RegisterEvent( LogicEvents type , LogicHandler handler )
+	{
+		logicEvents [(int)type] += handler;
+	}
+
+	/// <summary>
+	/// Unregisters the event.
+	/// </summary>
+	/// <param name="type">Type.</param>
+	/// <param name="handler">Handler.</param>
+	public static void UnregisterEvent( LogicEvents type , LogicHandler handler )
+	{
+		logicEvents [(int)type] -= handler;
+	}
+
+	/// <summary>
+	/// Register the handler function to all events
+	/// </summary>
+	/// <param name="handler">Handler.</param>
+	public static void RegisterAll( LogicHandler handler )
+	{
+		for (int i = 0; i < logicEvents.Length; ++i)
+			logicEvents [i] += handler;
+	}
+
+	/// <summary>
+	/// Unregister the handler to all events
+	/// </summary>
+	/// <param name="handler">Handler.</param>
+	public static void UnRegisterAll ( LogicHandler handler )
+	{
+		for (int i = 0; i < logicEvents.Length; ++i)
+			logicEvents [i] -= handler;
+	}
+
 	// const string for message
 	public const string EVENT_DISPLAY_DIALOG_PLOT = "KEY";
 	public const string EVENT_SWITCH_BGM_CLIP = "CLIP";
 	public const string EVENT_SAVE_POINT = "SAVE";
+	public const string EVENT_THOUGHT = "THOUGHT";
+	public const string EVENT_END_DISPLAY_SENDER = "SENDER";
+	public const string EVENT_PLAY_MUSIC_NAME = "MUSIC_NAME";
+
 }
 
 /// <summary>

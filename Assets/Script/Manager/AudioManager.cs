@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using System.Collections.Generic;
 
 /// <summary>
 /// manage the sound effect
@@ -38,13 +39,15 @@ public class AudioManager : MBehavior {
 	[SerializeField] float bgmFadeTime = 1f;
 	[SerializeField] AudioClip defaultBGM;
 	[SerializeField] AudioClip illusionBGM;
+	[SerializeField] AudioClip endingBGM;
+	[SerializeField] List<AudioClip> playableMusicList;
 	private AudioSource bgmSource;
 	private AudioSource bgmSwitchableSource;
 
 	protected override void MAwake ()
 	{
 		base.MAwake ();
-		SwitchBGM (defaultBGM);
+		SwitchBGM (defaultBGM , false);
 	}
 
 	protected override void MOnEnable ()
@@ -54,7 +57,9 @@ public class AudioManager : MBehavior {
 			M_Event.logicEvents [i] += OnLogicEvent;
 		}
 		M_Event.logicEvents [(int)LogicEvents.SwitchBGM] += OnSwitchBGM;
+		M_Event.logicEvents [(int)LogicEvents.PlayMusic] += OnPlayMusic;
 		M_Event.logicEvents [(int)LogicEvents.SwitchDefaultBGM] += OnDefaultBGM;
+		M_Event.logicEvents [(int)LogicEvents.PlayEndBGM] += OnPlayEndBGM;
 		M_Event.logicEvents [(int)LogicEvents.BeginDamage] += OnBeginDamage;
 		M_Event.logicEvents [(int)LogicEvents.EndDamage] += OnEndDamge;
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
@@ -67,11 +72,37 @@ public class AudioManager : MBehavior {
 			M_Event.logicEvents [i] -= OnLogicEvent;
 		}
 		M_Event.logicEvents [(int)LogicEvents.SwitchBGM] -= OnSwitchBGM;
+		M_Event.logicEvents [(int)LogicEvents.PlayMusic] -= OnPlayMusic;
 		M_Event.logicEvents [(int)LogicEvents.SwitchDefaultBGM] -= OnDefaultBGM;
+		M_Event.logicEvents [(int)LogicEvents.PlayEndBGM] -= OnPlayEndBGM;
 		M_Event.logicEvents [(int)LogicEvents.BeginDamage] -= OnBeginDamage;
 		M_Event.logicEvents [(int)LogicEvents.EndDamage] -= OnEndDamge;
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] -= OnDeathEnd;
 
+	}
+
+	public void OnPlayEndBGM( LogicArg arg )
+	{
+		SwitchBGM (endingBGM, false);
+	}
+
+	public string GetMusicName()
+	{
+		if (bgmSwitchableSource != null)
+			return bgmSwitchableSource.clip.name;
+		return "";
+	}
+
+	void OnPlayMusic( LogicArg arg )
+	{
+		
+		string name = (string)arg.GetMessage (M_Event.EVENT_PLAY_MUSIC_NAME);
+		foreach (AudioClip music in playableMusicList) {
+			if (music.name == name) {
+				SwitchBGM (music , false);
+
+			}
+		}
 	}
 
 	void OnBeginDamage(LogicArg arg)
@@ -86,14 +117,15 @@ public class AudioManager : MBehavior {
 
 	void OnDeathEnd(LogicArg arg )
 	{
-		SwitchBGM (defaultBGM);	
+		SwitchBGM (defaultBGM , false);	
 	}
 
 	void OnLogicEvent( LogicArg logicEvent )
 	{
 		foreach (LogicClipPair pair in LogicClipPairs) {
 			if (pair.type == logicEvent.type) {
-				StartCoroutine(PlayerClip(pair.clip));
+//				StartCoroutine(PlayerClip(pair.clip));
+				SwitchBGM( pair.clip , false );
 			}
 		}
 	}
@@ -119,46 +151,52 @@ public class AudioManager : MBehavior {
 	{
 		AudioClip clip = (AudioClip)arg.GetMessage (M_Event.EVENT_SWITCH_BGM_CLIP);
 
-		SwitchBGM (clip);
+		SwitchBGM (clip , true);
 	}
 
 	void OnDefaultBGM( LogicArg arg )
 	{
-		SwitchBGM (defaultBGM);
+		SwitchBGM (defaultBGM , false);
 	}
 
-	void SwitchBGM( AudioClip to )
+	void SwitchBGM( AudioClip to , bool randomPlay )
 	{
+		if ( to != null )
+			Debug.Log ("Switch BGM " + to.name);
 		if (bgmSource == null) {
 			bgmSource = gameObject.AddComponent<AudioSource> ();
 			bgmSource.loop = true;
 			bgmSource.volume = 0.7f;
-			bgmSource.spatialBlend = 1f;
+			bgmSource.spatialBlend = 0f;
 			bgmSource.clip = defaultBGM;
 			bgmSource.Play ();
-		}
-		if (bgmSource != null) {
-			if (to != defaultBGM) {
-				bgmSource.DOFade (0.35f, bgmFadeTime);
-			} else {
-				bgmSource.DOFade (0.7f, bgmFadeTime);
-			}
 		}
 
 		if (bgmSwitchableSource == null) {
 			bgmSwitchableSource = gameObject.AddComponent<AudioSource> ();
 			bgmSwitchableSource.loop = true;
 			bgmSwitchableSource.volume = 0.7f;
-			bgmSwitchableSource.spatialBlend = 1f;
+			bgmSwitchableSource.spatialBlend = 0f;
+		}
+		if (bgmSource != null) {
+			if (to != defaultBGM) {
+				bgmSource.DOFade (0.2f, bgmFadeTime);
+			} else {
+				bgmSource.DOFade (0.7f, bgmFadeTime);
+			}
 		}
 		if (bgmSwitchableSource != null) {
 			if (to != defaultBGM) {
 				bgmSwitchableSource.DOFade (0, bgmFadeTime).OnComplete (delegate {
 					bgmSwitchableSource.clip = to;
-					bgmSwitchableSource.time = Random.Range (0, bgmSwitchableSource.clip.length);
+					if (randomPlay)
+						bgmSwitchableSource.time = Random.Range (0, bgmSwitchableSource.clip.length);
 					bgmSwitchableSource.Play ();
 					bgmSwitchableSource.DOFade (0.7f, bgmFadeTime);
 				});
+			} else {
+				bgmSwitchableSource.Stop ();
+				bgmSwitchableSource.clip = null;
 			}
 		}
 

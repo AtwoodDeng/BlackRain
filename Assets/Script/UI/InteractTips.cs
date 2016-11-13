@@ -8,6 +8,7 @@ public class InteractTips : MBehavior {
 	[SerializeField] Image tipsButton;
 	[SerializeField] Image tipsBackground;
 	[SerializeField] Text tipsText;
+	[SerializeField] Button confirmButton;
 	[SerializeField] float animateTime = 0.5f;
 
 	float backAlpha;
@@ -35,6 +36,7 @@ public class InteractTips : MBehavior {
 		tipsButton.DOFade (1f, animateTime);
 		tipsBackground.DOFade (backAlpha, animateTime);
 		tipsText.DOFade (1f, animateTime);
+		confirmButton.image.DOFade (1f, animateTime);
 	}
 
 	public void Hide()
@@ -42,5 +44,6 @@ public class InteractTips : MBehavior {
 		tipsButton.DOFade (0, animateTime);
 		tipsBackground.DOFade (0, animateTime);
 		tipsText.DOFade (0, animateTime);
+		confirmButton.image.DOFade (0, animateTime);
 	}
 }

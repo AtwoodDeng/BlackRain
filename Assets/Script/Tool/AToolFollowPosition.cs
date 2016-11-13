@@ -31,6 +31,8 @@ public class AToolFollowPosition : MBehavior {
 
 	Vector3 GetTargetPosition()
 	{
+		if (target == null)
+			return Vector3.zero;
 		Vector3 res;
 		Vector3 targetPosition = target.position + originalOffset;
 		res.x = followX ? targetPosition.x : transform.position.x;

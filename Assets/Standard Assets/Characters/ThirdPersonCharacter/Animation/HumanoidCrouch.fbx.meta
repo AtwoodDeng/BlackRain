@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: d89ea37480b6d75458aa38843e9688dc
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: Chest
     100002: //RootNode
@@ -182,13 +182,13 @@ ModelImporter:
     4300008: Le_Eye_Mesh
     4300010: Ri_Eye_Mesh
     7400000: UNTY_Sneak_tk04
-    7400002: HumanoidCrouchIdle
-    7400004: HumanoidCrouchWalk
-    7400006: HumanoidCrouchWalkRight
-    7400008: HumanoidCrouchWalkLeft
-    7400010: HumanoidCrouchTurnRight
-    7400012: HumanoidCrouchTurnLeft
-    7400014: HumanoidCrouchWalkRightB
+    7400002: Crouch Idle
+    7400004: Crouch Walk
+    7400006: Crouch Walk Right
+    7400008: Crouch Walk Left
+    7400010: Crouch Turn Right
+    7400012: Crouch Turn Left
+    7400014: Crouch Walk Right B
     9500000: //RootNode
     13700000: Lw_Teeth_Mesh
     13700002: Tounge_Mesh
@@ -202,8 +202,6 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
-    motionNodeName: 
-    pivotNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -212,7 +210,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: HumanoidCrouchIdle
+      name: Crouch Idle
       takeName: Take 001
       firstFrame: 264
       lastFrame: 319
@@ -227,9 +225,9 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
-      heightFromFeet: 1
+      heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -238,7 +236,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: HumanoidCrouchWalk
+      name: Crouch Walk
       takeName: Take 001
       firstFrame: 105
       lastFrame: 159
@@ -264,7 +262,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: HumanoidCrouchWalkRight
+      name: Crouch Walk Right
       takeName: Take 001
       firstFrame: 2193
       lastFrame: 2245
@@ -290,7 +288,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: HumanoidCrouchWalkLeft
+      name: Crouch Walk Left
       takeName: Take 001
       firstFrame: 1542
       lastFrame: 1610
@@ -316,7 +314,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: HumanoidCrouchTurnRight
+      name: Crouch Turn Right
       takeName: Take 001
       firstFrame: 1932
       lastFrame: 1976
@@ -342,7 +340,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: HumanoidCrouchTurnLeft
+      name: Crouch Turn Left
       takeName: Take 001
       firstFrame: 1932
       lastFrame: 1976
@@ -368,7 +366,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: HumanoidCrouchWalkRightB
+      name: Crouch Walk Right B
       takeName: Take 001
       firstFrame: 1542
       lastFrame: 1610
@@ -399,7 +397,7 @@ ModelImporter:
     globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -409,7 +407,6 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
@@ -1144,4 +1141,3 @@ ModelImporter:
   animationType: 3
   additionalBone: 0
   userData: 
-  assetBundleName: 

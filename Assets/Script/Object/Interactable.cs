@@ -4,7 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(Collider))]
 public class Interactable : MBehavior {
 
-	[SerializeField] float interactiveRange = 5f;
+	[SerializeField] protected float interactiveRange = 5f;
+	[SerializeField] protected MWord interactTips;
 //	bool m_inInteractiveRange = false;
 	public bool IsInInteractiveRange{ get { return (transform.position - MainCharacter.Instance.transform.position).magnitude < interactiveRange; } }
 
@@ -20,7 +21,7 @@ public class Interactable : MBehavior {
 
 	public virtual string GetInteractTips()
 	{
-		return "To Interact";
+		return interactTips.word;
 	}
 
 	public virtual void Interact()

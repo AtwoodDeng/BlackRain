@@ -137,6 +137,11 @@ namespace CF.CameraBot
 		#region Developing scene view
 		private void OnSceneGUIPlayMode()
 		{
+			Preset preset = self.PresetList[self.Selected];
+			if (preset == null)
+				return;
+
+			PresetEditor.OnSceneZoomRange(preset);
 		}
 		private void OnSceneGUIEditorMode()
 		{

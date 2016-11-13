@@ -57,7 +57,12 @@ public class AStateMachine<StateType,EventType>
 
 	private Dictionary<EventType,List<KeyValuePair<StateType,StateType>>> eventDict = new Dictionary<EventType, List<KeyValuePair<StateType, StateType>>> ();
 	private Dictionary<StateType,KeyValuePair<StateType, float>> timeEventDict = new Dictionary<StateType, KeyValuePair<StateType, float>>();
+	private Dictionary<EventType,StateType> everyStateDict = new Dictionary<EventType, StateType>();
 
+	public AStateMachine( StateType initState )
+	{
+		m_state = initState;
+	}
 
 	/// <summary>
 	/// Adds and enter function for the state
@@ -135,6 +140,9 @@ public class AStateMachine<StateType,EventType>
 	/// <param name="toState">To state.</param>
 	public void BlindStateChangeEvent( EventType type , StateType fromState , StateType toState )
 	{
+		if (everyStateDict.ContainsKey (type)) {
+			Debug.LogError ("An Every State Event exists :" + type );
+		}
 		var pair = new KeyValuePair<StateType,StateType> (fromState, toState);
 		if (!eventDict.ContainsKey (type)) {
 			eventDict [type] = new List<KeyValuePair<StateType, StateType>> ();
@@ -158,13 +166,27 @@ public class AStateMachine<StateType,EventType>
 		return true;
 	}
 
+	public void BlindFromEveryState( EventType type , StateType toState )
+	{
+		if (everyStateDict.ContainsKey (type)) {
+			Debug.LogError ("An Every State Event exists :" + type );
+		}
+
+		if (eventDict.ContainsKey (type)) {
+			Debug.LogError ("The Event has already registered" + type );
+			
+		}
+
+		everyStateDict.Add (type, toState);
+	}
+
 	/// <summary>
 	/// React to the trigger events
 	/// </summary>
 	/// <param name="type">Type.</param>
 	public void OnEvent(EventType type)
 	{
-		// if the event is saved in the dict
+		// if the event is registered in the normal dict
 		if (eventDict.ContainsKey (type)) {
 			// get the state jumping list
 			var list = eventDict [type];
@@ -177,6 +199,11 @@ public class AStateMachine<StateType,EventType>
 					return;
 				}
 			}
+		}
+
+		// if the event is registered in every state dict
+		if (everyStateDict.ContainsKey (type)) {
+			State = everyStateDict [type];
 		}
 	}
 }

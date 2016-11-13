@@ -28,6 +28,11 @@ public class MBehavior : MonoBehaviour {
 		MOnDisable ();
 	}
 
+	void FixedUpdate()
+	{
+		MFixedUpdate ();
+	}
+
 	virtual protected void MAwake() {
 
 	}
@@ -48,4 +53,6 @@ public class MBehavior : MonoBehaviour {
 	virtual protected void MOnDisable() {
 	}
 
+	virtual protected void MFixedUpdate() {
+	}
 }

@@ -28,8 +28,8 @@ namespace CF.CameraBot.Parts
 			Color oldColor = UnityEditor.Handles.color;
 			UnityEditor.Handles.color = m_Color;
 			float radius = m_Preset.m_VirtualPosition.m_Camera.m_Coordinates.radius;
-			UnityEditor.Handles.DrawSolidArc(transform.position, -right, forward, 180f, radius);
-			UnityEditor.Handles.DrawSolidArc(transform.position, right, forward, 180f, radius);
+			UnityEditor.Handles.DrawSolidArc(transform.position, -right, forward, m_Preset.m_ClampAngle.m_ElevationUpRange, radius);
+			UnityEditor.Handles.DrawSolidArc(transform.position, right, forward, m_Preset.m_ClampAngle.m_ElevationDownRange, radius);
 			GizmosExtend.DrawLine(m_InitTransform.position, m_InitTransform.TransformPoint(0f, 0f, radius), m_Pointer);
 			UnityEditor.Handles.color = oldColor;
 #endif

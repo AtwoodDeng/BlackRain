@@ -15,7 +15,7 @@ namespace CF.CameraBot
         private GUIContent UpdateAngleLabel = new GUIContent("Update Angle", "Update frequency for this camera.");
         private GUIContent MoveLabel = new GUIContent("Move Method", "Camera position translation method.");
         private GUIContent RotationLabel = new GUIContent("Rotation Method", "Camera rotation method.");
-        //private GUIContent AccuracyLabel = new GUIContent("Angle Accuracy", "Adjust the input fineness to improve accuracy. any input more that this number will linear lerp to zero");
+        private GUIContent AccuracyLabel = new GUIContent("Angle Accuracy", "Adjust the input fineness to improve accuracy. any input more that this number will linear lerp to zero");
 
 		readonly static float
 			lineH = EditorGUIUtility.singleLineHeight,
@@ -75,7 +75,31 @@ namespace CF.CameraBot
 					line = line.GetRectBottom().Modify(y: lineS);
 					EditorGUI.PropertyField(line, property.FindPropertyRelative("m_RotationSpeed"));
 				}
-								
+
+				line = line.GetRectBottom(height: lineH * 2f).Modify(y: lineS);
+				prop = property.FindPropertyRelative("m_ImproveAccuracy");
+                if (prop.floatValue < 10f)
+                {
+                    EditorGUI.HelpBox(line,
+                        "When angle therhold are too small, the input will nearly no effect on camera position.",
+                        MessageType.Warning);
+                }
+                else if (prop.floatValue > 180f)
+                {
+                    EditorGUI.HelpBox(line,
+                        "When angle therhold are too big, the camera orbit may acting weird when moving really fast.",
+                        MessageType.Warning);
+                }
+                else
+                {
+                    EditorGUI.HelpBox(line,
+                        string.Format("When angle larger than ({0:F1}) the input value will ease down by scale, which mean reduce player input impact for final angle.", prop.floatValue),
+                        MessageType.Info);
+                }
+
+				line = line.GetRectBottom(height: lineH).Modify(y: lineS);
+				EditorGUI.PropertyField(line, prop, AccuracyLabel);
+				
 				line = line.GetRectBottom(height: lineH * 2f).Modify(y: lineS * 2f);
 				prop = property.FindPropertyRelative("m_IsRelatedAngle");
 				if(prop.boolValue)

@@ -106,6 +106,7 @@ namespace CF.CameraBot
 			{
 				// Init Camera Reference;
 				UpdateOrbitCoordinateData(0f, 0f, 0f, preset);
+				UpdateZoomSectionData(preset, 0f);
 			}
         }
         protected void ResetToInitStage(int pt)
@@ -159,15 +160,10 @@ namespace CF.CameraBot
 
 			float time = (AdvanceSetting.UpdateFrequency < UpdateFrequency.High) ? Time.deltaTime : Time.fixedDeltaTime;
 			time *= activePreset.m_Method.m_PositionSpeed;
-			Vector3 toPos =
+			ControlPosition.position =
 				(activePreset.m_Method.m_MoveMethod.Equals(MoveMethod.QuaternionLerp)) ? Vector3.Slerp(ControlPosition.position, activePreset.Instance.CameraPivot.transform.position, time) :
 				(activePreset.m_Method.m_MoveMethod.Equals(MoveMethod.Lerp)) ? Vector3.Lerp(ControlPosition.position, activePreset.Instance.CameraPivot.transform.position, time) :
 				(activePreset.m_Method.m_MoveMethod.Equals(MoveMethod.OrbitLerp)) ? GetOrbitLerpFramePosition(activePreset, time) : activePreset.Instance.CameraPivot.transform.position;
-
-			if (toPos.y < 1f)
-				toPos.y = 1f;
-
-			ControlPosition.position = toPos;
 		}
         private void UpdateActiveCameraRotation()
 		{
@@ -200,6 +196,9 @@ namespace CF.CameraBot
 				Selected < PresetList.Count &&
 				activePreset != null)
 			{
+				ChaseTargetTriggerAngleChange();
+
+
 				activePreset.Cache.m_LastFrameTargetPosition = activePreset.transform.position;
 				activePreset.Cache.m_LastFrameTargetRotation = activePreset.transform.rotation;
 				if (ChaseTarget != null)

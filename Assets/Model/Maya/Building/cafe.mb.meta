@@ -95,6 +95,12 @@ ModelImporter:
     100174: barDesk
     100176: Wall6
     100178: Wall7
+    100180: bar
+    100182: barChair
+    100184: bot
+    100186: pCylinder2
+    100188: pTorus1
+    100190: top1
     400000: //RootNode
     400002: glass
     400004: Roof
@@ -185,6 +191,12 @@ ModelImporter:
     400174: barDesk
     400176: Wall6
     400178: Wall7
+    400180: bar
+    400182: barChair
+    400184: bot
+    400186: pCylinder2
+    400188: pTorus1
+    400190: top1
     2300000: //RootNode
     2300002: glass
     2300004: Roof
@@ -272,6 +284,11 @@ ModelImporter:
     2300168: barDesk
     2300170: Wall6
     2300172: Wall7
+    2300174: bar
+    2300176: bot
+    2300178: pCylinder2
+    2300180: pTorus1
+    2300182: top1
     3300000: //RootNode
     3300002: glass
     3300004: Roof
@@ -359,6 +376,11 @@ ModelImporter:
     3300168: barDesk
     3300170: Wall6
     3300172: Wall7
+    3300174: bar
+    3300176: bot
+    3300178: pCylinder2
+    3300180: pTorus1
+    3300182: top1
     4300000: floor
     4300002: Roof
     4300004: glass
@@ -442,6 +464,11 @@ ModelImporter:
     4300160: barDesk
     4300162: Wall6
     4300164: Wall7
+    4300166: bar
+    4300168: top1
+    4300170: bot
+    4300172: pTorus1
+    4300174: pCylinder2
     7400000: Take 001
     9500000: //RootNode
   materials:

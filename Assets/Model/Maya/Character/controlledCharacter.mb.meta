@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: a463ed68f83bc5c4db1a3808ae7bab6e
+timeCreated: 1478457252
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone01
+    100002: Bone02
+    100004: Bone03
+    100006: Bone04
+    100008: Bone05
+    100010: Bone06
+    100012: Bone07
+    100014: Bone08
+    100016: Bone09
+    100018: Bone10
+    100020: Bone11
+    100022: Bone12
+    100024: Bone13
+    100026: Bone14
+    100028: Bone15
+    100030: Bone16
+    100032: Bone17
+    100034: Bone18
+    100036: Bone19
+    100038: Camera01
+    100040: Camera01.Target
+    100042: Camera02
+    100044: Camera02.Target
+    100046: Camera03
+    100048: Camera03.Target
+    100050: camera1_group
+    100052: camera2_group
+    100054: camera3_group
+    100056: Character
+    100058: CharacterNormalFour:body
+    100060: CharacterNormalFour:Head
+    100062: Circle01
+    100064: //RootNode
+    100066: Controller
+    100068: controller
+    100070: controller1
+    100072: Direct01.Target
+    100074: hand
+    100076: hand1
+    100078: wire
+    100080: wire2
+    100082: wire3
+    100084: wire4
+    100086: wires
+    400000: Bone01
+    400002: Bone02
+    400004: Bone03
+    400006: Bone04
+    400008: Bone05
+    400010: Bone06
+    400012: Bone07
+    400014: Bone08
+    400016: Bone09
+    400018: Bone10
+    400020: Bone11
+    400022: Bone12
+    400024: Bone13
+    400026: Bone14
+    400028: Bone15
+    400030: Bone16
+    400032: Bone17
+    400034: Bone18
+    400036: Bone19
+    400038: Camera01
+    400040: Camera01.Target
+    400042: Camera02
+    400044: Camera02.Target
+    400046: Camera03
+    400048: Camera03.Target
+    400050: camera1_group
+    400052: camera2_group
+    400054: camera3_group
+    400056: Character
+    400058: CharacterNormalFour:body
+    400060: CharacterNormalFour:Head
+    400062: Circle01
+    400064: //RootNode
+    400066: Controller
+    400068: controller
+    400070: controller1
+    400072: Direct01.Target
+    400074: hand
+    400076: hand1
+    400078: wire
+    400080: wire2
+    400082: wire3
+    400084: wire4
+    400086: wires
+    2300000: CharacterNormalFour:body
+    2300002: CharacterNormalFour:Head
+    2300004: controller
+    2300006: controller1
+    2300008: hand
+    2300010: hand1
+    2300012: wire
+    2300014: wire2
+    2300016: wire3
+    2300018: wire4
+    3300000: CharacterNormalFour:body
+    3300002: CharacterNormalFour:Head
+    3300004: controller
+    3300006: controller1
+    3300008: hand
+    3300010: hand1
+    3300012: wire
+    3300014: wire2
+    3300016: wire3
+    3300018: wire4
+    4300000: CharacterNormalFour:body
+    4300002: CharacterNormalFour:Head
+    4300004: controller1
+    4300006: controller
+    4300008: Circle01
+    4300010: hand
+    4300012: wire
+    4300014: wire2
+    4300016: wire3
+    4300018: wire4
+    4300020: hand1
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Circle01
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

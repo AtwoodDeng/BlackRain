@@ -63,9 +63,6 @@ public class PlaytestManager : MBehavior {
 	{
 		base.MStart ();
 		playtester = System.DateTime.Now.ToString ("yy-MM-dd HH-mm");
-		if (!Directory.Exists (thisFolder)) {
-			DirectoryInfo info = Directory.CreateDirectory (thisFolder);
-		}	
 		LogicManager.Instance.RegisterStateChange (delegate(LogicManager.GameState fromState, LogicManager.GameState toState) {
 			StateData st = new StateData();
 			st.State = toState.ToString();
@@ -116,16 +113,18 @@ public class PlaytestManager : MBehavior {
 	DialogData lastData = null;
 	void OnDisplayNext( LogicArg arg )
 	{
-		if (lastData != null )
-		{
-			lastData.lastTime = Time.time - lastData.time;
-			dialogData.Add (lastData);
-			lastData = null;
+		bool important = (bool)arg.GetMessage ("important");
+		if (important) {
+			if (lastData != null) {
+				lastData.lastTime = Time.time - lastData.time;
+				dialogData.Add (lastData);
+				lastData = null;
+			}
+			lastData = new DialogData ();
+			lastData.time = Time.time;
+			lastData.word = (string)arg.GetMessage ("word");
+			lastData.character = (string)arg.GetMessage ("character");
 		}
-		lastData = new DialogData ();
-		lastData.time = Time.time;
-		lastData.word = (string)arg.GetMessage ("word");
-		lastData.character = (string)arg.GetMessage ("character");
 	}
 
 	void OnDisplayEnd( LogicArg arg )
@@ -142,10 +141,15 @@ public class PlaytestManager : MBehavior {
 
 	void OnEnd( LogicArg arg )
 	{
+
+		if (!Directory.Exists (thisFolder)) {
+			DirectoryInfo info = Directory.CreateDirectory (thisFolder);
+		}
+
 		OutputState ();
 		OutputDialog ();
 		OutputMove ();
-		OutputDeath ();
+//		OutputDeath ();
 	}
 
 	void OutputState()

@@ -59,21 +59,21 @@ namespace CF.CameraBot
 				line = line.GetRectBottom(height: VirtualPositionDrawer.GetStaticHeight(virtualPositionProp)).Modify(y: lineS);
 				EditorGUI.PropertyField(line, virtualPositionProp, true);
 
-				//SerializedProperty zoomProp = presetObj.FindProperty("m_Zoom");
-				//line = line.GetRectBottom(height: ZoomDrawer.GetStaticHeight(zoomProp)).Modify(y: lineS);
-				//EditorGUI.PropertyField(line, zoomProp, true);
+				SerializedProperty zoomProp = presetObj.FindProperty("m_Zoom");
+				line = line.GetRectBottom(height: ZoomDrawer.GetStaticHeight(zoomProp)).Modify(y: lineS);
+				EditorGUI.PropertyField(line, zoomProp, true);
 
-				//SerializedProperty clampAngleProp = presetObj.FindProperty("m_ClampAngle");
-				//line = line.GetRectBottom(height: ClampAngleDrawer.GetStaticHeight(clampAngleProp)).Modify(y: lineS);
-				//EditorGUI.PropertyField(line, clampAngleProp, true);
+				SerializedProperty clampAngleProp = presetObj.FindProperty("m_ClampAngle");
+				line = line.GetRectBottom(height: ClampAngleDrawer.GetStaticHeight(clampAngleProp)).Modify(y: lineS);
+				EditorGUI.PropertyField(line, clampAngleProp, true);
 
 				SerializedProperty methodProp = presetObj.FindProperty("m_Method");
 				line = line.GetRectBottom(height: MethodDrawer.GetStaticHeight(methodProp)).Modify(y: lineS);
 				EditorGUI.PropertyField(line, methodProp, true);
 
-				//SerializedProperty positionOverriderProp = presetObj.FindProperty("m_PositionOverrider");
-				//line = line.GetRectBottom(height: PositionOverriderDrawer.GetStaticHeight(positionOverriderProp)).Modify(y: lineS);
-				//EditorGUI.PropertyField(line, positionOverriderProp, true);
+				SerializedProperty positionOverriderProp = presetObj.FindProperty("m_PositionOverrider");
+				line = line.GetRectBottom(height: PositionOverriderDrawer.GetStaticHeight(positionOverriderProp)).Modify(y: lineS);
+				EditorGUI.PropertyField(line, positionOverriderProp, true);
 			}
 
 
@@ -104,10 +104,10 @@ namespace CF.CameraBot
 			{
 				rst += 16f;
 				rst += VirtualPositionDrawer.GetStaticHeight(presetObj.FindProperty("m_VirtualPosition"));
-				//rst += ZoomDrawer.GetStaticHeight(presetObj.FindProperty("m_Zoom"));
-				//rst += ClampAngleDrawer.GetStaticHeight(presetObj.FindProperty("m_ClampAngle"));
+				rst += ZoomDrawer.GetStaticHeight(presetObj.FindProperty("m_Zoom"));
+				rst += ClampAngleDrawer.GetStaticHeight(presetObj.FindProperty("m_ClampAngle"));
 				rst += MethodDrawer.GetStaticHeight(presetObj.FindProperty("m_Method"));
-				//rst += PositionOverriderDrawer.GetStaticHeight(presetObj.FindProperty("m_PositionOverrider"));
+				rst += PositionOverriderDrawer.GetStaticHeight(presetObj.FindProperty("m_PositionOverrider"));
 				rst += lineH;
 			}
 			return rst;
@@ -119,10 +119,10 @@ namespace CF.CameraBot
 			if (property.isExpanded)
 			{
 				rst += VirtualPositionDrawer.GetStaticHeight(property.FindPropertyRelative("m_VirtualPosition"));
-				//rst += ZoomDrawer.GetStaticHeight(property.FindPropertyRelative("m_Zoom"));
-				//rst += ClampAngleDrawer.GetStaticHeight(property.FindPropertyRelative("m_ClampAngle"));
+				rst += ZoomDrawer.GetStaticHeight(property.FindPropertyRelative("m_Zoom"));
+				rst += ClampAngleDrawer.GetStaticHeight(property.FindPropertyRelative("m_ClampAngle"));
 				rst += MethodDrawer.GetStaticHeight(property.FindPropertyRelative("m_Method"));
-				//rst += PositionOverriderDrawer.GetStaticHeight(property.FindPropertyRelative("m_PositionOverrider"));
+				rst += PositionOverriderDrawer.GetStaticHeight(property.FindPropertyRelative("m_PositionOverrider"));
 				rst += lineH;
 			}
 			return rst;

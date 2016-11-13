@@ -34,6 +34,9 @@ namespace CF.CameraBot
 		{
 			Tools.hidden = false;
 			EditorApplication.update -= EditorUpdate;
+			
+			// force update addon list;
+			self.m_PositionOverrider.Update(self);
 		}
 		void EditorUpdate()
 		{
@@ -43,6 +46,9 @@ namespace CF.CameraBot
 			delta5sec = Mathf.Repeat(delta / 5f + delta5sec, 1f);
 			delta10sec = Mathf.Repeat(delta / 10f + delta10sec, 1f);
 
+			// force update addon list;
+			self.m_PositionOverrider.Update(self);
+
 			SceneView.RepaintAll();
 		}
 
@@ -51,6 +57,8 @@ namespace CF.CameraBot
 			OnSceneTargetForwardReference(controlId, self);
 			OnSceneHandlePosition(self);
 			OnSceneHandleRotation(self, false, out diffH, out diffV);
+			OnSceneRotationHints(controlId, self, delta5sec);
+			OnSceneZoomRange(self);
 		}
 		#endregion
 
@@ -124,8 +132,43 @@ namespace CF.CameraBot
 		/// <returns></returns>
 		internal static bool OnSceneHandleRotation(Preset preset, bool moveAll, out float diffH, out float diffV)
 		{
-			diffH = diffV = 0f;
-			return false;
+			bool changed = false;
+			diffH = 0f;
+			diffV = 0f;
+			if (Tools.current == Tool.Rotate)
+			{
+				Quaternion edit;
+
+				// Yaw handle
+				Handles.color = (moveAll) ? Color.white : Handles.xAxisColor;
+				Transform tran = preset.Instance.m_YawHandler.transform;
+				EditorGUI.BeginChangeCheck();
+				edit = Handles.Disc(tran.rotation, tran.position, tran.up, preset.m_VirtualPosition.m_Camera.m_Coordinates.radius + .05f, false, 0f);
+				if (EditorGUI.EndChangeCheck())
+				{
+					changed = true;
+					diffH = edit.AngleBetweenDirectionSigned(tran.rotation, Vector3.forward, tran.up);
+				}
+
+				// Pitch handle
+				Handles.color = (moveAll) ? Color.white : Handles.yAxisColor;
+				tran = preset.Instance.m_PitchHandler.transform;
+				EditorGUI.BeginChangeCheck();
+				edit = Handles.Disc(tran.rotation, tran.position, tran.right, preset.m_VirtualPosition.m_Camera.m_Coordinates.radius + .05f, false, 0f);
+				if (EditorGUI.EndChangeCheck())
+				{
+					changed = true;
+					diffV = edit.AngleBetweenDirectionSigned(tran.rotation, Vector3.forward, tran.right);
+				}
+			}
+
+			if(changed)
+			{
+				preset.m_Editing = true;
+				UpdatePresetCoordinatesValue(preset, diffH, diffV);
+			}
+
+			return changed;
 		}
 
 		/// <summary>Modify camera pivot and lookat transform, based on developer input</summary>
@@ -154,6 +197,45 @@ namespace CF.CameraBot
 			preset.Instance.YawLookAtDegree = preset.m_VirtualPosition.m_LookTarget.m_Coordinates.Yaw;
 			preset.m_VirtualPosition.m_LookTarget.m_Coordinates.Pitch += diffV * (flipLE ? 1f : -1f);
 			preset.Instance.PitchLookAtDegree = preset.m_VirtualPosition.m_LookTarget.m_Coordinates.Pitch;
+		}
+
+		internal static void OnSceneRotationHints(int id, Preset preset, float clock01)
+		{
+			if (Application.isPlaying || Tools.current != Tool.Rotate)
+				return;
+
+			Transform
+				cam = preset.Instance.m_CameraOrbitPivot.transform,
+				lookAt = preset.Instance.GetCameraLookAt();
+			VirtualPosition vp = preset.m_VirtualPosition;
+			Handles.color = clock01 > .5f? Color.red : Color.blue;
+			if (clock01 > .5f)
+				Handles.ArrowCap(id, cam.position, (vp.m_Camera.m_OppositePolar ? Quaternion.LookRotation(cam.right, cam.up) : Quaternion.LookRotation(-cam.right, cam.up)), clock01 * .5f);
+			else
+				Handles.ArrowCap(id, cam.position, (vp.m_Camera.m_OppositeElevation ? Quaternion.LookRotation(cam.up, -cam.forward) : Quaternion.LookRotation(-cam.up, cam.forward)), clock01 * .5f);
+
+			if (vp.m_EnableLookTarget)
+			{
+				if (clock01 > .5f)
+					Handles.ArrowCap(id, lookAt.position, (vp.m_LookTarget.m_OppositePolar ? Quaternion.LookRotation(lookAt.right, lookAt.up) : Quaternion.LookRotation(-lookAt.right, lookAt.up)), clock01 * .5f);
+				else
+					Handles.ArrowCap(id, lookAt.position, (vp.m_LookTarget.m_OppositeElevation ? Quaternion.LookRotation(lookAt.up, -lookAt.forward) : Quaternion.LookRotation(-lookAt.up, lookAt.forward)), clock01 * .5f);
+			}
+		}
+
+		internal static void OnSceneZoomRange(Preset preset)
+		{
+			Handles.color = preset.m_DebugColor;
+			if (preset != null &&
+				preset.m_Zoom.m_Distance > 0f)
+			{
+				Transform cam = preset.Instance.m_ZoomHandler.transform.parent;
+				Vector3 forwardPoint = (cam.position + (-cam.forward * -preset.m_Zoom.m_ForwardLimit));
+				Vector3 backwardPoint = (cam.position + (-cam.forward * -preset.m_Zoom.m_BackwardLimit));
+				Handles.DrawLine(backwardPoint, forwardPoint);
+				Handles.SphereCap(0, forwardPoint, Quaternion.identity, .05f);
+				Handles.SphereCap(0, backwardPoint, Quaternion.identity, .05f);
+			}
 		}
 
 		internal static void OnSceneTargetForwardReference(int id, Preset preset)

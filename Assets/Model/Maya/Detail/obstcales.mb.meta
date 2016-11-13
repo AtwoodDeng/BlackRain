@@ -1,0 +1,258 @@
+fileFormatVersion: 2
+guid: 8395b00e2dd24174890dd4ef729006f3
+timeCreated: 1478477287
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bar
+    100002: bar1
+    100004: bar2
+    100006: bar3
+    100008: bar4
+    100010: bar5
+    100012: bar6
+    100014: group1
+    100016: Obstacle
+    100018: Obstacle1
+    100020: Obstacle2
+    100022: Obstacle4
+    100024: //RootNode
+    100026: sign
+    100028: sign 1
+    100030: wood1
+    100032: wood2
+    100034: wood3
+    100036: wood4
+    100038: wood5
+    100040: wood7
+    100042: wood8
+    100044: Obstacle5
+    100046: Obstacle6
+    100048: Obstacle7
+    100050: bar7
+    100052: bar8
+    100054: bar 1
+    100056: bar10
+    100058: bar9
+    100060: group2
+    100062: Obstacle8
+    100064: pCube1
+    100066: pCube2
+    100068: pCube3
+    100070: transform1
+    100072: transform2
+    100074: bar11
+    100076: Obstacle10
+    100078: Obstacle9
+    100080: Obstacle11
+    100082: Obstacle12
+    400000: bar
+    400002: bar1
+    400004: bar2
+    400006: bar3
+    400008: bar4
+    400010: bar5
+    400012: bar6
+    400014: group1
+    400016: Obstacle
+    400018: Obstacle1
+    400020: Obstacle2
+    400022: Obstacle4
+    400024: //RootNode
+    400026: sign
+    400028: sign 1
+    400030: wood1
+    400032: wood2
+    400034: wood3
+    400036: wood4
+    400038: wood5
+    400040: wood7
+    400042: wood8
+    400044: Obstacle5
+    400046: Obstacle6
+    400048: Obstacle7
+    400050: bar7
+    400052: bar8
+    400054: bar 1
+    400056: bar10
+    400058: bar9
+    400060: group2
+    400062: Obstacle8
+    400064: pCube1
+    400066: pCube2
+    400068: pCube3
+    400070: transform1
+    400072: transform2
+    400074: bar11
+    400076: Obstacle10
+    400078: Obstacle9
+    400080: Obstacle11
+    400082: Obstacle12
+    2300000: bar
+    2300002: bar1
+    2300004: bar2
+    2300006: bar3
+    2300008: bar4
+    2300010: bar5
+    2300012: bar6
+    2300014: Obstacle
+    2300016: Obstacle1
+    2300018: Obstacle2
+    2300020: Obstacle4
+    2300022: sign 1
+    2300024: wood1
+    2300026: wood2
+    2300028: wood3
+    2300030: wood4
+    2300032: wood5
+    2300034: wood7
+    2300036: wood8
+    2300038: Obstacle5
+    2300040: Obstacle6
+    2300042: Obstacle7
+    2300044: bar7
+    2300046: bar8
+    2300048: bar 1
+    2300050: bar10
+    2300052: bar9
+    2300054: Obstacle8
+    2300056: pCube3
+    2300058: bar11
+    2300060: Obstacle10
+    2300062: Obstacle9
+    2300064: Obstacle11
+    2300066: Obstacle12
+    3300000: bar
+    3300002: bar1
+    3300004: bar2
+    3300006: bar3
+    3300008: bar4
+    3300010: bar5
+    3300012: bar6
+    3300014: Obstacle
+    3300016: Obstacle1
+    3300018: Obstacle2
+    3300020: Obstacle4
+    3300022: sign 1
+    3300024: wood1
+    3300026: wood2
+    3300028: wood3
+    3300030: wood4
+    3300032: wood5
+    3300034: wood7
+    3300036: wood8
+    3300038: Obstacle5
+    3300040: Obstacle6
+    3300042: Obstacle7
+    3300044: bar7
+    3300046: bar8
+    3300048: bar 1
+    3300050: bar10
+    3300052: bar9
+    3300054: Obstacle8
+    3300056: pCube3
+    3300058: bar11
+    3300060: Obstacle10
+    3300062: Obstacle9
+    3300064: Obstacle11
+    3300066: Obstacle12
+    4300000: Obstacle
+    4300002: Obstacle1
+    4300004: Obstacle2
+    4300006: sign
+    4300008: bar4
+    4300010: bar3
+    4300012: bar2
+    4300014: bar1
+    4300016: bar
+    4300018: bar5
+    4300020: bar6
+    4300022: wood2
+    4300024: wood1
+    4300026: wood3
+    4300028: wood4
+    4300030: wood5
+    4300032: wood7
+    4300034: wood8
+    4300036: Obstacle4
+    4300038: Obstacle5
+    4300040: Obstacle6
+    4300042: Obstacle7
+    4300044: bar7
+    4300046: bar8
+    4300048: Obstacle8
+    4300050: bar
+    4300052: bar9
+    4300054: bar10
+    4300056: pCube3
+    4300058: Obstacle9
+    4300060: Obstacle10
+    4300062: bar11
+    4300064: Obstacle11
+    4300066: Obstacle12
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
