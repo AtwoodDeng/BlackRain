@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-public class DeathPeople : MPeople {
+public class DeathPeople : TalkableCharacter {
 
 	[System.Serializable]
 	public struct TakePhotoSetting
@@ -39,8 +39,17 @@ public class DeathPeople : MPeople {
 	private float takePhotoRange;
 
 	AudioSource flashLightAudioSource;
+
+//	private NavMeshAgent m_agent;
+//	public NavMeshAgent Agent{ get { 
+//			if (m_agent == null)
+//				m_agent = GetComponent<NavMeshAgent> ();
+//			return m_agent; } }
+	
 	// Use this for initialization
-	void Awake () {
+	protected override void MAwake ()
+	{
+		base.MAwake ();
 		if (takePhotoSetting.flashLightSound != null) {
 			flashLightAudioSource = gameObject.AddComponent<AudioSource> ();
 			flashLightAudioSource.playOnAwake = false;
@@ -52,7 +61,6 @@ public class DeathPeople : MPeople {
 			flashLightAudioSource.maxDistance = 5f;
 			flashLightAudioSource.minDistance = 0.1f;
 		}
-
 
 		if (umbrellaUp != null ) {
 			Color color = umbrellaColor.Evaluate (Random.Range (0, 1f));
@@ -83,8 +91,8 @@ public class DeathPeople : MPeople {
 	public void Init( Vector3 _destination, Transform _bodyPosition , float _TakePhotoRange )
 	{
 		destination = _destination;
-		if ( Agent.enabled )
-		Agent.destination = destination;
+//		if ( Agent != null &&  Agent.enabled )
+//			Agent.destination = destination;
 
 		focusTransform = _bodyPosition;
 
@@ -102,7 +110,8 @@ public class DeathPeople : MPeople {
 	void StartTakingPhoto()
 	{
 		if (!isTakingPhoto) {
-			Agent.enabled = false;
+//			if ( Agent != null )
+//				Agent.enabled = false;
 
 				Vector3 lookAt = focusPosition;
 				lookAt.y = transform.position.y;

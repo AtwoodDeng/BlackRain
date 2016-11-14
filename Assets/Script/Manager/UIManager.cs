@@ -43,8 +43,8 @@ public class UIManager : MBehavior {
 	public Image EnergyFrame;
 
 	public RectTransform ending;
-	public Image endingImage;
-	public Text endingText;
+	public Image endingBack;
+	public RectTransform endingCredit;
 	public Image white;
 
 	public RectTransform musicPlayer;
@@ -295,9 +295,10 @@ public class UIManager : MBehavior {
 	{
 		if (toState == LogicManager.GameState.ShowCredit) {
 //			ending.DOScale (0.01f, 1f).From ();
-			endingImage.DOFade (0, 1f);
-			endingImage.DOFade (0.5f, 1f);
-			endingText.transform.DOMoveY (1000f, 30f);
+			endingBack.DOFade (0.6f, 2f);
+			endingCredit.transform.DOMoveY (1100f, 30f).OnComplete( delegate() {
+				M_Event.FireLogicEvent(LogicEvents.EndCredit, new LogicArg(this));	
+			});
 			ending.gameObject.SetActive (true);
 		} else if (toState == LogicManager.GameState.BeginShip) {
 			musicPlayer.gameObject.SetActive (false);

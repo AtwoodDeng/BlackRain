@@ -54,22 +54,28 @@ public class GirlBusStop : NormalPasserBy {
 		StartCoroutine( ReactToMusicDelay(Random.Range( 21f , 32f ) , musicName) );
 	}
 
+
 	void ReactToMusic( string musicName)
 	{
 		if (LogicManager.Instance.State == LogicManager.GameState.ListenToMusic) {
 
 			if (musicName == "LadyAndBird") {
-						DisplayDialog (playMusic [0]);
-					} else
-						DisplayDialog (playMusic [1]);
-				}
+				DisplayDialog (playMusic [0]);
+			} else if (musicName == "Parade") {
+				DisplayDialog (playMusic [1]);
+			} else if (musicName == "AnHeQiao") {
+				DisplayDialog (playMusic [2]);
+			}
+
+		}
 	}
 
 	IEnumerator ReactToMusicDelay( float time , string musicName)
 	{
 		yield return new WaitForSeconds (time);
 
-		ReactToMusic (musicName);
+		if ( AudioManager.Instance.switchBGMName == musicName )
+			ReactToMusic (musicName);
 	}
 
 	protected override void MUpdate ()
@@ -88,14 +94,20 @@ public class GirlBusStop : NormalPasserBy {
 //			}
 		}
 
-		if (LogicManager.Instance.State < LogicManager.GameState.DepartFromGirl )
-		{
-			if ( (!IsPlayerIn && isInRain) || IsTalking ) {
+		if (LogicManager.Instance.State < LogicManager.GameState.WalkOutStreetFour) {
+			if ((!IsPlayerIn && isInRain) || IsTalking) {
 				LockMove ();
 			} else {
 				RecoverMove ();
 			}
-		}else{
+		} else if (LogicManager.Instance.State < LogicManager.GameState.DepartFromGirl) {
+
+			if (IsTalking) {
+				LockMove ();
+			} else {
+				RecoverMove ();
+			}
+		} else{
 			Vector3 forward = Camera.main.transform.forward;
 			forward.y = 0;
 
@@ -124,13 +136,22 @@ public class GirlBusStop : NormalPasserBy {
 
 	public override void LockMove ()
 	{
+		
 		base.LockMove ();
-		m_collider.radius = 0.45f;
+		m_collider.radius = 0.5f;
+
+		if (waitCor == null) {
+			waitCor = StartCoroutine (StartWait());
+		}
 	}
 
 	public override void RecoverMove ()
 	{
 		base.RecoverMove ();
+		if (waitCor != null) {
+			StopCoroutine (waitCor);
+			waitCor = null;
+		}
 		if (LogicManager.Instance.State >= LogicManager.GameState.DepartFromGirl) {
 			m_agent.speed = 3.5f;
 
@@ -140,13 +161,17 @@ public class GirlBusStop : NormalPasserBy {
 		}
 	}
 
+	Coroutine waitCor = null ;
 	IEnumerator StartWait()
 	{
-		float timer = waitSpeakInterval;
+		float timer = waitSpeakInterval * 0.3f ;
 		while (true) {
 			timer -= Time.deltaTime;
 
 			if (m_agent.speed > 0)
+				yield break;
+
+			if (LogicManager.Instance.State < LogicManager.GameState.InBusStop || LogicManager.Instance.State >= LogicManager.GameState.WalkOutStreetFour)
 				yield break;
 
 			if (timer < 0) {

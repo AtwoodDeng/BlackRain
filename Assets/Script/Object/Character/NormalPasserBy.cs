@@ -13,6 +13,7 @@ public class NormalPasserBy : TalkableCharacter {
 	[SerializeField] List<Vector3> targetList;
 	private int targetIndex = 0;
 	[SerializeField] bool dieOnLastTarget = true;
+	public float targetToleranceRange = 0.5f;
 	bool isWaittingForGreen = false;
 //	public bool loop = false;
 
@@ -126,6 +127,7 @@ public class NormalPasserBy : TalkableCharacter {
 		if (isWaittingForGreen) {
 			RecoverMove ();
 			isWaittingForGreen = false;
+			gameObject.tag = "PasserBy";
 		}
 	}
 
@@ -217,7 +219,7 @@ public class NormalPasserBy : TalkableCharacter {
 	static int shipComingCount = 0;
 	void OnTriggerEnter(Collider col )
 	{
-		if (isWaittingForGreen && col.tag == "TrafficObstacle") {
+		if (isWaittingForGreen && col.tag == "TrafficObstacle" && LogicManager.Instance.State < LogicManager.GameState.WalkAcrossRoadWithGirl) {
 //			Debug.Log ("Meet Traffic Obstcale ");
 			LockMove ();
 			gameObject.tag = "TrafficObstacle";
@@ -310,10 +312,12 @@ public class NormalPasserBy : TalkableCharacter {
 
 	void LimitSpeed()
 	{
+		if ( (m_AISetting.type == Type.Friendly || m_AISetting.type == Type.Normal) && m_IsPlayerIn && m_isOpenUmbrella ) {
+			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.88f;
+		}
 		if ( m_agent.velocity.magnitude > m_agent.speed * 2f && m_agent.speed > 0  ) {
 			Debug.Log ("Exceed limit speed");
 			LockMove ();
-
 		}
 	}
 
@@ -321,7 +325,7 @@ public class NormalPasserBy : TalkableCharacter {
 	{
 		Vector3 offset = transform.position - m_agent.destination;
 		offset.y = 0;
-		if ( offset.magnitude < 0.5f) {
+		if ( offset.magnitude < targetToleranceRange ) {
 			NextTarget ();
 		}
 	}

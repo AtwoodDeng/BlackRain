@@ -43,6 +43,15 @@ public class AudioManager : MBehavior {
 	[SerializeField] List<AudioClip> playableMusicList;
 	private AudioSource bgmSource;
 	private AudioSource bgmSwitchableSource;
+	public string switchBGMName{
+		get {
+			string name = "";
+			if (bgmSwitchableSource != null && bgmSwitchableSource.clip != null)
+				name = bgmSwitchableSource.clip.name;
+			
+				return name;
+		}
+	}
 
 	protected override void MAwake ()
 	{

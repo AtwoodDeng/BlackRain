@@ -11,6 +11,7 @@ public class PasserByManipulator : MBehavior {
 	[SerializeField] LogicManager.GameState beginState = (LogicManager.GameState)0;
 	[SerializeField] LogicManager.GameState endState = (LogicManager.GameState)99;
 	[SerializeField] int MaxPeople = -1;
+	[SerializeField] float tolarenceRange = 0.5f;
 
 	float timer = 0;
 	int totalPeople = 0;
@@ -39,6 +40,7 @@ public class PasserByManipulator : MBehavior {
 
 		NormalPasserBy passerByCom = passerBy.GetComponent<NormalPasserBy> ();
 		passerByCom.SetSpeed (speed.RandomBetween);
+		passerByCom.targetToleranceRange = tolarenceRange;
 
 		Vector3[] targetList = new Vector3[target.Length];
 		for (int i = 0; i < targetList.Length; ++i) {

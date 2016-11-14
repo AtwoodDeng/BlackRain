@@ -89,6 +89,8 @@ public enum LogicEvents
 	WatchShipOne = 150,
 	WatchShipTwo = 151,
 
+	EndCredit = 160,
+
 }
 
 public class M_Event : MonoBehaviour {

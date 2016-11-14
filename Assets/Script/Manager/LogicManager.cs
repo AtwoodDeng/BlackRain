@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public class LogicManager : MBehavior {
 
@@ -152,6 +153,11 @@ public class LogicManager : MBehavior {
 			m_stateMachine.State = GameState.WalkAcrossRoadWithGirl;
 		}
 
+
+		if (Input.GetKeyDown (KeyCode.C) && Input.GetKey(KeyCode.LeftControl) ) {
+			m_stateMachine.State = GameState.ShowCredit;
+		}
+
 //		if (Input.GetKeyDown (KeyCode.Space)) {
 //			M_Event.FireLogicEvent (LogicEvents.SwitchThoughtBox, new LogicArg (this));
 //		}
@@ -194,6 +200,7 @@ public class LogicManager : MBehavior {
 //		m_stateMachine.BlindTimeStateChange (GameState.WalkAcrossRoadWithGirl, GameState.DepartFromGirl, 10f);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.InvisibleFromPlayer, GameState.DepartFromGirl, GameState.BeginShip);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.EnterEnd, GameState.WalkInStreetColorful, GameState.PlayEndAnimation);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.EndCredit, GameState.ShowCredit, GameState.End);
 
 
 		m_stateMachine.BlindFromEveryState (LogicEvents.EndTalkWithGirl, GameState.TalkWithGirlInCafe);
@@ -225,6 +232,10 @@ public class LogicManager : MBehavior {
 
 		m_stateMachine.AddEnter (GameState.BackToApartment, delegate() {
 			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , new LogicArg(this));	
+		});
+
+		m_stateMachine.AddEnter (GameState.End, delegate() {
+			SceneManager.LoadScene("Title");
 		});
 
 //		m_stateMachine.AddEnter (GameState.PlayEndAnimation, delegate() {
