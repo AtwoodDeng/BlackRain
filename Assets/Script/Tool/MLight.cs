@@ -28,7 +28,7 @@ public class MLight : MBehavior {
 	{
 		Sequence seq = DOTween.Sequence ();
 		seq.Append (m_light.DOColor (oriangeColor, colorChangeInterval));
-		seq.Append (m_light.DOColor (Color.black, colorChangeInterval).SetLoops (999, LoopType.Yoyo).SetEase(Ease.InOutCirc) );
+		seq.Append (m_light.DOColor (Color.Lerp(oriangeColor,Color.black, 0.5f ), colorChangeInterval).SetLoops (999, LoopType.Yoyo).SetEase(Ease.InOutCirc) );
 	}
 
 	protected override void MStart ()

@@ -37,6 +37,7 @@ public class UIManager : MBehavior {
 	public Image cursorImage;
 	public Sprite ScanSprite;
 	public Sprite normalSprite;
+	public Sprite runSprite;
 
 	public Image EnergyIcon;
 	public Image EnergyBar;
@@ -108,6 +109,7 @@ public class UIManager : MBehavior {
 		M_Event.RegisterEvent (LogicEvents.EndRun, OnEndRun);
 		M_Event.RegisterEvent (LogicEvents.GirlSayPlayMusic, OnShowMusicPlayer);
 		M_Event.RegisterEvent (LogicEvents.PickUpMusicPlayer, OnShowBrokenMusicPlayer);
+//		M_Event.RegisterEvent (LogicEvents.InvisibleFromPlayer, OnHideMusicPlayer );
 		M_Event.RegisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
 	}
 
@@ -125,6 +127,7 @@ public class UIManager : MBehavior {
 		M_Event.UnregisterEvent (LogicEvents.EndRun, OnEndRun);
 		M_Event.UnregisterEvent (LogicEvents.GirlSayPlayMusic, OnShowMusicPlayer);
 		M_Event.UnregisterEvent (LogicEvents.PickUpMusicPlayer, OnShowBrokenMusicPlayer);
+//		M_Event.UnregisterEvent (LogicEvents.InvisibleFromPlayer, OnHideMusicPlayer );
 		M_Event.UnregisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
 	}
 
@@ -153,11 +156,14 @@ public class UIManager : MBehavior {
 	{
 		FadeEnergy (1f, 0.2f);
 
+		cursorImage.sprite = runSprite;
+
 	}
 
 	void OnEndRun( LogicArg arg )
 	{
 		FadeEnergy (0, 2f);
+		cursorImage.sprite = normalSprite;
 	}
 
 	void FadeEnergy( float to , float time )
@@ -295,13 +301,14 @@ public class UIManager : MBehavior {
 	{
 		if (toState == LogicManager.GameState.ShowCredit) {
 //			ending.DOScale (0.01f, 1f).From ();
-			endingBack.DOFade (0.6f, 2f);
-			endingCredit.transform.DOMoveY (1100f, 30f).OnComplete( delegate() {
+			endingBack.DOFade (0.45f, 2f);
+			endingBack.DOFade (1f, 5f).SetDelay (25f);
+			endingCredit.transform.DOMoveY (1300f, 30f).OnComplete( delegate() {
 				M_Event.FireLogicEvent(LogicEvents.EndCredit, new LogicArg(this));	
 			});
 			ending.gameObject.SetActive (true);
 		} else if (toState == LogicManager.GameState.BeginShip) {
-			musicPlayer.gameObject.SetActive (false);
+			HideMusicPlayer (0.3f);
 		}
 //		Debug.Log ("On Change" + toState);
 //		foreach (StateTargetPair pair in targetList) {
@@ -323,6 +330,10 @@ public class UIManager : MBehavior {
 		UpdateCursor ();
 		UpdateEnergy ();
 		UpdateThought ();
+
+		if (Input.GetKeyDown (KeyCode.M) && Input.GetKey (KeyCode.LeftControl)) {
+			ShowMusicPlayer (1f);
+		}
 	}
 
 	void UpdateThought()
@@ -380,7 +391,6 @@ public class UIManager : MBehavior {
 
 	public void OnInteract()
 	{
-		
 		M_Event.FireLogicEvent (LogicEvents.Interact, new LogicArg (this));
 	}
 

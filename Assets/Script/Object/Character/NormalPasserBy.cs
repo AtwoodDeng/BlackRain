@@ -32,6 +32,18 @@ public class NormalPasserBy : TalkableCharacter {
 	}
 	[SerializeField] RenderSetting renderSetting;
 
+	[System.Serializable]
+	public struct SoundSetting
+	{
+		public AudioClip umbrellaWalk;
+		public AudioClip umbrellaTakeOut;
+		public AudioClip umbrellaTakeOff;
+//		public AnimationCurve curve;
+	}
+	[SerializeField] SoundSetting soundSetting;
+
+	AudioSource m_umbrellaAudioSource;
+
 
 	public enum Type
 	{
@@ -71,6 +83,19 @@ public class NormalPasserBy : TalkableCharacter {
 			m_animator = GetComponentInChildren<Animator> ();
 		if (m_agent == null) {
 			m_agent = GetComponent<NavMeshAgent> ();
+		}
+		{
+			m_umbrellaAudioSource = gameObject.AddComponent<AudioSource> ();
+			m_umbrellaAudioSource.volume = 0.7f;
+			m_umbrellaAudioSource.spatialBlend = 1f;
+			m_umbrellaAudioSource.playOnAwake = false;
+			m_umbrellaAudioSource.minDistance = 1f;
+			m_umbrellaAudioSource.maxDistance = 10f;
+//			AnimationCurve curve = new AnimationCurve ();
+//			curve.AddKey (new Keyframe (0, 1f));
+//			curve.AddKey (new Keyframe (1f, 0));
+//			m_umbrellaAudioSource.SetCustomCurve (AudioSourceCurveType.CustomRolloff , soundSetting.curve);
+			m_umbrellaAudioSource.Stop ();
 		}
 
 	}
@@ -217,8 +242,9 @@ public class NormalPasserBy : TalkableCharacter {
 
 
 	static int shipComingCount = 0;
-	void OnTriggerEnter(Collider col )
+	protected override void MOnTriggerEnter ( Collider  col)
 	{
+		base.MOnTriggerEnter (col);
 		if (isWaittingForGreen && col.tag == "TrafficObstacle" && LogicManager.Instance.State < LogicManager.GameState.WalkAcrossRoadWithGirl) {
 //			Debug.Log ("Meet Traffic Obstcale ");
 			LockMove ();
@@ -354,10 +380,20 @@ public class NormalPasserBy : TalkableCharacter {
 			if (isNowInRain) {
 				LockMove ();
 				m_animator.SetTrigger ("TakeOut");
+				if (m_umbrellaAudioSource != null) {
+					m_umbrellaAudioSource.clip = soundSetting.umbrellaTakeOut;
+					m_umbrellaAudioSource.loop = false;
+					m_umbrellaAudioSource.Play ();
+				}
 //				Debug.Log ("Set TakeOut");
 			} else {
 				LockMove ();
 				m_animator.SetTrigger ("TakeOff");
+				if (m_umbrellaAudioSource != null) {
+					m_umbrellaAudioSource.clip = soundSetting.umbrellaTakeOff;
+					m_umbrellaAudioSource.loop = false;
+					m_umbrellaAudioSource.Play ();
+				}
 //				Debug.Log ("Set TakeOff");
 			}
 		}
@@ -373,7 +409,12 @@ public class NormalPasserBy : TalkableCharacter {
 	virtual public void RecoverMove()
 	{
 //		Debug.Log ("Recover Move " + MAgentSpeed );
-		m_agent.speed = MAgentSpeed;
+
+		if ( (m_AISetting.type == Type.ExtremFriendly || m_AISetting.type == Type.Friendly) && IsPlayerIn ){
+			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.85f;
+		} else {
+			m_agent.speed = MAgentSpeed;
+		}
 	}
 
 	virtual protected bool CheckIfInRain()
@@ -385,8 +426,9 @@ public class NormalPasserBy : TalkableCharacter {
 		return true;
 	}
 
-	public void OnAnimationEnd( string info )
+	public override void OnAnimationEnd (string info)
 	{
+		base.OnAnimationEnd (info);
 		if (info == "TakeOff" || info == "TakeOut") {
 			// for the one first meet in front of the building
 			if (m_AISetting.type == Type.ExtremFriendly) {
@@ -399,8 +441,14 @@ public class NormalPasserBy : TalkableCharacter {
 
 		if (info == "TakeOff")
 			m_isOpenUmbrella = false;
-		else if (info == "TakeOut")
+		else if (info == "TakeOut") {
 			m_isOpenUmbrella = true;
+			if (m_umbrellaAudioSource != null) {
+				m_umbrellaAudioSource.clip = soundSetting.umbrellaWalk;
+				m_umbrellaAudioSource.loop = true;
+				m_umbrellaAudioSource.Play ();
+			}
+		}
 	}
 
 //	void OnDrawGizmosSelected()

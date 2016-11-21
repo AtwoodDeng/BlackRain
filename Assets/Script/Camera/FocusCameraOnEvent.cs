@@ -14,6 +14,7 @@ public class FocusCameraOnEvent : OnEventResponsor {
 	{
 		base.OnEvent (arg);
 		M_Event.FireLogicEvent (LogicEvents.FocusCamera, new LogicArg (this));
+		Debug.Log ("Focus");
 		Sequence seq = DOTween.Sequence ();
 		seq.AppendInterval (delayTime);
 		seq.Append (Camera.main.transform.DOMove (moveCameraTo.position, moveTime));
@@ -21,6 +22,7 @@ public class FocusCameraOnEvent : OnEventResponsor {
 		seq.AppendInterval (lastTime);
 		seq.AppendCallback (delegate() {
 			M_Event.FireLogicEvent(LogicEvents.UnfocusCamera , new LogicArg(this));	
+			Debug.Log("Unfocus");
 			if ( endEvent != LogicEvents.None )
 				M_Event.FireLogicEvent(endEvent , new LogicArg( this ));
 		});

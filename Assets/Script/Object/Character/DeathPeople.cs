@@ -39,6 +39,7 @@ public class DeathPeople : TalkableCharacter {
 	private float takePhotoRange;
 
 	AudioSource flashLightAudioSource;
+	[SerializeField] Transform umbrella;
 
 //	private NavMeshAgent m_agent;
 //	public NavMeshAgent Agent{ get { 
@@ -54,11 +55,11 @@ public class DeathPeople : TalkableCharacter {
 			flashLightAudioSource = gameObject.AddComponent<AudioSource> ();
 			flashLightAudioSource.playOnAwake = false;
 			flashLightAudioSource.Stop ();
-			flashLightAudioSource.volume = 0.35f;
+			flashLightAudioSource.volume = 1f;
 			flashLightAudioSource.loop = false;
 			flashLightAudioSource.spatialBlend = 1f;
 			flashLightAudioSource.clip = takePhotoSetting.flashLightSound;
-			flashLightAudioSource.maxDistance = 5f;
+			flashLightAudioSource.maxDistance = 35f;
 			flashLightAudioSource.minDistance = 0.1f;
 		}
 
@@ -67,6 +68,11 @@ public class DeathPeople : TalkableCharacter {
 			color.a = 0.55f;
 			umbrellaUp.material = new Material (Shader.Find ("AlphaSelfIllum_NoFog"));
 			umbrellaUp.material.SetColor ("_Color", color);
+		}
+
+		if (umbrella != null) {
+			umbrella.transform.localPosition += new Vector3 (Random.Range (-0.3f, 0.3f), Random.Range (-2f, 0), Random.Range (-0.3f, 0.3f));
+			umbrella.transform.Rotate( new Vector3( Random.Range( -7f , 7f ) , Random.Range( -7f , 7f ) , Random.Range( -7f , 7f )));
 		}
 
 	}

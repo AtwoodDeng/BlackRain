@@ -3,18 +3,18 @@ using System.Collections;
 
 public class NormalPasserbyAnimationState : MAnimationState {
 
-	NormalPasserBy normalPasserBy;
+	Character character;
 	[SerializeField] string EndAnimationInfo;
 
 	public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnStateEnter (animator, stateInfo, layerIndex);
-		normalPasserBy = animator.transform.parent.GetComponent<NormalPasserBy> ();
+		character = animator.transform.parent.GetComponent<Character> ();
 	}
 
 	public override void OnStateExit (Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnStateExit (animator, stateInfo, layerIndex);
-		normalPasserBy.OnAnimationEnd (EndAnimationInfo);
+		character.OnAnimationEnd (EndAnimationInfo);
 	}
 }

@@ -143,15 +143,18 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
 	}
 
+
+	bool m_isFocus;
 	void OnFocusCamera( LogicArg arg )
 	{
-		
+		m_isFocus = true;
 		cameraBot.enabled = false;
 		Moveable = false;
 	}
 
 	void OnUnfocusCamera( LogicArg arg )
 	{
+		m_isFocus = false;
 		cameraBot.enabled = true;
 		Moveable = true;
 	}
@@ -201,8 +204,10 @@ public class MainCharacter : MonoBehaviour {
 	void OnEndDisplay( LogicArg arg )
 	{
 //		Debug.Log ("Camerabot enable");
-		Moveable = true;
-		cameraBot.enabled = true;
+		if (!m_isFocus) {
+			Moveable = true;
+			cameraBot.enabled = true;
+		}
 		CameraNarrativeSensity = 1f;
 //		m_UseHeadBob = true;
 //		m_Move = true;

@@ -12,7 +12,7 @@ public class TalkableCharacter : Character {
 	[SerializeField] bool OnlySubPlots;
 	[HideInInspector] public bool IsMainEnded = false;
 	[HideInInspector] public bool IsTalking = false;
-	float becomeTalkableDelay = 2f;
+	float becomeTalkableDelay = 1.5f;
 	[HideInInspector] public bool isMainTalking = false;
 	[SerializeField] LogicEvents MainTalkEndEvent;
 	[SerializeField] Transform talkCamera;
@@ -61,7 +61,6 @@ public class TalkableCharacter : Character {
 	virtual protected void OnEndDisplayDialog( LogicArg arg )
 	{
 		TalkableCharacter character = (TalkableCharacter)arg.GetMessage (M_Event.EVENT_END_DISPLAY_SENDER);
-
 		if (character == this) {
 			if (isMainTalking) {
 
@@ -115,7 +114,9 @@ public class TalkableCharacter : Character {
 			arg.AddMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT, plot);
 			M_Event.FireLogicEvent (LogicEvents.DisplayDialog, arg);
 
-			IsTalking = true;
+			// switch to talking if the plot is important
+			if ( plot.important )
+				IsTalking = true;
 		}
 	}
 

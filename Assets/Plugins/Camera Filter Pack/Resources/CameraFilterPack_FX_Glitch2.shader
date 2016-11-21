@@ -91,7 +91,7 @@ float4 frag (v2f i) : COLOR
 float2 uv = i.texcoord.xy;
 uv -= 0.5;
 
-float _TimeX = _TimeX / 30.0;
+float _TimeX = _Time.x / 30.0;
 _TimeX = 0.5 + 0.5 * sin( _TimeX * 6.238 );
 _TimeX = tex2D( _MainTex, float2(0.5,0.5) ).x; 
 

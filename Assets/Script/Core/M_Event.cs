@@ -80,11 +80,13 @@ public enum LogicEvents
 	EndHitFour = 139,
 	DisPlayClimaxEffect = 141,
 	PickUpMusicPlayer = 142,
+	EnterStone = 143,
 
 	PlayEndBGM = 145,
 
 
 	EnterEnd = 140,
+
 
 	WatchShipOne = 150,
 	WatchShipTwo = 151,
@@ -189,6 +191,7 @@ public class M_Event : MonoBehaviour {
 	public const string EVENT_SAVE_POINT = "SAVE";
 	public const string EVENT_THOUGHT = "THOUGHT";
 	public const string EVENT_END_DISPLAY_SENDER = "SENDER";
+	public const string EVENT_END_DISPLAY_FRAME = "IMPORTANT";
 	public const string EVENT_PLAY_MUSIC_NAME = "MUSIC_NAME";
 
 }

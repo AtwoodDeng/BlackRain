@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class LogicManager : MBehavior {
 
@@ -158,6 +159,12 @@ public class LogicManager : MBehavior {
 			m_stateMachine.State = GameState.ShowCredit;
 		}
 
+
+		if (Input.GetKeyDown (KeyCode.I) && Input.GetKey(KeyCode.LeftControl) ) {
+			m_stateMachine.State = GameState.BeginShip;
+			M_Event.FireLogicEvent (LogicEvents.InvisibleFromPlayer, new LogicArg (this));
+		}
+
 //		if (Input.GetKeyDown (KeyCode.Space)) {
 //			M_Event.FireLogicEvent (LogicEvents.SwitchThoughtBox, new LogicArg (this));
 //		}
@@ -238,9 +245,9 @@ public class LogicManager : MBehavior {
 			SceneManager.LoadScene("Title");
 		});
 
-//		m_stateMachine.AddEnter (GameState.PlayEndAnimation, delegate() {
-//			M_Event.FireLogicEvent(LogicEvents.PlayEndBGM , new LogicArg(this));
-//		});
+		m_stateMachine.AddEnter (GameState.PlayEndAnimation, delegate() {
+			m_MainCharacter.transform.DOMove(m_MainCharacter.transform.forward * m_MainCharacter.MoveSpeed * 4f , 4f ).SetRelative(true);
+		});
 
 
 		m_stateMachine.State = startState;

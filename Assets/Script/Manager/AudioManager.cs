@@ -175,7 +175,7 @@ public class AudioManager : MBehavior {
 		if (bgmSource == null) {
 			bgmSource = gameObject.AddComponent<AudioSource> ();
 			bgmSource.loop = true;
-			bgmSource.volume = 0.7f;
+			bgmSource.volume = 0.5f;
 			bgmSource.spatialBlend = 0f;
 			bgmSource.clip = defaultBGM;
 			bgmSource.Play ();
@@ -184,14 +184,14 @@ public class AudioManager : MBehavior {
 		if (bgmSwitchableSource == null) {
 			bgmSwitchableSource = gameObject.AddComponent<AudioSource> ();
 			bgmSwitchableSource.loop = true;
-			bgmSwitchableSource.volume = 0.7f;
+			bgmSwitchableSource.volume = 0.5f;
 			bgmSwitchableSource.spatialBlend = 0f;
 		}
 		if (bgmSource != null) {
 			if (to != defaultBGM) {
 				bgmSource.DOFade (0.2f, bgmFadeTime);
 			} else {
-				bgmSource.DOFade (0.7f, bgmFadeTime);
+				bgmSource.DOFade (0.5f, bgmFadeTime);
 			}
 		}
 		if (bgmSwitchableSource != null) {
@@ -201,7 +201,7 @@ public class AudioManager : MBehavior {
 					if (randomPlay)
 						bgmSwitchableSource.time = Random.Range (0, bgmSwitchableSource.clip.length);
 					bgmSwitchableSource.Play ();
-					bgmSwitchableSource.DOFade (0.7f, bgmFadeTime);
+					bgmSwitchableSource.DOFade (0.5f, bgmFadeTime);
 				});
 			} else {
 				bgmSwitchableSource.Stop ();

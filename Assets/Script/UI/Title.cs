@@ -11,6 +11,10 @@ public class Title : MBehavior {
 	[SerializeField] Image[] logos;
 	[SerializeField] float logoShowTime = 5f;
 	[SerializeField] float fadeTime = 2f;
+	[SerializeField] AudioSource titleBGM;
+	[SerializeField] AudioSource titleRain;
+	[SerializeField] AudioSource startGameSound ;
+	[SerializeField] RectTransform cursorTransform;
 
 	protected override void MStart ()
 	{
@@ -20,6 +24,7 @@ public class Title : MBehavior {
 			logo.gameObject.SetActive (true);
 		}
 		white.gameObject.SetActive(true);
+		Cursor.visible = false;
 	}
 
 	float timer = 0;
@@ -35,12 +40,20 @@ public class Title : MBehavior {
 				if (index > 0)
 					logos [index - 1].DOFade (0, fadeTime);
 				if (index < logos.Length)
-					logos [index].DOFade (1f, fadeTime);
+					logos [index].DOFade (1f, fadeTime).SetDelay(fadeTime);
 				else
 					white.DOFade (0, fadeTime);
 				index++;
+				if (index >= logos.Length) {
+					if (titleBGM != null)
+						titleBGM.Play ();
+					if (titleRain != null)
+						titleRain.Play ();
+				}
 			}
 		}
+
+		UpdateCursor ();
 	}
 
 	public void StartGame()
@@ -49,5 +62,17 @@ public class Title : MBehavior {
 		white.DOFade (1f, fadeTime).OnComplete (delegate {
 			SceneManager.LoadSceneAsync ("Main");
 		});
+
+		if (startGameSound != null) {
+			startGameSound.Play ();
+		}
+	}
+
+	public void UpdateCursor()
+	{
+		Vector2 pos;
+		// RectTransformUtility.ScreenPointToLocalPointInRectangle (UICanvas.GetComponent<RectTransform>(), InteractManager.FocusPoint, Camera.main, out pos);
+
+		cursorTransform.position = InteractManager.FocusPoint;
 	}
 }

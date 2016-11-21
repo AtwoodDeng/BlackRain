@@ -68,7 +68,7 @@ namespace UnityStandardAssets.CrossPlatformInput.Inspector
                 case BuildTarget.Android:
                 case BuildTarget.iOS:
                 case BuildTarget.WP8Player:
-                case BuildTarget.BlackBerry:
+//                case BuildTarget.BlackBerry:
                     EditorUtility.DisplayDialog("Mobile Input",
                                                 "You have disabled Mobile Input. Mobile control rigs won't be visible, and the Cross Platform Input functions will always return standalone controls.",
                                                 "OK");

@@ -12,4 +12,9 @@ public class Character : Interactable {
 		m_collider.isTrigger = true;
 	}
 
+	public virtual void OnAnimationEnd( string str )
+	{
+		
+	}
+
 }

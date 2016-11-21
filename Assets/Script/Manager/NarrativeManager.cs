@@ -21,7 +21,7 @@ public class NarrativeManager : MBehavior {
 
 	[SerializeField] float showUpTime=0.2f;
 	[SerializeField] KeyCode nextDialogKey;
-	[SerializeField] float autoSkipTime = 5f;
+	[SerializeField] float autoSkipTime = 15f;
 	[SerializeField] GameObject smallDialogPrefab;
 
 	private AudioSource mainCharacterSpeaker;
@@ -241,6 +241,7 @@ public class NarrativeManager : MBehavior {
 	{
 		LogicArg arg = new LogicArg (this);
 		arg.AddMessage (M_Event.EVENT_END_DISPLAY_SENDER, plot.character);
+		arg.AddMessage (M_Event.EVENT_END_DISPLAY_FRAME, true);
 		M_Event.FireLogicEvent (LogicEvents.EndDisplayDialog, arg );
 
 		if (plot.plot.endPlotEvent != LogicEvents.None) {
@@ -282,8 +283,9 @@ public class NarrativeManager : MBehavior {
 			NextDialog ();
 		}
 
-		if (dialogTimer > autoSkipTime && !temPlot.plot.important)
+		if (dialogTimer > autoSkipTime && m_isDisplaying ) {
 			NextDialog ();
+		}
 			
 //		if (temSpeaker != null && !temSpeaker.isPlaying) {
 //			NextDialog ();

@@ -4,13 +4,13 @@ using System.Collections;
 namespace CF.CameraBot
 {
     public class CursorLock : MonoBehaviour
-    {
+	{
+		private bool _ownCursor = false;
 #if UNITY_WEBPLAYER || UNITY_STANDALONE_WIN || UNITY_EDITOR || UNITY_WEBGL
         public bool ToggleCursorMode = true;
         public KeyCode ToggleCursorKey = KeyCode.Escape;
         public bool AutoTakenCursorMode = true;
 
-        private bool _ownCursor = false;
 
         private void Awake()
         {

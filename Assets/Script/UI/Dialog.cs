@@ -82,6 +82,7 @@ public class Dialog : MBehavior {
 
 			LogicArg arg = new LogicArg (this);
 			arg.AddMessage (M_Event.EVENT_END_DISPLAY_SENDER, character);
+			arg.AddMessage (M_Event.EVENT_END_DISPLAY_FRAME, false);
 			M_Event.FireLogicEvent (LogicEvents.EndDisplayDialog, arg );
 		}
 	}

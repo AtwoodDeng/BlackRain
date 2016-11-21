@@ -27,7 +27,7 @@ public class Ship : MBehavior {
 	{
 		base.MStart ();
 		ship.SetActive (false);
-		flower.SetActive (false);
+//		flower.SetActive (false);
 	}
 
 	protected override void MOnEnable ()
@@ -64,7 +64,7 @@ public class Ship : MBehavior {
 
 	void OnFlower( LogicArg arg )
 	{
-		flower.SetActive (true);
+//		flower.SetActive (true);
 
 		Sequence seq = DOTween.Sequence ();
 

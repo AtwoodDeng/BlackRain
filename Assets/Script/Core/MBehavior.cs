@@ -33,6 +33,20 @@ public class MBehavior : MonoBehaviour {
 		MFixedUpdate ();
 	}
 
+	void OnCollisionEnter( Collision col )
+	{
+		MOnCollisionEnter (  col );
+	}
+	void OnTriggerEnter(Collider col )
+	{
+		MOnTriggerEnter (col);
+	}
+
+	void OnTriggerExit(Collider col )
+	{
+		MOnTriggerExit (col);
+	}
+
 	virtual protected void MAwake() {
 
 	}
@@ -54,5 +68,17 @@ public class MBehavior : MonoBehaviour {
 	}
 
 	virtual protected void MFixedUpdate() {
+	}
+
+	virtual protected void MOnCollisionEnter( Collision col )
+	{
+		
+	}
+	virtual protected void MOnTriggerEnter( Collider col )
+	{
+	}
+
+	virtual protected void MOnTriggerExit( Collider col )
+	{
 	}
 }
