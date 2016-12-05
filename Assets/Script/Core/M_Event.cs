@@ -15,6 +15,8 @@ public enum LogicEvents
 	EnterSavePoint = 4,
 	LockCamera = 5,
 	UnlockCamera = 6,
+	PauseGame = 7,
+	UnpauseGame = 8,
 
 	/// <summary>
 	/// call to start the death effect
@@ -40,6 +42,9 @@ public enum LogicEvents
 	HideThought = 45,
 
 	PlayMusic = 50,
+
+	Sneeze = 60,
+	Breath = 70,
 
 	EndGame = 99,
 
@@ -88,8 +93,18 @@ public enum LogicEvents
 	EnterEnd = 140,
 
 
+
 	WatchShipOne = 150,
 	WatchShipTwo = 151,
+	WatchMusicPlayer = 152,
+
+	EnterColorfulClimaxOne = 155,
+	EnterColorfulClimaxTwo = 156,
+	EnterColorfulClimaxThree = 157,
+	EndTalkWithFakeGirl = 158,
+
+	CloseApartment = 159,
+
 
 	EndCredit = 160,
 
@@ -193,6 +208,8 @@ public class M_Event : MonoBehaviour {
 	public const string EVENT_END_DISPLAY_SENDER = "SENDER";
 	public const string EVENT_END_DISPLAY_FRAME = "IMPORTANT";
 	public const string EVENT_PLAY_MUSIC_NAME = "MUSIC_NAME";
+	public const string EVENT_BGM_FADE_TIME = "BGM_FADE_TIME";
+
 
 }
 

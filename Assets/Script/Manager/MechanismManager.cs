@@ -39,6 +39,9 @@ public class MechanismManager : MBehavior {
 		[TooltipAttribute("The precentage of the minHealth of the character.")]
 		[RangeAttribute(0,1f)]
 		public float minHealth;
+
+		[TooltipAttribute("The duration between each sneeze")]
+		public float sneezeDuration;
 	}
 	[SerializeField] DamageSetting damageSetting;
 
@@ -72,18 +75,38 @@ public class MechanismManager : MBehavior {
 		public Health(){
 			health = FullHealth;
 			energy = FullEnergy;
+			sneezeNum = 0;
 		}
 
 		private float energy;
 		public const float FullEnergy = 1f;
 		private bool isSpeedUp;
 		private float minHealth = 0;
+		private float sneezeDuration = 10f;
+		public float inRainTimer;
+		private int sneezeNum;
 
 
+		/// <summary>
+		/// Gets the health value.
+		/// </summary>
+		/// <value>The health value.</value>
 		public float HealthValue{ get { return health; } }
 
+		/// <summary>
+		/// health / Full health
+		/// </summary>
+		/// <value>The health rate.</value>
 		public float HealthRate{ get{ return health / FullHealth;}}
+		/// <summary>
+		/// Convert the health rate to (0 - 1f)
+		/// </summary>
+		/// <value>The health rate zero one.</value>
 		public float HealthRateZeroOne{ get { return (health - minHealth) / (FullHealth - minHealth); } }
+		/// <summary>
+		/// 1 - healthRate
+		/// </summary>
+		/// <value>The lost health rate.</value>
 		public float LostHealthRate { get { return 1f - HealthRate; } }
 
 		public float SpeedUp { get { return isSpeedUp ? ( energy > 0 ? 1f : 0 ) : 0; } }// Mathf.Sqrt(( Mathf.Max( 0 , energy) / FullEnergy)) : 0 ; } }
@@ -103,6 +126,18 @@ public class MechanismManager : MBehavior {
 				health -= dmg * Time.deltaTime;
 		}
 
+		public void OnUpdateSneeze()
+		{
+			if ( !NarrativeManager.Instance.IsDisplaying && !MainCharacter.Instance.IsFocus )
+				inRainTimer += Time.deltaTime;
+			
+			if (inRainTimer > (sneezeNum + 1) * sneezeDuration) {
+				sneezeNum++;
+				M_Event.FireLogicEvent (LogicEvents.Sneeze, new LogicArg (this));
+				Debug.Log ("Sneeze" + sneezeNum);
+			}
+		}
+
 		public void OnRecover( float recoverRate )
 		{
 			if ( health < FullHealth )
@@ -115,11 +150,14 @@ public class MechanismManager : MBehavior {
 		}
 		public void OnSpeedUp( float energyLostRate )
 		{
-			energy -= energyLostRate * Time.deltaTime;
-			isSpeedUp = true;
-			if (energy < 0) {
-				isSpeedUp = false;
-				energy = 0;
+			if (energy > 0) {
+				energy -= energyLostRate * Time.deltaTime;
+				isSpeedUp = true;
+				if (energy < 0) {
+					isSpeedUp = false;
+					energy = 0;
+					M_Event.FireLogicEvent (LogicEvents.Breath, new LogicArg (this));
+				}
 			}
 		}
 
@@ -131,9 +169,10 @@ public class MechanismManager : MBehavior {
 			isSpeedUp = false;
 		}
 
-		public void SetMinHealth( float min )
+		public void InitHealth( float _minHealth , float _sneezeDuration )
 		{
-			minHealth = min;
+			minHealth = _minHealth;
+			sneezeDuration = _sneezeDuration;
 		}
 	};
 
@@ -143,7 +182,8 @@ public class MechanismManager : MBehavior {
 	protected override void MAwake ()
 	{
 		base.MAwake ();
-		m_health.SetMinHealth (damageSetting.minHealth);
+		m_health = new Health ();
+		m_health.InitHealth (damageSetting.minHealth , damageSetting.sneezeDuration);
 	}
 
 	protected override void MOnEnable ()
@@ -164,6 +204,13 @@ public class MechanismManager : MBehavior {
 		UpdateDamageState ();
 		UpdateHealth ();
 		UpdateEnergy ();
+		UpdateSneeze ();
+	}
+
+	void UpdateSneeze()
+	{
+		if (DamageState == DamageStateType.UnderDamage)
+			m_health.OnUpdateSneeze ();	
 	}
 
 	void UpdateEnergy()
@@ -214,7 +261,7 @@ public class MechanismManager : MBehavior {
 	}
 
 	bool CheckUnderObject()
-	{
+	{ 
 		MainCharacter character = MainCharacter.Instance;
 
 		RaycastHit hitInfo;
@@ -222,6 +269,11 @@ public class MechanismManager : MBehavior {
 			return true;
 		}
 		return false;
+	}
+
+
+	void OnGUI(){
+		GUILayout.Label ("Sneeze Timer" + m_health.inRainTimer);
 	}
 
 }

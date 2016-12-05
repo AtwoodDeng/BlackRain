@@ -166,7 +166,7 @@ public class T_Water : MonoBehaviour
 		reflectionCamera.cullingMask = ~(1<<LayerMask.NameToLayer ("Water")) & m_LayerMask.value; // never render water layer
 		reflectionCamera.targetTexture = m_ReflectionTexture;
 		//GL.invertCulling = true;        //should be used but inverts the faces of the terrain
-//		GL.SetRevertBackfacing (true);    //obsolete
+		//		GL.SetRevertBackfacing (true);    //obsolete
 		GL.invertCulling = true;
 		reflectionCamera.transform.position = newpos;
 		Vector3 euler = cam.transform.eulerAngles;
@@ -174,7 +174,7 @@ public class T_Water : MonoBehaviour
 		reflectionCamera.Render();
 		reflectionCamera.transform.position = oldpos;
 		//GL.invertCulling = true;        //should be used but inverts the faces of the terrain
-//		GL.SetRevertBackfacing (false);   //obsolete
+		//		GL.SetRevertBackfacing (false);   //obsolete
 		GL.invertCulling = false;
 		Material[] materials = GetComponent<Renderer>().sharedMaterials;
 		foreach( Material mat in materials ) {

@@ -45,16 +45,17 @@ public class TalkableCharacter : Character {
 		if (mainPlot != null)
 			mainPlot.important = true;
 
-
-		foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>()) {
-			if (trans.name == "Head" && head == null)
-				head = trans;
+		if (head == null) {
+			foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>()) {
+				if (trans.name.Contains ("Head"))
+					head = trans;
 //			if (trans.name == "body") {
 //				if (trans.GetComponent<Collider> () == null) {
 //					trans.gameObject.AddComponent<CapsuleCollider> ();
 //					trans.gameObject.layer = LayerMask.NameToLayer ("PasserByBody");
 //				}
 //			}
+			}
 		}
 	}
 
@@ -71,7 +72,7 @@ public class TalkableCharacter : Character {
 				IsMainEnded = true;
 			}
 
-			if (IsTalking) {
+			if (IsTalking && gameObject.activeSelf) {
 				StartCoroutine (DelayBecomeTalkable (becomeTalkableDelay));
 			}
 		}
@@ -133,8 +134,10 @@ public class TalkableCharacter : Character {
 
 	public override Vector3 GetInteractCenter ()
 	{
-		if (head != null)
+		if (head != null) {
+//			Debug.Log ("Head " + head.transform.position + "offset " + InteractionPointOffset);
 			return head.transform.position + InteractionPointOffset;
+		}
 
 		return base.GetInteractCenter ();
 	}

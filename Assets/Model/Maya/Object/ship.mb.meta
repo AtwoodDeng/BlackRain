@@ -66,6 +66,24 @@ ModelImporter:
     100116: Light7
     100118: Light8
     100120: Light9
+    100122: quantBase
+    100124: quantBase1
+    100126: quantBase10
+    100128: quantBase11
+    100130: quantBase2
+    100132: quantBase3
+    100134: quantBase4
+    100136: quantBase5
+    100138: quantBase6
+    100140: quantBase7
+    100142: quantBase8
+    100144: quantBase9
+    100146: quants
+    100148: Cylinder034
+    100150: engine4
+    100152: engine5
+    100154: engine6
+    100156: engine7
     400000: boat_01
     400002: Box043
     400004: Box046
@@ -127,6 +145,24 @@ ModelImporter:
     400116: Light7
     400118: Light8
     400120: Light9
+    400122: quantBase
+    400124: quantBase1
+    400126: quantBase10
+    400128: quantBase11
+    400130: quantBase2
+    400132: quantBase3
+    400134: quantBase4
+    400136: quantBase5
+    400138: quantBase6
+    400140: quantBase7
+    400142: quantBase8
+    400144: quantBase9
+    400146: quants
+    400148: Cylinder034
+    400150: engine4
+    400152: engine5
+    400154: engine6
+    400156: engine7
     2300000: Box043
     2300002: Box046
     2300004: Cylinder029
@@ -183,6 +219,23 @@ ModelImporter:
     2300106: Light7
     2300108: Light8
     2300110: Light9
+    2300112: quantBase
+    2300114: quantBase1
+    2300116: quantBase10
+    2300118: quantBase11
+    2300120: quantBase2
+    2300122: quantBase3
+    2300124: quantBase4
+    2300126: quantBase5
+    2300128: quantBase6
+    2300130: quantBase7
+    2300132: quantBase8
+    2300134: quantBase9
+    2300136: Cylinder034
+    2300138: engine4
+    2300140: engine5
+    2300142: engine6
+    2300144: engine7
     3300000: Box043
     3300002: Box046
     3300004: Cylinder029
@@ -239,6 +292,23 @@ ModelImporter:
     3300106: Light7
     3300108: Light8
     3300110: Light9
+    3300112: quantBase
+    3300114: quantBase1
+    3300116: quantBase10
+    3300118: quantBase11
+    3300120: quantBase2
+    3300122: quantBase3
+    3300124: quantBase4
+    3300126: quantBase5
+    3300128: quantBase6
+    3300130: quantBase7
+    3300132: quantBase8
+    3300134: quantBase9
+    3300136: Cylinder034
+    3300138: engine4
+    3300140: engine5
+    3300142: engine6
+    3300144: engine7
     4300000: Cylinder030
     4300002: Cylinder031
     4300004: Box046
@@ -294,6 +364,23 @@ ModelImporter:
     4300104: Light2
     4300106: Light1
     4300108: Light
+    4300110: quantBase
+    4300112: quantBase1
+    4300114: quantBase2
+    4300116: quantBase3
+    4300118: quantBase4
+    4300120: quantBase5
+    4300122: quantBase6
+    4300124: quantBase7
+    4300126: quantBase8
+    4300128: quantBase9
+    4300130: quantBase10
+    4300132: quantBase11
+    4300134: Cylinder034
+    4300136: engine4
+    4300138: engine5
+    4300140: engine6
+    4300142: engine7
     7400000: ShipFly
     9500000: //RootNode
   materials:
@@ -352,89 +439,127 @@ ModelImporter:
         weight: 1
       - path: boat/boat_body/Box046
         weight: 1
-      - path: boat/boat_body/Cylinder029
-        weight: 1
       - path: boat/boat_body/Cylinder030
         weight: 1
       - path: boat/boat_body/Cylinder031
         weight: 1
+      - path: boat/boat_body/Cylinder034
+        weight: 1
       - path: boat/boat_body/Tube002
         weight: 1
-      - path: boat/quant
+      - path: boat/quants
         weight: 1
-      - path: boat/quant/pCube1
+      - path: boat/quants/quant
         weight: 1
-      - path: boat/quant1
+      - path: boat/quants/quant/pCube1
         weight: 1
-      - path: boat/quant1/pCube1 1
+      - path: boat/quants/quant1
         weight: 1
-      - path: boat/quant3
+      - path: boat/quants/quant1/pCube1 1
         weight: 1
-      - path: boat/quant3/pCube1 11
+      - path: boat/quants/quant3
         weight: 1
-      - path: boat/quant5
+      - path: boat/quants/quant3/pCube1 8
         weight: 1
-      - path: boat/quant5/pCube1 12
+      - path: boat/quants/quant5
         weight: 1
-      - path: boat/quant7
+      - path: boat/quants/quant5/pCube1 9
         weight: 1
-      - path: boat/quant7/pCube1 13
+      - path: boat/quants/quant8
         weight: 1
-      - path: boat/quant8
+      - path: boat/quants/quant8/pCube1 10
         weight: 1
-      - path: boat/quant8/pCube1 14
+      - path: boat/quants/quant9
         weight: 1
-      - path: boat/quant9
+      - path: boat/quants/quant9/pCube1 11
         weight: 1
-      - path: boat/quant9/pCube1 15
+      - path: boat/quants/quant11
         weight: 1
-      - path: boat/quant10
+      - path: boat/quants/quant11/pCube1 2
         weight: 1
-      - path: boat/quant10/pCube1 2
+      - path: boat/quants/quant12
         weight: 1
-      - path: boat/quant11
+      - path: boat/quants/quant12/pCube1 3
         weight: 1
-      - path: boat/quant11/pCube1 3
+      - path: boat/quants/quant13
         weight: 1
-      - path: boat/quant12
+      - path: boat/quants/quant13/pCube1 4
         weight: 1
-      - path: boat/quant12/pCube1 4
+      - path: boat/quants/quant14
         weight: 1
-      - path: boat/quant13
+      - path: boat/quants/quant14/pCube1 5
         weight: 1
-      - path: boat/quant13/pCube1 5
+      - path: boat/quants/quant16
         weight: 1
-      - path: boat/quant14
+      - path: boat/quants/quant16/pCube1 6
         weight: 1
-      - path: boat/quant14/pCube1 6
+      - path: boat/quants/quant17
         weight: 1
-      - path: boat/quant15
+      - path: boat/quants/quant17/pCube1 7
         weight: 1
-      - path: boat/quant15/pCube1 7
+      - path: boat/quants/quantBase
         weight: 1
-      - path: boat/quant16
+      - path: boat/quants/quantBase1
         weight: 1
-      - path: boat/quant16/pCube1 8
+      - path: boat/quants/quantBase2
         weight: 1
-      - path: boat/quant17
+      - path: boat/quants/quantBase3
         weight: 1
-      - path: boat/quant17/pCube1 9
+      - path: boat/quants/quantBase4
         weight: 1
-      - path: boat/quant18
+      - path: boat/quants/quantBase5
         weight: 1
-      - path: boat/quant18/pCube1 10
+      - path: boat/quants/quantBase6
+        weight: 1
+      - path: boat/quants/quantBase7
+        weight: 1
+      - path: boat/quants/quantBase8
+        weight: 1
+      - path: boat/quants/quantBase9
+        weight: 1
+      - path: boat/quants/quantBase10
+        weight: 1
+      - path: boat/quants/quantBase11
         weight: 1
       - path: engine
         weight: 1
-      - path: engine1
+      - path: engine/engine 1
         weight: 1
-      - path: engine2
+      - path: engine/engine1
         weight: 1
-      - path: engine3
+      - path: engine/engine2
+        weight: 1
+      - path: engine/engine3
+        weight: 1
+      - path: Light
+        weight: 1
+      - path: Light/Light 1
+        weight: 1
+      - path: Light/Light1
+        weight: 1
+      - path: Light/Light2
+        weight: 1
+      - path: Light/Light3
+        weight: 1
+      - path: Light/Light4
+        weight: 1
+      - path: Light/Light5
+        weight: 1
+      - path: Light/Light6
+        weight: 1
+      - path: Light/Light7
+        weight: 1
+      - path: Light/Light8
+        weight: 1
+      - path: Light/Light9
+        weight: 1
+      - path: Light/Light10
+        weight: 1
+      - path: Light/Light11
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 10
     isReadable: 1
   meshes:
     lODScreenPercentages: []

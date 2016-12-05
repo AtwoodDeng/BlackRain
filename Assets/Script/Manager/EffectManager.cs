@@ -135,8 +135,8 @@ public class EffectManager : MBehavior {
 	bool IsInDamage = false;
 	void OnBeginDamage(LogicArg arg)
 	{
-		if (waterDropEffect != null && !isCameraLocked) {
-			waterDropEffect.enabled = true;
+		if (waterDropEffect != null ) {
+//			waterDropEffect.enabled = true;
 			DOTween.To( () => waterDropEffect.rate , (x) => waterDropEffect.rate = x , 1f , 0.2f );
 		}
 
@@ -155,18 +155,33 @@ public class EffectManager : MBehavior {
 
 	void OnUpdateDamageEffect()
 	{
+//		if (waterDropEffect != null) {
+////			if (MechanismManager.health.LostHealthRate < damgeAffectThreshod)
+////				waterDropEffect.enabled = false;
+////			else
+//			{
+////				waterDropEffect.enabled = true;
+////				waterDropEffect.rate = Mathf.Sqrt( (MechanismManager.health.LostHealthRate - damgeAffectThreshod) / ( 1f - damgeAffectThreshod) + 0.5f ) ;
+//			}
+//
+//		}
 		if (waterDropEffect != null) {
-//			if (MechanismManager.health.LostHealthRate < damgeAffectThreshod)
-//				waterDropEffect.enabled = false;
-//			else
+			if (isCameraLocked || NarrativeManager.Instance.IsDisplaying) {
+				Debug.Log ("Water Drop false");
+				waterDropEffect.enabled = false;
+			}else
 			{
-//				waterDropEffect.enabled = true;
-//				waterDropEffect.rate = Mathf.Sqrt( (MechanismManager.health.LostHealthRate - damgeAffectThreshod) / ( 1f - damgeAffectThreshod) + 0.5f ) ;
+				if (MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.UnderDamage) {
+					waterDropEffect.enabled = true;
+				} else if ( MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.UnderProtect) {
+					if (waterDropEffect.rate == 0)
+						waterDropEffect.enabled = false;
+				}
 			}
-
 		}
+
 		if (BlurEffect != null) {
-			if (isCameraLocked) {
+			if (isCameraLocked || NarrativeManager.Instance.IsDisplaying ) {
 				BlurEffect.enabled = false;
 			}else if (MechanismManager.health.LostHealthRate < damgeAffectThreshod )
 				BlurEffect.enabled = false;

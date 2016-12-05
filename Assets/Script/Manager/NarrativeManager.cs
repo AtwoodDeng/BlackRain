@@ -14,10 +14,10 @@ public class NarrativeManager : MBehavior {
 			if (m_Instance == null)
 				m_Instance = FindObjectOfType<NarrativeManager> ();
 			return m_Instance;}}
-	NarrativeManager() {
-		if (m_Instance == null)
-			m_Instance = this;
-	}
+//	NarrativeManager() {
+//		if (m_Instance == null)
+//			m_Instance = this;
+//	}
 
 	[SerializeField] float showUpTime=0.2f;
 	[SerializeField] KeyCode nextDialogKey;
@@ -371,6 +371,13 @@ public class NarrativeManager : MBehavior {
 
 			}
 		}
+	}
+
+	void OnGUI()
+	{
+//		GUILayout.Label ("");
+//		GUILayout.Label ("");
+//		GUILayout.Label ("is displaying " + Instance.IsDisplaying);
 	}
 }
 

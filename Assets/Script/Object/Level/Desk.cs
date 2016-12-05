@@ -64,7 +64,7 @@ public class Desk : MBehavior {
 		for( int i = 0 ; i < personNum ; ++i )
 		{
 			GameObject tem = personList[Random.Range(0,personList.Length)];
-			Debug.Log ("Set " + tem.name + " to true ");
+//			Debug.Log ("Set " + tem.name + " to true ");
 			Quaternion rotation = Quaternion.Euler(new Vector3 (0, i * angle + Random.Range (-angle / 4f, angle / 4f), 0));
 			tem.transform.localRotation = rotation;
 			tem.SetActive (true);

@@ -10,9 +10,9 @@
             xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
          <xmp:CreatorTool>Adobe Audition CC 2015.2 (Windows)</xmp:CreatorTool>
          <xmp:CreateDate>2016-11-17T00:13:34-08:00</xmp:CreateDate>
-         <xmp:MetadataDate>2016-11-17T00:14:52-08:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2016-11-17T00:14:52-08:00</xmp:ModifyDate>
-         <xmpMM:InstanceID>xmp.iid:116452c0-ff2d-7248-9bba-616417786bd9</xmpMM:InstanceID>
+         <xmp:MetadataDate>2016-11-21T12:55:31-08:00</xmp:MetadataDate>
+         <xmp:ModifyDate>2016-11-21T12:55:31-08:00</xmp:ModifyDate>
+         <xmpMM:InstanceID>xmp.iid:6f8171fa-94a5-ea41-ad49-9747cc939a09</xmpMM:InstanceID>
          <xmpMM:DocumentID>xmp.did:46f49f65-c49a-0d49-a38a-304b09f7f863</xmpMM:DocumentID>
          <xmpMM:OriginalDocumentID>xmp.did:ea928367-836f-324f-880c-da0b3e519222</xmpMM:OriginalDocumentID>
          <xmpMM:History>
@@ -42,6 +42,20 @@
                   <stEvt:action>saved</stEvt:action>
                   <stEvt:instanceID>xmp.iid:116452c0-ff2d-7248-9bba-616417786bd9</stEvt:instanceID>
                   <stEvt:when>2016-11-17T00:14:52-08:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition CC 2015.2 (Windows)</stEvt:softwareAgent>
+                  <stEvt:changed>/</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:0f70248d-6ede-224d-a827-8b0deff09edf</stEvt:instanceID>
+                  <stEvt:when>2016-11-21T12:55:31-08:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition CC 2015.2 (Windows)</stEvt:softwareAgent>
+                  <stEvt:changed>/metadata</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:6f8171fa-94a5-ea41-ad49-9747cc939a09</stEvt:instanceID>
+                  <stEvt:when>2016-11-21T12:55:31-08:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition CC 2015.2 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>

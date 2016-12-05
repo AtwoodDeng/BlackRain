@@ -32,6 +32,7 @@ public class MainCharacter : MonoBehaviour {
 
 	Rigidbody m_Rigidbody;
 	CharacterController m_CharacterController;
+	[SerializeField] Transform model;
 
 	[SerializeField] float m_StationaryTurnSpeed = 180;
 	public float StationaryTurnSpeed
@@ -46,12 +47,22 @@ public class MainCharacter : MonoBehaviour {
 	[SerializeField] float m_MoveSpeedMultiplier = 1f;
 	public float MoveSpeed
 	{
-		get { return m_MoveSpeedMultiplier * MechanismManager.health.HealthRate; }
+//		get { return m_MoveSpeedMultiplier * MechanismManager.health.HealthRate; }
+		get { return m_MoveSpeedMultiplier ; }
+	}
+	/// <summary>
+	/// The speed for the passerby and girl to follow
+	/// </summary>
+	/// <value>The follow speed.</value>
+	public float FollowSpeed
+	{
+		get { return MoveSpeed * 0.96f; }
 	}
 	[SerializeField] float m_RunSpeedMultiplier = 3f;
 	public float RunSpeed
 	{
-		get { return m_RunSpeedMultiplier * ( 0.6f + MechanismManager.health.HealthRate * 0.4f ) ; }
+//		get { return m_RunSpeedMultiplier * ( 0.6f + MechanismManager.health.HealthRate * 0.4f ) ; }
+		get { return m_RunSpeedMultiplier; }
 	}
 	[SerializeField] CF.CameraBot.CameraBot cameraBot;
 	private float oriCamBotSensity;
@@ -93,6 +104,14 @@ public class MainCharacter : MonoBehaviour {
 		}
 	}
 
+	public bool IsFocus{
+		get { return m_isFocus; }
+	}
+	bool m_isFocus = false;
+	bool m_isDisplay = false;
+	bool m_isSneeze = false;
+	bool m_isBreath = false;
+
 
 	[SerializeField] Animator m_animator;
 
@@ -115,6 +134,9 @@ public class MainCharacter : MonoBehaviour {
 		if ( m_animator != null )
 			m_animator = GetComponentInChildren<Animator> ();
 
+		if (model != null) {
+		}
+
 		cameraBot.InputSetting.Sensitive = CameraSensity;
 		oriCamBotSensity = CameraSensity;
 	}
@@ -129,6 +151,8 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.UnlockCamera] += OnUnlockCamer;
 		M_Event.logicEvents [(int)LogicEvents.FocusCamera] += OnFocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] += OnUnfocusCamera;
+		M_Event.logicEvents [(int)LogicEvents.Sneeze] += OnSneeze;
+		M_Event.logicEvents [(int)LogicEvents.Breath] += OnBreath;
 	}
 
 	void OnDisable()
@@ -141,10 +165,43 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.UnlockCamera] -= OnUnlockCamer;
 		M_Event.logicEvents [(int)LogicEvents.FocusCamera] -= OnFocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
+		M_Event.logicEvents [(int)LogicEvents.Sneeze] -= OnSneeze;
+		M_Event.logicEvents [(int)LogicEvents.Breath] -= OnBreath;
+	}
+
+	void OnBreath( LogicArg arg )
+	{
+		m_animator.SetTrigger ("Breath");
+		Moveable = false;
+		m_isBreath = true;
+		Sequence seq = DOTween.Sequence ();
+		seq.AppendInterval (1.5f);
+		seq.AppendCallback (delegate() {
+			if ( !m_isFocus && !m_isDisplay) {
+				Moveable = true;
+				m_isBreath = false;
+			}
+		});
+
+	}
+
+	void OnSneeze( LogicArg arg )
+	{
+		m_animator.SetTrigger ("Sneeze");
+		Moveable = false;
+		m_isSneeze = true;
+		Sequence seq = DOTween.Sequence ();
+		seq.AppendInterval (2f);
+		seq.AppendCallback (delegate() {
+			if ( !m_isFocus && !m_isDisplay) {
+				Moveable = true;
+				m_isSneeze = false;
+			}
+		});
 	}
 
 
-	bool m_isFocus;
+
 	void OnFocusCamera( LogicArg arg )
 	{
 		m_isFocus = true;
@@ -187,10 +244,12 @@ public class MainCharacter : MonoBehaviour {
 				character.MoveCamera (m_MainCamera);
 				cameraBot.enabled = false;
 				Moveable = false;
+				m_isDisplay = true;
 			} else {
 			
 				if (plot != null && plot.lockCamera) {
 					Moveable = false;
+					m_isDisplay = true;
 					CameraNarrativeSensity = 0.03f;
 
 				}
@@ -207,6 +266,7 @@ public class MainCharacter : MonoBehaviour {
 		if (!m_isFocus) {
 			Moveable = true;
 			cameraBot.enabled = true;
+			m_isDisplay = false;
 		}
 		CameraNarrativeSensity = 1f;
 //		m_UseHeadBob = true;
@@ -254,6 +314,14 @@ public class MainCharacter : MonoBehaviour {
 //				OnDeathEnd ();
 //			}
 //		}
+
+		if (Input.GetKey (KeyCode.LeftControl)  && 
+			Input.GetKeyDown (KeyCode.K)) {
+			if (model != null) {
+				Debug.Log ("Set model");
+				model.gameObject.SetActive(!model.gameObject.activeSelf);
+			}
+		}
 	}
 
 
@@ -282,7 +350,7 @@ public class MainCharacter : MonoBehaviour {
 		else
 		{
 			// we use world-relative directions in the case of no main camera
-			m_Move = v*Vector3.forward + h*Vector3.right;
+			m_Move = v * Vector3.forward + h * Vector3.right;
 		}
 			
 		#if !MOBILE_INPUT

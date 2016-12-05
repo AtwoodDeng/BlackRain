@@ -3,18 +3,22 @@ using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Title : MBehavior {
 
 	[SerializeField] Text title;
 	[SerializeField] Image white;
 	[SerializeField] Image[] logos;
+	[SerializeField] Sprite[] startButtonSprite;
 	[SerializeField] float logoShowTime = 5f;
 	[SerializeField] float fadeTime = 2f;
 	[SerializeField] AudioSource titleBGM;
 	[SerializeField] AudioSource titleRain;
 	[SerializeField] AudioSource startGameSound ;
 	[SerializeField] RectTransform cursorTransform;
+	[SerializeField] Button startButton;
+	[SerializeField] Text languageText;
 
 	protected override void MStart ()
 	{
@@ -35,10 +39,12 @@ public class Title : MBehavior {
 
 		if (index <= logos.Length) {
 			timer -= Time.deltaTime;
-			if (timer < 0 || Input.GetMouseButtonUp (0) || Input.GetMouseButtonUp (1)) {
+			if (timer < 0 || CrossPlatformInputManager.GetButtonDown("SkipTitle") ) {
 				timer = logoShowTime;
-				if (index > 0)
+				if (index > 0) {
+					logos [index - 1].DOKill ();
 					logos [index - 1].DOFade (0, fadeTime);
+				}
 				if (index < logos.Length)
 					logos [index].DOFade (1f, fadeTime).SetDelay(fadeTime);
 				else
@@ -74,5 +80,17 @@ public class Title : MBehavior {
 		// RectTransformUtility.ScreenPointToLocalPointInRectangle (UICanvas.GetComponent<RectTransform>(), InteractManager.FocusPoint, Camera.main, out pos);
 
 		cursorTransform.position = InteractManager.FocusPoint;
+	}
+
+	public void OnSwitchLangage()
+	{
+		if (LogicManager.Language == LogicManager.GameLanguage.English)
+			LogicManager.ChangeLanguageTo (LogicManager.GameLanguage.Chinese);
+		else if (LogicManager.Language == LogicManager.GameLanguage.Chinese)
+			LogicManager.ChangeLanguageTo (LogicManager.GameLanguage.English);
+	
+		languageText.text = (LogicManager.Language == LogicManager.GameLanguage.English) ? "简体中文" : "English";
+
+		startButton.image.sprite = (LogicManager.Language == LogicManager.GameLanguage.English) ? startButtonSprite [0] : startButtonSprite [1];
 	}
 }

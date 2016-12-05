@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MBehavior {
 
@@ -53,8 +54,11 @@ public class UIManager : MBehavior {
 	public Image brokenMusicPlayer;
 	[SerializeField] float musicHide = -300f;
 
-
-
+	public RectTransform Menu;
+	public Text languageText;
+	public Text MenuMainMenuButtonText;
+	public Text MenuBackButtonText;
+	public Text MenuLanguageTips;
 
 
 	[System.Serializable]
@@ -111,6 +115,8 @@ public class UIManager : MBehavior {
 		M_Event.RegisterEvent (LogicEvents.PickUpMusicPlayer, OnShowBrokenMusicPlayer);
 //		M_Event.RegisterEvent (LogicEvents.InvisibleFromPlayer, OnHideMusicPlayer );
 		M_Event.RegisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
+		M_Event.RegisterEvent (LogicEvents.PauseGame, OnPause);
+		M_Event.RegisterEvent (LogicEvents.UnpauseGame, OnUnpause);
 	}
 
 	protected override void MOnDisable ()
@@ -129,6 +135,9 @@ public class UIManager : MBehavior {
 		M_Event.UnregisterEvent (LogicEvents.PickUpMusicPlayer, OnShowBrokenMusicPlayer);
 //		M_Event.UnregisterEvent (LogicEvents.InvisibleFromPlayer, OnHideMusicPlayer );
 		M_Event.UnregisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
+		M_Event.UnregisterEvent (LogicEvents.PauseGame, OnPause);
+		M_Event.UnregisterEvent (LogicEvents.UnpauseGame, OnUnpause);
+	
 	}
 
 	void OnShowBrokenMusicPlayer( LogicArg arg )
@@ -154,7 +163,7 @@ public class UIManager : MBehavior {
 
 	void OnBeginRun( LogicArg arg )
 	{
-		FadeEnergy (1f, 0.2f);
+//		FadeEnergy (1f, 0.2f);
 
 		cursorImage.sprite = runSprite;
 
@@ -162,7 +171,7 @@ public class UIManager : MBehavior {
 
 	void OnEndRun( LogicArg arg )
 	{
-		FadeEnergy (0, 2f);
+//		FadeEnergy (0, 2f);
 		cursorImage.sprite = normalSprite;
 	}
 
@@ -221,6 +230,8 @@ public class UIManager : MBehavior {
 		HideThought ();
 
 		HideMusicPlayer ( 0 );
+
+		Menu.gameObject.SetActive (false);
 	}
 
 	bool isThoughtOn = true;
@@ -303,7 +314,7 @@ public class UIManager : MBehavior {
 //			ending.DOScale (0.01f, 1f).From ();
 			endingBack.DOFade (0.45f, 2f);
 			endingBack.DOFade (1f, 5f).SetDelay (25f);
-			endingCredit.transform.DOMoveY (1300f, 30f).OnComplete( delegate() {
+			endingCredit.transform.DOMoveY (1600f, 30f).OnComplete( delegate() {
 				M_Event.FireLogicEvent(LogicEvents.EndCredit, new LogicArg(this));	
 			});
 			ending.gameObject.SetActive (true);
@@ -328,11 +339,18 @@ public class UIManager : MBehavior {
 		base.MUpdate ();
 		UpdateInteractTips ();
 		UpdateCursor ();
-		UpdateEnergy ();
+//		UpdateEnergy ();
 		UpdateThought ();
 
 		if (Input.GetKeyDown (KeyCode.M) && Input.GetKey (KeyCode.LeftControl)) {
-			ShowMusicPlayer (1f);
+//			ShowMusicPlayer (1f);
+			OnSwitchMusicPlayer();
+		}
+
+		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.L)) {
+			Debug.Log (cursorImage.gameObject.activeSelf);
+			cursorImage.gameObject.SetActive (!cursorImage.gameObject.activeSelf);
+			EnergyFrame.gameObject.SetActive (!EnergyFrame.gameObject.activeSelf);
 		}
 	}
 
@@ -404,5 +422,56 @@ public class UIManager : MBehavior {
 	public void EndGame()
 	{
 		M_Event.FireLogicEvent (LogicEvents.EndGame, new LogicArg (this));
+	}
+
+	public void OnPause( LogicArg arg )
+	{
+		InitMenu ();
+	}
+
+
+	public void InitMenu( )
+	{
+		Menu.gameObject.SetActive (true);
+		UpdateLanguageText ();
+	}
+	public void UpdateLanguageText()
+	{
+		languageText.text = (LogicManager.Language == LogicManager.GameLanguage.English) ? "简体中文" : "English";
+		MenuMainMenuButtonText.text = (LogicManager.Language == LogicManager.GameLanguage.English) ? "MAIN MENU" : "主菜单";
+		MenuBackButtonText.text = (LogicManager.Language == LogicManager.GameLanguage.English) ? "BACK" : "返回";
+		MenuLanguageTips.text = (LogicManager.Language == LogicManager.GameLanguage.English) ? "LANGUAGE" : "语言";
+	}
+
+	public void BackToTitle()
+	{
+		SceneManager.LoadScene ("Title");
+	}
+
+
+	public void OnUnpause( LogicArg arg )
+	{
+		CloseMenu ();
+	}
+
+	public void BackToGame()
+	{
+		M_Event.FireLogicEvent (LogicEvents.UnpauseGame, new LogicArg(this));
+	}
+
+	public void ChangeLanguage()
+	{
+		if (LogicManager.Language == LogicManager.GameLanguage.English) {
+			LogicManager.ChangeLanguageTo (LogicManager.GameLanguage.Chinese);
+		} else if (LogicManager.Language == LogicManager.GameLanguage.Chinese) {
+			LogicManager.ChangeLanguageTo (LogicManager.GameLanguage.English);
+		}
+
+		UpdateLanguageText ();
+	}
+
+	public void CloseMenu(  )
+	{
+		Menu.gameObject.SetActive (false);
 	}
 }

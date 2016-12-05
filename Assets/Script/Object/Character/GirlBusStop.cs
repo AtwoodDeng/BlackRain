@@ -79,11 +79,10 @@ public class GirlBusStop : TalkableCharacter {
 	{
 		m_stateMachine.AddEnter (GirlState.Init, delegate() {
 			m_agent.speed = 0;
-			Debug.Log("Set Spped to 0 ");
 		});
 
 		m_stateMachine.AddEnter (GirlState.Walk, delegate() {
-			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.8f;
+			m_agent.speed = MainCharacter.Instance.FollowSpeed;
 		});
 		m_stateMachine.AddUpdate (GirlState.Walk, delegate() {
 			if ( isInRain )
@@ -136,7 +135,7 @@ public class GirlBusStop : TalkableCharacter {
 			}
 		});
 		m_stateMachine.AddUpdate (GirlState.WalkWithUmbrella, delegate() {
-			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.88f;
+			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.96f;
 
 			if ( !m_IsPlayerIn && LogicManager.Instance.State < LogicManager.GameState.WalkOutStreetFour)
 			{
@@ -198,6 +197,10 @@ public class GirlBusStop : TalkableCharacter {
 			m_agent.SetDestination (transform.position + forward * -5f);	
 		});
 
+		m_stateMachine.AddEnter (GirlState.WalkAway, delegate() {
+			gameObject.SetActive( false );	
+		});
+
 
 		m_stateMachine.State = GirlState.Init;
 	}
@@ -233,7 +236,7 @@ public class GirlBusStop : TalkableCharacter {
 		} else if (arg.type == LogicEvents.EnterStone) {
 			DisplayDialog (stonePlot);
 		} else if (arg.type == LogicEvents.ForceGirlLeave) {
-			MechanismManager.health.SetHealthToMin ();
+//			MechanismManager.health.SetHealthToMin ();
 			Leave ();
 		} else if (arg.type == LogicEvents.PlayMusic) {
 //			ReactToMusic (arg);
@@ -350,12 +353,12 @@ public class GirlBusStop : TalkableCharacter {
 			m_IsPlayerIn = false;
 	}
 
-//	void OnGUI()
-//	{
+	void OnGUI()
+	{
 //		GUILayout.Label ("");
 //		GUILayout.Label ("GirlState" + m_stateMachine.State);
 //		GUILayout.Label ("Girl is end talking " + m_realTalking);
-//	}
+	}
 
 //	void ReactToMusic( LogicArg arg )
 //	{
@@ -432,8 +435,10 @@ public class GirlBusStop : TalkableCharacter {
 	void Leave ( )
 	{
 		Sequence seq = DOTween.Sequence ();
-		seq.AppendInterval (5f);
+		seq.AppendInterval (2f);
 		seq.AppendCallback (delegate() {
+			Debug.Log("Leave Player");
+			m_stateMachine.State = GirlState.WalkAway;
 			M_Event.FireLogicEvent (LogicEvents.InvisibleFromPlayer, new LogicArg (this));
 			M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM, new LogicArg (this));
 		});

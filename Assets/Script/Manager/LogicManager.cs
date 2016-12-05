@@ -6,7 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
-public class LogicManager : MBehavior {
+public class LogicManager : MonoBehaviour {
 
 	static LogicManager m_Instance;
 	public static LogicManager Instance{ 
@@ -23,11 +23,23 @@ public class LogicManager : MBehavior {
 		English,
 		Chinese,
 	}
-	[SerializeField] GameLanguage m_language;
+	static GameLanguage m_language ;
 	static public GameLanguage Language{
-		get { return Instance.m_language; }
+		get { return  m_language; }
 	}
+	static public void ChangeLanguageTo( GameLanguage language )
+	{
+		m_language = language;
+	}
+	[SerializeField] float soundVolume;
 
+	public static bool isGamePaused
+	{
+		get {
+			return m_isGamePaused;
+		}
+	}
+	static bool m_isGamePaused=false;
 
 
 	public enum GameState
@@ -73,11 +85,13 @@ public class LogicManager : MBehavior {
 		WalkAcrossRoadWithGirl = 51,
 		DepartFromGirl = 54,
 		BeginShip = 56,
+		PickUpMusicPlayer = 59,
 
 
 		WalkInStreetColorful = 70,
 
 		BackToApartment = 80,
+		TalkWithFakeGirl = 81,
 
 		PlayEndAnimation = 82,
 		ShowCredit = 85,
@@ -103,7 +117,7 @@ public class LogicManager : MBehavior {
 	}
 
 	// Use this for initialization
-	protected override void MAwake ()
+	void Awake()
 	{
 		if (m_Instance == null)
 			m_Instance = this;
@@ -115,19 +129,21 @@ public class LogicManager : MBehavior {
 
 		InitStateMachine ();
 
+//		PlaySoundOnEvent[] s = FindObjectsOfType<PlaySoundOnEvent> ();
+//		foreach (PlaySoundOnEvent e in s)
+//			Debug.Log (e.name);
+
 	}
 
 
-	protected override void MStart ()
+	void Start()
 	{
-		base.MStart ();
 
 		M_Event.FireLogicEvent (LogicEvents.LockCamera, new LogicArg (this));
 	}
 
-	protected override void MUpdate ()
+	void Update()
 	{
-		base.MUpdate ();
 
 		// TODO: flexible input
 //		if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(1) ) {
@@ -141,6 +157,13 @@ public class LogicManager : MBehavior {
 			
 		if ( CrossPlatformInputManager.GetButtonUp( "LockCam" ) ) {
 			M_Event.FireLogicEvent (LogicEvents.LockCamera, new LogicArg (this));
+		}
+
+		if (CrossPlatformInputManager.GetButtonDown ("PauseGame")) {
+			if (isGamePaused)
+				OnUnpauseGame ( true );
+			else
+				OnPauseGame ();
 		}
 
 		// for test
@@ -159,29 +182,27 @@ public class LogicManager : MBehavior {
 			m_stateMachine.State = GameState.ShowCredit;
 		}
 
-
 		if (Input.GetKeyDown (KeyCode.I) && Input.GetKey(KeyCode.LeftControl) ) {
 			m_stateMachine.State = GameState.BeginShip;
 			M_Event.FireLogicEvent (LogicEvents.InvisibleFromPlayer, new LogicArg (this));
 		}
 
-//		if (Input.GetKeyDown (KeyCode.Space)) {
-//			M_Event.FireLogicEvent (LogicEvents.SwitchThoughtBox, new LogicArg (this));
-//		}
+		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.E)) {
+			EffectManager effectManager = FindObjectOfType<EffectManager> ();
+			effectManager.enabled = !effectManager.isActiveAndEnabled;
+		}
 
 		m_stateMachine.Update ();
 	}
 
-	protected override void MOnEnable ()
+	void OnEnable()
 	{
-		base.MOnEnable ();
 		for (int i = 0; i < M_Event.logicEvents.Length; ++i)
 			M_Event.logicEvents [i] += OnEvent;
 	}
 
-	protected override void MOnDisable ()
+	void OnDisable()
 	{
-		base.MOnDisable ();
 		for (int i = 0; i < M_Event.logicEvents.Length; ++i)
 			M_Event.logicEvents [i] -= OnEvent;
 	}
@@ -189,6 +210,26 @@ public class LogicManager : MBehavior {
 	void OnEvent(LogicArg arg)
 	{
 		m_stateMachine.OnEvent (arg.type);
+		if (arg.type == LogicEvents.UnpauseGame) {
+			OnUnpauseGame (false);
+		}
+	}
+
+	void OnPauseGame()
+	{
+		m_isGamePaused = true;
+		MBehavior.isPaused = true;
+		DOTween.PauseAll ();
+		M_Event.FireLogicEvent (LogicEvents.PauseGame, new LogicArg (this));
+	}
+
+	void OnUnpauseGame( bool isFire )
+	{
+		m_isGamePaused = false;
+		MBehavior.isPaused = false;
+		DOTween.PlayAll ();
+		if ( isFire )
+		M_Event.FireLogicEvent (LogicEvents.UnpauseGame, new LogicArg (this));
 	}
 
 	void InitStateMachine()
@@ -207,6 +248,7 @@ public class LogicManager : MBehavior {
 //		m_stateMachine.BlindTimeStateChange (GameState.WalkAcrossRoadWithGirl, GameState.DepartFromGirl, 10f);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.InvisibleFromPlayer, GameState.DepartFromGirl, GameState.BeginShip);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.EnterEnd, GameState.WalkInStreetColorful, GameState.PlayEndAnimation);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.EndTalkWithFakeGirl, GameState.BackToApartment, GameState.TalkWithFakeGirl);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.EndCredit, GameState.ShowCredit, GameState.End);
 
 
@@ -222,6 +264,7 @@ public class LogicManager : MBehavior {
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetFour, GameState.WalkInStreetFour);
 		m_stateMachine.BlindFromEveryState (LogicEvents.GirlSayPlayMusic, GameState.ListenToMusic);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetFourEnd, GameState.WalkOutStreetFour);
+		m_stateMachine.BlindFromEveryState (LogicEvents.PickUpMusicPlayer, GameState.PickUpMusicPlayer);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetColorful, GameState.WalkInStreetColorful);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterApartment, GameState.BackToApartment);
 		m_stateMachine.BlindFromEveryState (LogicEvents.WalkInApartment, GameState.PlayEndAnimation);
@@ -231,14 +274,16 @@ public class LogicManager : MBehavior {
 			M_Event.FireLogicEvent(LogicEvents.TrafficGreenLight,new LogicArg(this));
 		});
 
-
 		m_stateMachine.AddEnter (GameState.BeginShip, delegate() {
-			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , new LogicArg(this));	
+			LogicArg arg = new LogicArg(this);
+			arg.AddMessage(M_Event.EVENT_BGM_FADE_TIME,0);
+			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , arg );	
 		});
 
-
-		m_stateMachine.AddEnter (GameState.BackToApartment, delegate() {
-			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , new LogicArg(this));	
+		m_stateMachine.AddEnter (GameState.TalkWithFakeGirl, delegate() {
+			LogicArg arg = new LogicArg(this);
+			arg.AddMessage(M_Event.EVENT_BGM_FADE_TIME,5f);
+			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , arg );	
 		});
 
 		m_stateMachine.AddEnter (GameState.End, delegate() {
@@ -255,7 +300,7 @@ public class LogicManager : MBehavior {
 
 	void OnGUI()
 	{
-		GUILayout.Label ("State " + State);
+//		 GUILayout.Label ("State " + State);
 	}
 	
 }

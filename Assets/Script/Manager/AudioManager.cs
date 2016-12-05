@@ -33,6 +33,7 @@ public class AudioManager : MBehavior {
 	{
 		public LogicEvents type;
 		public AudioClip clip;
+		public bool switchBGM;
 	};
 	[SerializeField] LogicClipPair[] LogicClipPairs;
 
@@ -134,7 +135,10 @@ public class AudioManager : MBehavior {
 		foreach (LogicClipPair pair in LogicClipPairs) {
 			if (pair.type == logicEvent.type) {
 //				StartCoroutine(PlayerClip(pair.clip));
-				SwitchBGM( pair.clip , false );
+				if (pair.switchBGM)
+					SwitchBGM (pair.clip, false);
+				else
+					StartCoroutine (PlayerClip (pair.clip));
 			}
 		}
 	}
@@ -165,13 +169,18 @@ public class AudioManager : MBehavior {
 
 	void OnDefaultBGM( LogicArg arg )
 	{
-		SwitchBGM (defaultBGM , false);
+		float fadeTime = -1f;
+		if (arg.ContainMessage (M_Event.EVENT_BGM_FADE_TIME)) {
+			fadeTime = (float)arg.GetMessage (M_Event.EVENT_BGM_FADE_TIME);
+		}
+		SwitchBGM (defaultBGM , false , fadeTime);
 	}
 
-	void SwitchBGM( AudioClip to , bool randomPlay )
+	void SwitchBGM( AudioClip to , bool randomPlay , float duration = -1f )
 	{
-		if ( to != null )
-			Debug.Log ("Switch BGM " + to.name);
+		if (duration < 0)
+			duration = bgmFadeTime;
+		
 		if (bgmSource == null) {
 			bgmSource = gameObject.AddComponent<AudioSource> ();
 			bgmSource.loop = true;
@@ -187,25 +196,28 @@ public class AudioManager : MBehavior {
 			bgmSwitchableSource.volume = 0.5f;
 			bgmSwitchableSource.spatialBlend = 0f;
 		}
+
 		if (bgmSource != null) {
 			if (to != defaultBGM) {
-				bgmSource.DOFade (0.2f, bgmFadeTime);
+				bgmSource.DOFade (0.2f, duration);
 			} else {
-				bgmSource.DOFade (0.5f, bgmFadeTime);
+				bgmSource.DOFade (0.5f, duration);
 			}
 		}
 		if (bgmSwitchableSource != null) {
 			if (to != defaultBGM) {
-				bgmSwitchableSource.DOFade (0, bgmFadeTime).OnComplete (delegate {
+				bgmSwitchableSource.DOFade (0, duration).OnComplete (delegate {
 					bgmSwitchableSource.clip = to;
 					if (randomPlay)
 						bgmSwitchableSource.time = Random.Range (0, bgmSwitchableSource.clip.length);
 					bgmSwitchableSource.Play ();
-					bgmSwitchableSource.DOFade (0.5f, bgmFadeTime);
+					bgmSwitchableSource.DOFade (0.5f, duration);
 				});
 			} else {
-				bgmSwitchableSource.Stop ();
-				bgmSwitchableSource.clip = null;
+
+				bgmSwitchableSource.DOFade (0, duration).OnComplete (delegate {
+					bgmSwitchableSource.clip = null;
+				});
 			}
 		}
 

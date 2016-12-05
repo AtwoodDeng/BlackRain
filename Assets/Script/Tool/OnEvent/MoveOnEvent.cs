@@ -12,6 +12,7 @@ public class MoveOnEvent : OnEventResponsor {
 	public override void OnEvent (LogicArg arg)
 	{
 		base.OnEvent (arg);
+		Debug.Log ("Move");
 		target.DOMove (move, Time).SetRelative (relative).OnComplete (delegate() {
 			if ( disableOnEnd )
 				target.gameObject.SetActive( false );	

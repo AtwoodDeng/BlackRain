@@ -6,7 +6,7 @@ public class Ship : MBehavior {
 
 	[SerializeField] RangeTarget[] targets;
 	[SerializeField] GameObject ship;
-	[SerializeField] GameObject flower;
+	[SerializeField] GameObject[] flowers;
 	int index = 0 ;
 	Vector3 temTarget
 	{
@@ -64,7 +64,9 @@ public class Ship : MBehavior {
 
 	void OnFlower( LogicArg arg )
 	{
-//		flower.SetActive (true);
+		foreach (GameObject f in flowers) {
+			f.SetActive (true);
+		}
 
 		Sequence seq = DOTween.Sequence ();
 

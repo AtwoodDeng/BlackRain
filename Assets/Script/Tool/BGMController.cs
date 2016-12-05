@@ -5,6 +5,7 @@ using System.Collections;
 public class BGMController : MBehavior {
 
 	[SerializeField] AudioClip switchBGM;
+	[SerializeField] bool isExitSwitchToDefault = true;
 
 	protected override void MAwake ()
 	{
@@ -23,7 +24,7 @@ public class BGMController : MBehavior {
 
 	void OnTriggerExit(Collider col)
 	{
-		if (col.tag == "MainCamera") {
+		if (col.tag == "MainCamera" && isExitSwitchToDefault ) {
 			M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM, new LogicArg (this));
 		}
 	}

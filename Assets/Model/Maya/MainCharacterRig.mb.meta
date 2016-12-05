@@ -51,6 +51,8 @@ ModelImporter:
     7400002: Normal
     7400004: Move
     7400006: Sit
+    7400008: Sneeze
+    7400010: Breath
     9500000: //RootNode
     13700000: Head
     13700002: body
@@ -236,6 +238,110 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 160
       lastFrame: 180
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bot
+        weight: 1
+      - path: bot/knee
+        weight: 1
+      - path: bot/knee/mid
+        weight: 1
+      - path: bot/knee/mid/chest
+        weight: 1
+      - path: bot/knee/mid/chest/neck
+        weight: 1
+      - path: bot/knee/mid/chest/neck/head
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Character/body
+        weight: 1
+      - path: Character/body/Head
+        weight: 1
+      - path: left1
+        weight: 1
+      - path: right1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Sneeze
+      takeName: Take 001
+      firstFrame: 190
+      lastFrame: 240
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bot
+        weight: 1
+      - path: bot/knee
+        weight: 1
+      - path: bot/knee/mid
+        weight: 1
+      - path: bot/knee/mid/chest
+        weight: 1
+      - path: bot/knee/mid/chest/neck
+        weight: 1
+      - path: bot/knee/mid/chest/neck/head
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Character/body
+        weight: 1
+      - path: Character/body/Head
+        weight: 1
+      - path: left1
+        weight: 1
+      - path: right1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Breath
+      takeName: Take 001
+      firstFrame: 250
+      lastFrame: 285
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

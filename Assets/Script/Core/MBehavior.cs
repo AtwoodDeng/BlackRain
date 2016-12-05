@@ -3,6 +3,9 @@ using System.Collections;
 
 public class MBehavior : MonoBehaviour {
 
+	public static bool isPaused = false;
+	[SerializeField] bool isAffectByPause = true;
+
 	void Awake()
 	{
 		MAwake ();
@@ -15,7 +18,8 @@ public class MBehavior : MonoBehaviour {
 
 	void Update()
 	{
-		MUpdate ();
+		if ( !isPaused || !isAffectByPause )
+			MUpdate ();
 	}
 
 	void OnEnable()
@@ -30,20 +34,24 @@ public class MBehavior : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		MFixedUpdate ();
+		if ( !isPaused || !isAffectByPause )
+			MFixedUpdate ();
 	}
 
 	void OnCollisionEnter( Collision col )
 	{
+		if ( !isPaused || !isAffectByPause)
 		MOnCollisionEnter (  col );
 	}
 	void OnTriggerEnter(Collider col )
 	{
+		if ( !isPaused || !isAffectByPause)
 		MOnTriggerEnter (col);
 	}
 
 	void OnTriggerExit(Collider col )
 	{
+		if ( !isPaused || !isAffectByPause)
 		MOnTriggerExit (col);
 	}
 

@@ -250,6 +250,7 @@ public class NormalPasserBy : TalkableCharacter {
 			LockMove ();
 			gameObject.tag = "TrafficObstacle";
 		}
+
 		if ( col.tag == "Player")
 		{
 			m_IsPlayerIn = true;
@@ -263,7 +264,7 @@ public class NormalPasserBy : TalkableCharacter {
 			}
 
 			if (m_AISetting.type == Type.Friendly || m_AISetting.type == Type.ExtremFriendly ) {
-				m_agent.speed = MAgentSpeed * 0.7f;
+				m_agent.speed = MainCharacter.Instance.FollowSpeed;
 			}
 
 			if (m_AISetting.type == Type.Unfriendly) {
@@ -280,7 +281,11 @@ public class NormalPasserBy : TalkableCharacter {
 		if (col.tag == "Player") {
 			m_IsPlayerIn = false;
 
-			if ( ( m_AISetting.type == Type.Friendly || m_AISetting.type == Type.ExtremFriendly ) && IsOpenUmbrella ) {
+			if ( m_AISetting.type == Type.ExtremFriendly )  {
+				LockMove();
+			}
+
+			if ( ( m_AISetting.type == Type.Friendly ) && IsOpenUmbrella ) {
 				LockMove ();
 				Sequence seq = DOTween.Sequence ();
 				seq.AppendInterval (waitDuration);
@@ -319,8 +324,10 @@ public class NormalPasserBy : TalkableCharacter {
 		
 	protected override void OnEndDisplayDialog (LogicArg arg)
 	{
-		if ( IsTalking )
+		if (IsTalking) {
+			Debug.Log ("End DisplayDialog " + IsPlayerIn + m_AISetting.type);
 			RecoverMove ();
+		}
 		base.OnEndDisplayDialog (arg);
 	}
 
@@ -410,8 +417,9 @@ public class NormalPasserBy : TalkableCharacter {
 	{
 //		Debug.Log ("Recover Move " + MAgentSpeed );
 
-		if ( (m_AISetting.type == Type.ExtremFriendly || m_AISetting.type == Type.Friendly) && IsPlayerIn ){
-			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.85f;
+		if ( (m_AISetting.type == Type.ExtremFriendly || m_AISetting.type == Type.Friendly) ){
+			if ( IsPlayerIn )
+				m_agent.speed = MainCharacter.Instance.FollowSpeed;
 		} else {
 			m_agent.speed = MAgentSpeed;
 		}
