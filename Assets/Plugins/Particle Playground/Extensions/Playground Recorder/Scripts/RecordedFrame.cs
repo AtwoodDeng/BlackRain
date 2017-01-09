@@ -37,7 +37,7 @@ namespace ParticlePlayground {
 					playgroundParticles.playgroundCache.velocity[i],
 					playgroundParticles.playgroundCache.rotation[i],
 					playgroundParticles.playgroundCache.size[i],
-					playgroundParticles.particleCache[i].lifetime,
+					playgroundParticles.particleCache[i].remainingLifetime,
 					playgroundParticles.particleCache[i].startLifetime,
 					playgroundParticles.playgroundCache.life[i],
 					playgroundParticles.playgroundCache.birth[i],

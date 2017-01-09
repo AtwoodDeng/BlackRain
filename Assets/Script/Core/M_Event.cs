@@ -108,6 +108,16 @@ public enum LogicEvents
 
 	EndCredit = 160,
 
+	FilmShotOne = 180,
+	FilmShotTwo = 181,
+	FilmShotThree = 182,
+	FilmShotFour = 183,
+	FilmShotFive = 184,
+	FilmShotSix = 185,
+	FilmShotSeven = 186,
+	FilmShotEight = 187,
+	FilmShotNine = 188,
+
 }
 
 public class M_Event : MonoBehaviour {

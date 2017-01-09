@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class MPeople : MObject {
 
-	private NavMeshAgent m_agent;
-	public NavMeshAgent Agent{ get { 
+	private UnityEngine.AI.NavMeshAgent m_agent;
+	public UnityEngine.AI.NavMeshAgent Agent{ get { 
 			if (m_agent == null)
-				m_agent = GetComponent<NavMeshAgent> ();
+				m_agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 			return m_agent; } }
 
 }

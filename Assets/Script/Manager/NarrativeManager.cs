@@ -30,6 +30,8 @@ public class NarrativeManager : MBehavior {
 	Image m_backImage;
 	Image m_arrow;
 
+	bool m_test_ShowDialog = true;
+
 	private float backImageOriginalAlpha = 0;
 	List<DisplayPlot> PlotArray = new List<DisplayPlot>();
 	NarrativeDialog temDialog;
@@ -123,16 +125,18 @@ public class NarrativeManager : MBehavior {
 
 	void DisplayUnimportantDialog( NarrativeDialog dialog , DisplayPlot plot )
 	{
-		plot.otherSpeaker.clip = dialog.clip;
-		plot.otherSpeaker.Play ();
+		if (m_test_ShowDialog) {
+			plot.otherSpeaker.clip = dialog.clip;
+			plot.otherSpeaker.Play ();
 
 
-		GameObject smallDialog = Instantiate (smallDialogPrefab) as GameObject;
-		smallDialog.transform.SetParent (UIManager.Instance.transform);
-		Dialog dialogCom = smallDialog.GetComponent<Dialog> ();
+			GameObject smallDialog = Instantiate (smallDialogPrefab) as GameObject;
+			smallDialog.transform.SetParent (UIManager.Instance.transform);
+			Dialog dialogCom = smallDialog.GetComponent<Dialog> ();
 
-		if ( dialogCom != null )
-			dialogCom.Init (plot.character, dialog );
+			if (dialogCom != null)
+				dialogCom.Init (plot.character, dialog);
+		}
 
 	}
 
@@ -285,6 +289,10 @@ public class NarrativeManager : MBehavior {
 
 		if (dialogTimer > autoSkipTime && m_isDisplaying ) {
 			NextDialog ();
+		}
+
+		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.L)) {
+			m_test_ShowDialog = !m_test_ShowDialog;
 		}
 			
 //		if (temSpeaker != null && !temSpeaker.isPlaying) {

@@ -1510,7 +1510,7 @@ namespace ParticlePlayground {
 					// Catch up Shuriken particle lifetime with the update rate
 					if (Time.frameCount%particleSystems[i].updateRate!=0) {
 						for (int p = 0; p<particleSystems[i].particleCount; p++)
-							particleSystems[i].particleCache[p].lifetime = (particleSystems[i].playgroundCache.death[p]-particleSystems[i].playgroundCache.birth[p])-particleSystems[i].playgroundCache.lifetimeSubtraction[p];
+							particleSystems[i].particleCache[p].remainingLifetime = (particleSystems[i].playgroundCache.death[p]-particleSystems[i].playgroundCache.birth[p])-particleSystems[i].playgroundCache.lifetimeSubtraction[p];
 						particleSystems[i].isReadyForThreadedCalculations = false;
 						continue;
 					}

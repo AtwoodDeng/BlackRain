@@ -15,8 +15,9 @@ public class GirlBusStop : TalkableCharacter {
 	[SerializeField] Rigidbody ropeTop;
 	[SerializeField] Rigidbody ropeEnd;
 	[SerializeField] LayerMask damageMask;
-	NavMeshAgent m_agent;
+	UnityEngine.AI.NavMeshAgent m_agent;
 	[SerializeField] Animator m_animator;
+	[SerializeField] GameObject Model;
 	[System.Serializable]
 	public struct SoundSetting
 	{
@@ -53,7 +54,7 @@ public class GirlBusStop : TalkableCharacter {
 	{
 		base.MAwake ();
 		m_stateMachine = new AStateMachine<GirlState, LogicEvents> (GirlState.None);
-		m_agent = GetComponent<NavMeshAgent> ();
+		m_agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 //		NextTarget ();
 		m_animator = GetComponentInChildren<Animator> ();
 
@@ -75,6 +76,7 @@ public class GirlBusStop : TalkableCharacter {
 		}
 	}
 
+	float stateTimer = 0;
 	void InitStateMachine()
 	{
 		m_stateMachine.AddEnter (GirlState.Init, delegate() {
@@ -189,16 +191,29 @@ public class GirlBusStop : TalkableCharacter {
 
 		m_stateMachine.BlindFromEveryState (LogicEvents.ForceGirlLeave, GirlState.LeavePlayer);
 
+		m_stateMachine.AddEnter (GirlState.LeavePlayer, delegate() {
+			stateTimer = 0 ;		
+		});
+
 		m_stateMachine.AddUpdate (GirlState.LeavePlayer, delegate() {
 			Vector3 forward = Camera.main.transform.forward;
 			forward.y = 0;
 
 			m_agent.speed = 12f;
 			m_agent.SetDestination (transform.position + forward * -5f);	
+
+			stateTimer += Time.deltaTime;
+
+			if ( stateTimer > 2f )
+				m_stateMachine.State = GirlState.WalkAway;
 		});
 
 		m_stateMachine.AddEnter (GirlState.WalkAway, delegate() {
-			gameObject.SetActive( false );	
+			if ( Model != null )
+				Model.SetActive(false);
+			Model.SetActive( false );	
+			M_Event.FireLogicEvent (LogicEvents.InvisibleFromPlayer, new LogicArg (this));
+			M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM, new LogicArg (this));
 		});
 
 
@@ -237,7 +252,7 @@ public class GirlBusStop : TalkableCharacter {
 			DisplayDialog (stonePlot);
 		} else if (arg.type == LogicEvents.ForceGirlLeave) {
 //			MechanismManager.health.SetHealthToMin ();
-			Leave ();
+//			Leave ();
 		} else if (arg.type == LogicEvents.PlayMusic) {
 //			ReactToMusic (arg);
 		}

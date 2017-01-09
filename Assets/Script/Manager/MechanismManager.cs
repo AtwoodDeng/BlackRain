@@ -173,6 +173,7 @@ public class MechanismManager : MBehavior {
 		{
 			minHealth = _minHealth;
 			sneezeDuration = _sneezeDuration;
+			inRainTimer = 0.95f * _sneezeDuration;
 		}
 	};
 
@@ -273,7 +274,7 @@ public class MechanismManager : MBehavior {
 
 
 	void OnGUI(){
-		GUILayout.Label ("Sneeze Timer" + m_health.inRainTimer);
+//		GUILayout.Label ("Sneeze Timer" + m_health.inRainTimer);
 	}
 
 }

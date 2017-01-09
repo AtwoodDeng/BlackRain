@@ -81,7 +81,7 @@ public class TakePhotoCharacter : TalkableCharacter {
 
 		m_animator.speed = Random.Range (0.8f, 1.2f);
 
-		StartCoroutine (TakePhoto());
+		timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
 	}
 
 	protected override void MOnTriggerEnter (Collider col)
@@ -110,6 +110,33 @@ public class TakePhotoCharacter : TalkableCharacter {
 	public override Vector3 GetInteractCenter ()
 	{
 		return base.GetInteractCenter () + Vector3.up * 0.5f ;
+	}
+
+	float timer;
+	float lastTime = 0;
+
+	protected override void MUpdate ()
+	{
+		base.MUpdate ();
+
+		lastTime = timer;
+		timer -= Time.deltaTime;
+		if (timer < 0 && lastTime >= 0 ) {
+			if (takePhotoSetting.flashLight != null)
+				takePhotoSetting.flashLight.enabled = true;
+			if (takePhotoSetting.flashLightPar != null) {
+				takePhotoSetting.flashLightPar.startLifetime = takePhotoSetting.flashLightTime;
+				takePhotoSetting.flashLightPar.Emit (1);
+			}
+			if (flashLightAudioSource != null)
+				flashLightAudioSource.Play ();
+		}
+
+		if (timer < -takePhotoSetting.flashLightTime) {
+			if (takePhotoSetting.flashLight != null)
+				takePhotoSetting.flashLight.enabled = false;
+			timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
+		}
 	}
 
 	IEnumerator TakePhoto()

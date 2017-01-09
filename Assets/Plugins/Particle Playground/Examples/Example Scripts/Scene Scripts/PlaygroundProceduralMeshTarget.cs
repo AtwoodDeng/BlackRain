@@ -276,7 +276,7 @@ namespace UnityEngine {
 			mesh.normals = normales;
 			
 			mesh.RecalculateBounds();
-			mesh.Optimize();
+			;
 		}
 	}
 

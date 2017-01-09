@@ -6,7 +6,7 @@ public class GoodMan : TalkableCharacter {
 	[SerializeField] AudioClip showUpSound;
 	[SerializeField] float ShowUpOffset = 2f ;
 	[SerializeField] int hurtBeforeShowUp = 0;
-	[SerializeField] NavMeshAgent agent;
+	[SerializeField] UnityEngine.AI.NavMeshAgent agent;
 	[SerializeField] Vector3 leadDes;
 	[SerializeField] Vector3 goAwayDes;
 	[SerializeField] NarrativePlotScriptableObject goAwayPlot;

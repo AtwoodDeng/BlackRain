@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class NormalPasserBy : TalkableCharacter {
 
-	[SerializeField] protected NavMeshAgent m_agent;
+	[SerializeField] protected UnityEngine.AI.NavMeshAgent m_agent;
 	private float MAgentSpeed;
 	[SerializeField] Animator m_animator;
 	[SerializeField] NarrativePlotScriptableObject[] enterUmbrellaPlot;
@@ -82,7 +82,7 @@ public class NormalPasserBy : TalkableCharacter {
 		if (m_animator == null)
 			m_animator = GetComponentInChildren<Animator> ();
 		if (m_agent == null) {
-			m_agent = GetComponent<NavMeshAgent> ();
+			m_agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		}
 		{
 			m_umbrellaAudioSource = gameObject.AddComponent<AudioSource> ();

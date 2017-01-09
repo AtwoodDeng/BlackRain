@@ -15,6 +15,7 @@ public class InteractManager : MBehavior{
 	[SerializeField] float interactRange = 5f;
 	[SerializeField] LayerMask interactiveMask = -1;
 
+
 	Interactable s_Interactable;
 	Interactable tem_Interactable
 	{

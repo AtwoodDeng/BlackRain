@@ -18,6 +18,8 @@ namespace CF.CameraBot.Parts
 			}
 			set
 			{
+				if (float.IsNaN (value))
+					value = 0;
 				float laterDegree = Mathf.Repeat(value, 360f);
 				//if (laterDegree == 360f) laterDegree = 0f;
 				transform.localRotation = Quaternion.Euler(laterDegree, 0f, 0f);

@@ -3,12 +3,39 @@ guid: 7227c6f9623384a4a8e5fdeaf7cc7217
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: Box044
+    100004: Box045
+    100006: Cylinder032
+    100008: Cylinder033
+    100010: Cylinder034
+    100012: Tube003
+    400000: //RootNode
+    400002: Box044
+    400004: Box045
+    400006: Cylinder032
+    400008: Cylinder033
+    400010: Cylinder034
+    400012: Tube003
+    2300000: Box044
+    2300002: Box045
+    2300004: Cylinder032
+    2300006: Cylinder033
+    2300008: Cylinder034
+    2300010: Tube003
+    3300000: Box044
+    3300002: Box045
+    3300004: Cylinder032
+    3300006: Cylinder033
+    3300008: Cylinder034
+    3300010: Tube003
     4300000: Cylinder033
     4300002: Box044
     4300004: Cylinder034
     4300006: Cylinder032
     4300008: Tube003
     4300010: Box045
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
@@ -55,6 +82,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -65,7 +93,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
   humanoidOversampling: 1

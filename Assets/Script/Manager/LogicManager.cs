@@ -192,6 +192,45 @@ public class LogicManager : MonoBehaviour {
 			effectManager.enabled = !effectManager.isActiveAndEnabled;
 		}
 
+		if (Input.GetKey (KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt) ) {
+			if (Input.GetKeyDown (KeyCode.Alpha1)) {
+				Debug.Log ("Press One ALPHA");
+				M_Event.FireLogicEvent (LogicEvents.FilmShotOne, new LogicArg (this));
+				m_stateMachine.State = GameState.BackToApartment;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha2)) {
+				M_Event.FireLogicEvent (LogicEvents.FilmShotTwo, new LogicArg (this));
+				m_stateMachine.State = GameState.WalkInStreetTwo;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha3)) {
+				M_Event.FireLogicEvent (LogicEvents.FilmShotThree, new LogicArg (this));
+				m_stateMachine.State = GameState.WalkInStreetTwo;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha4)) {
+				M_Event.FireLogicEvent (LogicEvents.FilmShotFour, new LogicArg (this));
+				m_stateMachine.State = GameState.WalkInStreetThree;
+				Camera.main.fieldOfView = 60f;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha5)) {
+				M_Event.FireLogicEvent (LogicEvents.FilmShotFive, new LogicArg (this));
+				m_stateMachine.State = GameState.InBusStop;
+				Camera.main.fieldOfView = 20f;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha6)) {
+				M_Event.FireLogicEvent (LogicEvents.FilmShotSix, new LogicArg (this));
+				m_stateMachine.State = GameState.BackToApartment;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha7)) {
+				M_Event.FireLogicEvent (LogicEvents.FilmShotSeven, new LogicArg (this));
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha8))
+				M_Event.FireLogicEvent (LogicEvents.FilmShotEight, new LogicArg (this));
+			if (Input.GetKeyDown (KeyCode.Alpha9))
+				M_Event.FireLogicEvent (LogicEvents.FilmShotNine, new LogicArg (this));
+		}
+
+	
+
 		m_stateMachine.Update ();
 	}
 
@@ -291,7 +330,7 @@ public class LogicManager : MonoBehaviour {
 		});
 
 		m_stateMachine.AddEnter (GameState.PlayEndAnimation, delegate() {
-			m_MainCharacter.transform.DOMove(m_MainCharacter.transform.forward * m_MainCharacter.MoveSpeed * 4f , 4f ).SetRelative(true);
+			m_MainCharacter.transform.DOMove(m_MainCharacter.transform.forward * m_MainCharacter.MoveSpeed * 2f , 2f ).SetRelative(true);
 		});
 
 

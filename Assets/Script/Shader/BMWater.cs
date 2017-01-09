@@ -510,7 +510,7 @@ public class BMWater : MonoBehaviour
 		m_filter.sharedMesh = m_mesh;
 //		m_filter.mesh.RecalculateNormals ();
 //		m_filter.mesh.RecalculateBounds ();
-		m_filter.mesh.Optimize ();
+		;
 
 
 

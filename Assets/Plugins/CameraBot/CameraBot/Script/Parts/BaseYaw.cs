@@ -1,6 +1,7 @@
 ﻿//#define GIZMOS_DEBUG
 using UnityEngine;
 using Kit.Extend;
+using System;
 
 namespace CF.CameraBot.Parts
 {
@@ -20,6 +21,8 @@ namespace CF.CameraBot.Parts
 			}
 			set
 			{
+				if (float.IsNaN (value))
+					value = 0;
 				_degree = Mathf.Repeat(value, 360f);
 				transform.localRotation = Quaternion.Euler(0f, _degree, 0f);
 				if (!Application.isPlaying)

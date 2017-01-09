@@ -20,7 +20,7 @@ public class ThoughtManager : MBehavior {
 	private float tiredTimer = 0;
 
 	List<Thought> thoughtsForState = new List<Thought>();
-
+	bool m_test_showThought = true;
 
 	protected override void MStart ()
 	{
@@ -88,7 +88,7 @@ public class ThoughtManager : MBehavior {
 
 	public void SendThought( Thought thought )
 	{
-		if ( thought.thought != "" ) {
+		if ( thought.thought != "" && m_test_showThought ) {
 			LogicArg arg = new LogicArg (this);
 			arg.AddMessage (M_Event.EVENT_THOUGHT, thought);
 //			Debug.Log ("Send thought " + thought.thought);
@@ -114,6 +114,10 @@ public class ThoughtManager : MBehavior {
 		if (tiredTimer > tiredTime || ( Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.T)) ) {
 			SendThought (GetTempThought ());
 			ResetTiredTime ();
+		}
+
+		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.L)) {
+			m_test_showThought = !m_test_showThought;
 		}
 	}
 

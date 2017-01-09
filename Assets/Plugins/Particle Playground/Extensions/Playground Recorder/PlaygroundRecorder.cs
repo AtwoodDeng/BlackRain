@@ -762,7 +762,7 @@ namespace ParticlePlayground {
 					_playbackParticles[i].startColor = Color.Lerp (recordedFrames[normalizedFrame].particles[i].color, recordedFrames[targetFrame].particles[i].color, deltaTime);
 #endif
 					_playbackParticles[i].rotation = Mathf.Lerp (recordedFrames[normalizedFrame].particles[i].rotation, recordedFrames[targetFrame].particles[i].rotation, deltaTime);
-					_playbackParticles[i].lifetime = Mathf.Lerp (recordedFrames[normalizedFrame].particles[i].lifetime, recordedFrames[targetFrame].particles[i].lifetime, deltaTime);
+					_playbackParticles[i].remainingLifetime = Mathf.Lerp (recordedFrames[normalizedFrame].particles[i].lifetime, recordedFrames[targetFrame].particles[i].lifetime, deltaTime);
 				}
 				
 			}
@@ -932,7 +932,7 @@ namespace ParticlePlayground {
 			ParticleSystem.Particle particle = new ParticleSystem.Particle();
 			particle.position = position;
 			particle.rotation = rotation;
-			particle.lifetime = lifetime;
+			particle.remainingLifetime = lifetime;
 			particle.startLifetime = startLifetime;
 #if UNITY_4_3 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
 			particle.size = size;

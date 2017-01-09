@@ -63,6 +63,11 @@ public class EffectManager : MBehavior {
 //			M_Event.FireLogicEvent (LogicEvents.Death, new LogicArg (this));
 		
 		OnUpdateDamageEffect ();
+
+		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.W)) {
+			photoShopEffect.enabled = true;
+			photoShopEffect.FadeFX = 0.3f;
+		}
 	}
 
 	protected override void MOnEnable ()

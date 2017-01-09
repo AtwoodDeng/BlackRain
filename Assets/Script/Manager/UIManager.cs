@@ -351,6 +351,7 @@ public class UIManager : MBehavior {
 			Debug.Log (cursorImage.gameObject.activeSelf);
 			cursorImage.gameObject.SetActive (!cursorImage.gameObject.activeSelf);
 			EnergyFrame.gameObject.SetActive (!EnergyFrame.gameObject.activeSelf);
+			interactableTips.gameObject.SetActive (!interactableTips.gameObject.activeSelf);
 		}
 	}
 

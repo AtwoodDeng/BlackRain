@@ -6,6 +6,7 @@ public class MoveOnEvent : OnEventResponsor {
 	[SerializeField] Transform target;
 	[SerializeField] Vector3 move;
 	[SerializeField] float Time;
+	[SerializeField] float delay = 0;
 	[SerializeField] bool relative;
 	[SerializeField] bool disableOnEnd;
 
@@ -13,7 +14,7 @@ public class MoveOnEvent : OnEventResponsor {
 	{
 		base.OnEvent (arg);
 		Debug.Log ("Move");
-		target.DOMove (move, Time).SetRelative (relative).OnComplete (delegate() {
+		target.DOMove (move, Time).SetRelative (relative).SetDelay(delay).SetEase(Ease.Linear).OnComplete (delegate() {
 			if ( disableOnEnd )
 				target.gameObject.SetActive( false );	
 		});

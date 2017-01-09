@@ -87,7 +87,7 @@ Shader "LemonSpawn/LazyClouds" {
                  float4 uv : TEXCOORD2;
                  float3 worldPosition: TEXCOORD3;
  
-                 LIGHTING_COORDS(3,4)
+                 LIGHTING_COORDS(4,5)
              };
               
              v2f vert (appdata_base v)
