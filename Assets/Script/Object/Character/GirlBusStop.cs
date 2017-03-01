@@ -60,7 +60,6 @@ public class GirlBusStop : TalkableCharacter {
 
 		InitStateMachine ();
 
-
 		{
 			m_umbrellaAudioSource = gameObject.AddComponent<AudioSource> ();
 			m_umbrellaAudioSource.volume = 0.7f;

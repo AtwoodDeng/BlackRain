@@ -67,3 +67,43 @@ public class NarrativeDialog
 	public SpeakerType type;
 
 }
+
+
+public enum NarrativeIcon {
+	None,
+	Umbrella,
+	Happy,
+}
+
+
+
+[System.Serializable]
+public class IconNarrativeDialog
+{
+	public NarrativeIcon icon;
+	public float delay = -1f;
+	public float duration = -1f;
+	/// <summary>
+	/// The clip of the dialog
+	/// </summary>
+	public AudioClip clip;
+	public float soundVolumn = 0.8f;
+	/// <summary>
+	/// who says this dialog
+	/// </summary>
+	public enum SpeakerType
+	{
+		None,
+		ThisCharacter,
+		MainCharacter,
+		Girl,
+	}
+	public SpeakerType type;
+
+	/// <summary>
+	/// Who send the dialog
+	/// </summary>
+	public TalkableCharacter thisCharacter;
+
+
+}

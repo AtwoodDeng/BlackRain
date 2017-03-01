@@ -32,13 +32,10 @@ Shader "Hidden/Dof/DX11Dof"
 	float3 _Screen;
 	float _SpawnHeuristic;
 
-	sampler2D_float _CameraDepthTexture;
+	sampler2D _CameraDepthTexture;
 	sampler2D _BlurredColor;
 	sampler2D _MainTex;
 	sampler2D _FgCocMask;
-
-	half4 _MainTex_ST;
-	
 
 	struct appendStruct {
 		float3 pos;
@@ -64,6 +61,7 @@ Shader "Hidden/Dof/DX11Dof"
 
 	struct vs_out {
 		float4 pos : SV_POSITION;
+		float2 uv : TEXCOORD0;
 		float4 color : TEXCOORD1;
 		float cocOverlap : TEXCOORD2;
 	};
@@ -137,7 +135,7 @@ SubShader
 
 Pass
 {
-	ZWrite Off ZTest Always Cull Off
+	ZWrite Off ZTest Always Cull Off Fog { Mode Off }
 
 	CGPROGRAM
 
@@ -162,8 +160,8 @@ Pass
 	{
 		v2f o;
 		o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-		o.uv = UnityStereoScreenSpaceUVAdjust(v.texcoord, _MainTex_ST);
-		o.uv_flip = UnityStereoScreenSpaceUVAdjust(v.texcoord, _MainTex_ST);
+		o.uv = v.texcoord;
+		o.uv_flip = v.texcoord;
 		#if UNITY_UV_STARTS_AT_TOP
 		if(_MainTex_TexelSize.y<0)		
 			o.uv_flip.y = 1.0-o.uv_flip.y;
@@ -175,7 +173,7 @@ Pass
 
 	AppendStructuredBuffer<appendStruct> pointBufferOutput : register(u1);
 
-	float4 frag (v2f i) : SV_Target
+	float4 frag (v2f i) : COLOR0
 	{
 		float4 c = tex2D (_MainTex, i.uv_flip);
 		float lumc = Luminance (c.rgb);
@@ -204,7 +202,7 @@ Pass
 
 Pass {
 
-	ZWrite Off ZTest Always Cull Off
+	ZWrite Off ZTest Always Cull Off Fog { Mode Off }
 	Blend One One, One One
 	ColorMask RGBA
 
@@ -217,9 +215,9 @@ Pass {
 
 	#include "UnityCG.cginc"
 
-	fixed4 frag (gs_out i) : SV_Target
+	fixed4 frag (gs_out i) : COLOR0
 	{
-		float2 uv = UnityStereoScreenSpaceUVAdjust((i.uv.xy) * i.misc.xy + (float2(1,1)-i.misc.xy) * 0.5, _MainTex_ST);	// smooth uv scale
+		float2 uv = (i.uv.xy) * i.misc.xy + (float2(1,1)-i.misc.xy) * 0.5;	// smooth uv scale
 		return float4(i.color.rgb, 1) * float4(tex2D(_MainTex, uv.xy).rgb, i.uv.z) * clampBorderColor (uv);
 	}
 
@@ -230,7 +228,7 @@ Pass {
 
 Pass {
 
-	ZWrite Off ZTest Always Cull Off
+	ZWrite Off ZTest Always Cull Off Fog { Mode Off }
 	BlendOp Add, Add
 	Blend DstAlpha One, Zero One
 	ColorMask RGBA
@@ -244,9 +242,9 @@ Pass {
 
 	#include "UnityCG.cginc"
 
-	fixed4 frag (gs_out i) : SV_Target
+	fixed4 frag (gs_out i) : COLOR0
 	{
-		float2 uv = UnityStereoScreenSpaceUVAdjust((i.uv.xy) * i.misc.xy + (float2(1,1)-i.misc.xy) * 0.5, _MainTex_ST);	// smooth uv scale
+		float2 uv = (i.uv.xy) * i.misc.xy + (float2(1,1)-i.misc.xy) * 0.5;	// smooth uv scale
 		return float4(i.color.rgb, 1) * float4(tex2D(_MainTex, uv.xy).rgb, i.uv.z) * clampBorderColor (uv);
 	}
 

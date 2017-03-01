@@ -86,14 +86,13 @@ public class InteractManager : MBehavior{
 //		Ray mainCharacterRay = new Ray (MainCharacter.Instance.transform.position, MainCharacter.Instance.transform.forward);
 //		Ray mainCharacterRay = new Ray( Camera.main.transform.position , Camera.main.transform.forward);
 		Ray mainCharacterRay = Camera.main.ScreenPointToRay(FocusPoint);
-		hits = Physics.RaycastAll (mainCharacterRay, interactRange , interactiveMask.value);
+		hits = Physics.RaycastAll ( mainCharacterRay , interactRange , interactiveMask.value );
 
 		Interactable target = null;
-		foreach( RaycastHit hit in hits )
-		{
+		foreach( RaycastHit hit in hits ) {
 			target = hit.collider.GetComponent<Interactable> ();
-			if (target != null) {
-				if (target.IsInteractable() )
+			if ( target != null ) {
+				if ( target.IsInteractable() )
 					break;
 				else
 					target = null;

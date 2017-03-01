@@ -6,6 +6,7 @@ Properties {
 SubShader {
 	Pass {
 		ZTest Always Cull Off ZWrite Off
+		Fog { Mode off }
 
 CGPROGRAM
 
@@ -13,6 +14,8 @@ CGPROGRAM
 #pragma fragment frag
 #include "UnityCG.cginc"
 #pragma target 3.0
+#pragma glsl
+#pragma exclude_renderers d3d11_9x
 
 #define FXAA_HLSL_3 1
 
@@ -74,8 +77,8 @@ CGPROGRAM
     #define FxaaFloat2 float2
     #define FxaaSat(a) saturate((a))
     #define FxaaTex sampler2D
-    #define FxaaTexLod0(t, p) tex2Dlod(t, float4(UnityStereoScreenSpaceUVAdjust(p, _MainTex_ST), 0.0, 0.0))
-    #define FxaaTexOff(t, p, o, r) tex2Dlod(t, float4(UnityStereoScreenSpaceUVAdjust(p + (o * r), _MainTex_ST), 0, 0))
+    #define FxaaTexLod0(t, p) tex2Dlod(t, float4(p, 0.0, 0.0))
+    #define FxaaTexOff(t, p, o, r) tex2Dlod(t, float4(p + (o * r), 0, 0))
 #endif
 /*--------------------------------------------------------------------------*/
 #if FXAA_HLSL_4
@@ -83,8 +86,8 @@ CGPROGRAM
     #define FxaaFloat2 float2
     #define FxaaSat(a) saturate((a))
     struct FxaaTex { SamplerState smpl; Texture2D tex; };
-    #define FxaaTexLod0(t, p) t.tex.SampleLevel(t.smpl, UnityStereoScreenSpaceUVAdjust(p, _MainTex_ST), 0.0) 
-    #define FxaaTexOff(t, p, o, r) t.tex.SampleLevel(t.smpl, UnityStereoScreenSpaceUVAdjust(p, _MainTex_ST), 0.0, o)
+    #define FxaaTexLod0(t, p) t.tex.SampleLevel(t.smpl, p, 0.0) 
+    #define FxaaTexOff(t, p, o, r) t.tex.SampleLevel(t.smpl, p, 0.0, o)
 #endif
 
 
@@ -109,8 +112,6 @@ float2 rcpFrame) {          // {1.0/frameWidth, 1.0/frameHeight}
                                 PIXEL SHADER
                                 
 ============================================================================*/
-half4 _MainTex_ST;
-
 float3 FxaaPixelShader(
 float4 posPos,       // Output of FxaaVertexShader interpolated across screen.
 FxaaTex tex,         // Input texture.
@@ -176,7 +177,7 @@ v2f vert (appdata_img v)
 
 sampler2D _MainTex;
 
-float4 frag (v2f i) : SV_Target
+float4 frag (v2f i) : COLOR0
 {
 	return float4(FxaaPixelShader(i.uv, _MainTex, _MainTex_TexelSize.xy).xyz, 0.0f);
 }

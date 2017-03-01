@@ -9,7 +9,7 @@ Shader "Hidden/Vignetting" {
 	#include "UnityCG.cginc"
 	
 	struct v2f {
-		float4 pos : SV_POSITION;
+		float4 pos : POSITION;
 		float2 uv : TEXCOORD0;
 		float2 uv2 : TEXCOORD1;
 	};
@@ -21,8 +21,6 @@ Shader "Hidden/Vignetting" {
 	half _Blur;
 
 	float4 _MainTex_TexelSize;
-	half4  _MainTex_ST;
-	half4  _VignetteTex_ST;
 		
 	v2f vert( appdata_img v ) {
 		v2f o;
@@ -38,17 +36,17 @@ Shader "Hidden/Vignetting" {
 		return o;
 	} 
 	
-	half4 frag(v2f i) : SV_Target {
+	half4 frag(v2f i) : COLOR {
 		half2 coords = i.uv;
 		half2 uv = i.uv;
 		
-		coords = (coords - 0.5) * 2.0;
+		coords = (coords - 0.5) * 2.0;		
 		half coordDot = dot (coords,coords);
-		half4 color = tex2D (_MainTex, UnityStereoScreenSpaceUVAdjust(uv, _MainTex_ST));
+		half4 color = tex2D (_MainTex, uv);	 
 
-		float mask = 1.0 - coordDot * _Intensity; 
+		float mask = 1.0 - coordDot * _Intensity * 0.1; 
 		
-		half4 colorBlur = tex2D (_VignetteTex, UnityStereoScreenSpaceUVAdjust(i.uv2, _VignetteTex_ST));
+		half4 colorBlur = tex2D (_VignetteTex, i.uv2);
 		color = lerp (color, colorBlur, saturate (_Blur * coordDot));
 		
 		return color * mask;
@@ -59,8 +57,10 @@ Shader "Hidden/Vignetting" {
 Subshader {
  Pass {
 	  ZTest Always Cull Off ZWrite Off
+	  Fog { Mode off }      
 
       CGPROGRAM
+      #pragma fragmentoption ARB_precision_hint_fastest 
       #pragma vertex vert
       #pragma fragment frag
       ENDCG

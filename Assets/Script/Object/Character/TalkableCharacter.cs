@@ -17,6 +17,14 @@ public class TalkableCharacter : Character {
 	[SerializeField] LogicEvents MainTalkEndEvent;
 	[SerializeField] Transform talkCamera;
 	[SerializeField] float talkCameraChangeDuration = 1f;
+	[SerializeField] FilmController filmController;
+	[SerializeField] bool filmOnce;
+	bool isFilmPlayed = false;
+	public bool IsFlimPlayable{
+		get {
+			return (!filmOnce) || (!isFilmPlayed);
+		}
+	}
 
 	static public  Vector3 InteractionPointOffset
 	{
@@ -90,7 +98,10 @@ public class TalkableCharacter : Character {
 		if (!IsTalking) {
 			base.Interact ();
 
-			if (OnlySubPlots || IsMainEnded ) {
+			if (filmController != null) {
+				filmController.Work ();
+				isFilmPlayed = true;
+			}else if (OnlySubPlots || IsMainEnded ) {
 				DisplaySubDialog ();
 			} else {
 				DisplayDialog (mainPlot);
@@ -144,6 +155,7 @@ public class TalkableCharacter : Character {
 
 	public override bool IsInteractable ()
 	{
-		return base.IsInteractable () && !IsTalking && ( mainPlot != null || subPlots.Length > 0 );
+		return base.IsInteractable () && !IsTalking && ( mainPlot != null || subPlots.Length > 0 || (filmController != null && IsFlimPlayable) );
 	}
+
 }

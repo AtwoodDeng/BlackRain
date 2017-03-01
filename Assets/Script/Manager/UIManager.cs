@@ -377,7 +377,7 @@ public class UIManager : MBehavior {
 	void UpdateInteractTips()
 	{
 		Interactable interact = InteractManager.Instance.TempInteractable;
-		if (interact != null) {
+		if (interact != null && !MainCharacter.Instance.IsFocus) {
 			interactableTips.Show (interact);
 
 			Vector3 screenPos = Camera.main.WorldToViewportPoint (interact.GetInteractCenter ());

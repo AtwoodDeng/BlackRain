@@ -85,6 +85,7 @@ public class MechanismManager : MBehavior {
 		private float sneezeDuration = 10f;
 		public float inRainTimer;
 		private int sneezeNum;
+		private bool isOnDamage;
 
 
 		/// <summary>
@@ -109,7 +110,8 @@ public class MechanismManager : MBehavior {
 		/// <value>The lost health rate.</value>
 		public float LostHealthRate { get { return 1f - HealthRate; } }
 
-		public float SpeedUp { get { return isSpeedUp ? ( energy > 0 ? 1f : 0 ) : 0; } }// Mathf.Sqrt(( Mathf.Max( 0 , energy) / FullEnergy)) : 0 ; } }
+//		public float SpeedUp { get { return isSpeedUp ? ( energy > 0 ? 1f : 0 ) : 0; } }// Mathf.Sqrt(( Mathf.Max( 0 , energy) / FullEnergy)) : 0 ; } }
+		public float SpeedUp { get { return isOnDamage ? Mathf.Lerp( 0 , 1f , 1f - health / FullHealth * 2f  ) : 0 ;} }
 		public float Energy { get { return energy; } }
 		public float EnergyRate { get { return energy / FullEnergy; } }
 
@@ -124,6 +126,7 @@ public class MechanismManager : MBehavior {
 		{
 			if ( health > minHealth * FullHealth )
 				health -= dmg * Time.deltaTime;
+			isOnDamage = true;
 		}
 
 		public void OnUpdateSneeze()
@@ -142,6 +145,7 @@ public class MechanismManager : MBehavior {
 		{
 			if ( health < FullHealth )
 				health += (FullHealth - health) * recoverRate * Time.deltaTime;
+			isOnDamage = false;
 		}
 
 		public void Revive()
@@ -167,13 +171,14 @@ public class MechanismManager : MBehavior {
 				energy += recoverRate * Time.deltaTime;
 			}
 			isSpeedUp = false;
+
 		}
 
 		public void InitHealth( float _minHealth , float _sneezeDuration )
 		{
 			minHealth = _minHealth;
 			sneezeDuration = _sneezeDuration;
-			inRainTimer = 0.95f * _sneezeDuration;
+			inRainTimer = 0.9999f * _sneezeDuration;
 		}
 	};
 

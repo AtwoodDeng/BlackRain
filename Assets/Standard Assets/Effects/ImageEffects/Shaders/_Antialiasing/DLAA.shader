@@ -17,14 +17,13 @@ CGINCLUDE
 
 	uniform sampler2D _MainTex;
 	uniform float4 _MainTex_TexelSize;
-	half4 _MainTex_ST;
 
 	struct v2f {
-		float4 pos : SV_POSITION;
+		float4 pos : POSITION;
 		float2 uv : TEXCOORD0;
 	};
 	
-	#define LD( o, dx, dy ) o = tex2D( _MainTex, UnityStereoScreenSpaceUVAdjust(texCoord + float2( dx, dy ) * _MainTex_TexelSize.xy, _MainTex_ST) );
+	#define LD( o, dx, dy ) o = tex2D( _MainTex, texCoord + float2( dx, dy ) * _MainTex_TexelSize.xy );
 	
 	float GetIntensity( float3 col )
 	{
@@ -287,15 +286,15 @@ CGINCLUDE
 		return o;
 	}
 
-	half4 fragFirst (v2f i) : SV_Target {		 	 	    
+	half4 fragFirst (v2f i) : COLOR {		 	 	    
 		return highPassPre (i.uv);
 	}
 	
-	half4 fragSecond (v2f i) : SV_Target {		 	 	    
+	half4 fragSecond (v2f i) : COLOR {		 	 	    
 	    return edgeDetectAndBlur( i.uv );
 	}
 
-	half4 fragThird (v2f i) : SV_Target {		 	 	    
+	half4 fragThird (v2f i) : COLOR {		 	 	    
 	    return edgeDetectAndBlurSharper( i.uv );
 	}
 			
@@ -304,37 +303,47 @@ ENDCG
 SubShader {
 	Pass {
 		ZTest Always Cull Off ZWrite Off
+		Fog { Mode off }
 	
 		CGPROGRAM
 	
 		#pragma vertex vert
 		#pragma fragment fragFirst
+		//#pragma fragmentoption ARB_precision_hint_fastest 
         #pragma exclude_renderers d3d11_9x
+        #pragma glsl
 		
 		ENDCG
 	}
 	
 	Pass {
 		ZTest Always Cull Off ZWrite Off
+		Fog { Mode off }
 	
 		CGPROGRAM
 	
 		#pragma vertex vert
 		#pragma fragment fragSecond
+		//#pragma fragmentoption ARB_precision_hint_fastest 
 		#pragma target 3.0
         #pragma exclude_renderers d3d11_9x
+        #pragma glsl
 		
 		ENDCG
 	}
 
 	Pass {
 		ZTest Always Cull Off ZWrite Off
+		Fog { Mode off }
 	
 		CGPROGRAM
 	
 		#pragma vertex vert
 		#pragma fragment fragThird
+		//#pragma fragmentoption ARB_precision_hint_fastest 
 		#pragma target 3.0
+        #pragma exclude_renderers d3d11_9x
+        #pragma glsl
 		
 		ENDCG
 	}	

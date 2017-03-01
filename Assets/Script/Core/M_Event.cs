@@ -32,6 +32,7 @@ public enum LogicEvents
 	DisplayDialog = 30,
 	EndDisplayDialog = 31,
 	DisplayNextDialog = 32,
+	DisplayIconDialog = 35,
 
 	DisplayThought = 40,
 	SwitchThoughtBox = 41,
@@ -45,18 +46,24 @@ public enum LogicEvents
 
 	Sneeze = 60,
 	Breath = 70,
+	ToOld = 80,
+	ToModern = 81,
+	EndFilm = 85,
 
 	EndGame = 99,
 
-	EndTalkManInCafe = 100,
+	CafeEndPackUp = 100,
 	EnterStreetOne = 101,
-	EnterRotateBuilding = 102,
+	SeeGrilInStreetOne = 102,
 	EnterStreetTwo = 103,
 	EnterStreetThree = 104,
 	EnterTakePhoto = 105,
 	SeeGirlStreetTwo = 106,
 	EnterBorrowUmbrella = 107,
 	EnterStreetThreeEnd = 108,
+	CafePackUpBag = 200,
+	CafePhoneRing = 201,
+	StreetOneWatchCorw = 210,
 
 	EnterBusStop = 110,
 	BusStopEndTalkGirl = 111,
@@ -89,10 +96,7 @@ public enum LogicEvents
 
 	PlayEndBGM = 145,
 
-
 	EnterEnd = 140,
-
-
 
 	WatchShipOne = 150,
 	WatchShipTwo = 151,
@@ -104,7 +108,6 @@ public enum LogicEvents
 	EndTalkWithFakeGirl = 158,
 
 	CloseApartment = 159,
-
 
 	EndCredit = 160,
 
@@ -219,6 +222,7 @@ public class M_Event : MonoBehaviour {
 	public const string EVENT_END_DISPLAY_FRAME = "IMPORTANT";
 	public const string EVENT_PLAY_MUSIC_NAME = "MUSIC_NAME";
 	public const string EVENT_BGM_FADE_TIME = "BGM_FADE_TIME";
+	public const string EVENT_ICON_NARRATIV_DIALOG = "ICON_DIALOG";
 
 
 }
@@ -262,6 +266,7 @@ public class MsgArg : BasicArg
 	{
 		return dict.ContainsKey(key);
 	}
+
 }
 
 /// <summary>
@@ -275,4 +280,6 @@ public class LogicArg : MsgArg
 	/// The type of the arg.
 	/// </summary>
 	public LogicEvents type;
+
+
 }

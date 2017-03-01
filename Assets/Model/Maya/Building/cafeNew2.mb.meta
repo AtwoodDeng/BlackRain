@@ -74,6 +74,18 @@ ModelImporter:
     100132: pCube18
     100134: Wall7 1
     100136: Wall8
+    100138: pCylinder3
+    100140: Wall9
+    100142: Wall10
+    100144: Wall11
+    100146: Wall12
+    100148: Wall13
+    100150: FrontBar
+    100152: FrontBar1
+    100154: FrontBar2
+    100156: FrontWall
+    100158: GlassWall
+    100160: band
     400000: bar
     400002: barChair
     400004: barDesk
@@ -143,6 +155,18 @@ ModelImporter:
     400132: pCube18
     400134: Wall7 1
     400136: Wall8
+    400138: pCylinder3
+    400140: Wall9
+    400142: Wall10
+    400144: Wall11
+    400146: Wall12
+    400148: Wall13
+    400150: FrontBar
+    400152: FrontBar1
+    400154: FrontBar2
+    400156: FrontWall
+    400158: GlassWall
+    400160: band
     2300000: bar
     2300002: barDesk
     2300004: Bot
@@ -196,6 +220,18 @@ ModelImporter:
     2300100: Wall7
     2300102: pCube18
     2300104: Wall8
+    2300106: pCylinder3
+    2300108: Wall9
+    2300110: Wall10
+    2300112: Wall11
+    2300114: Wall12
+    2300116: Wall13
+    2300118: FrontBar
+    2300120: FrontBar1
+    2300122: FrontBar2
+    2300124: FrontWall
+    2300126: GlassWall
+    2300128: band
     3300000: bar
     3300002: barDesk
     3300004: Bot
@@ -249,6 +285,18 @@ ModelImporter:
     3300100: Wall7
     3300102: pCube18
     3300104: Wall8
+    3300106: pCylinder3
+    3300108: Wall9
+    3300110: Wall10
+    3300112: Wall11
+    3300114: Wall12
+    3300116: Wall13
+    3300118: FrontBar
+    3300120: FrontBar1
+    3300122: FrontBar2
+    3300124: FrontWall
+    3300126: GlassWall
+    3300128: band
     4300000: floor
     4300002: barDesk
     4300004: Music
@@ -302,6 +350,18 @@ ModelImporter:
     4300100: pCube17
     4300102: pCube18
     4300104: Wall8
+    4300106: pCylinder3
+    4300108: Wall9
+    4300110: Wall10
+    4300112: Wall11
+    4300114: Wall12
+    4300116: Wall13
+    4300118: FrontWall
+    4300120: GlassWall
+    4300122: FrontBar
+    4300124: FrontBar1
+    4300126: FrontBar2
+    4300128: band
     7400000: Take 001
     9500000: //RootNode
   materials:
@@ -350,6 +410,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -360,7 +421,10 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1

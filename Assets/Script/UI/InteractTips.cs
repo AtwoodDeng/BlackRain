@@ -24,9 +24,7 @@ public class InteractTips : MBehavior {
 	{
 		if (interact != null) {
 			tipsText.text = interact.GetInteractTips ();
-//			Vector3 scale = tipsBackground.transform.localScale;
-//			scale.x = tipsText.text.Length * 0.08f + 0.3f;
-//			tipsBackground.transform.localScale = scale;
+			tipsBackground.rectTransform.sizeDelta = new Vector2 ( Mathf.Max( 125f , tipsText.text.Length * 15f + 50f), 55f); 
 		}
 	}
 

@@ -308,11 +308,6 @@ public class NormalPasserBy : TalkableCharacter {
 
 	}
 
-	public override void Interact ()
-	{
-		base.Interact ();
-
-	}
 	protected override void DisplayDialog (NarrativePlotScriptableObject plot)
 	{
 		base.DisplayDialog (plot);

@@ -14,15 +14,15 @@ public class NarrativeManager : MBehavior {
 			if (m_Instance == null)
 				m_Instance = FindObjectOfType<NarrativeManager> ();
 			return m_Instance;}}
-//	NarrativeManager() {
-//		if (m_Instance == null)
-//			m_Instance = this;
-//	}
+	
 
 	[SerializeField] float showUpTime=0.2f;
 	[SerializeField] KeyCode nextDialogKey;
 	[SerializeField] float autoSkipTime = 15f;
 	[SerializeField] GameObject smallDialogPrefab;
+	[SerializeField] GameObject iconDialogPrefab;
+	[SerializeField] bool HideDialog;
+	[SerializeField] bool HideIconDialog;
 
 	private AudioSource mainCharacterSpeaker;
 	private AudioSource temSpeaker;
@@ -61,12 +61,14 @@ public class NarrativeManager : MBehavior {
 	{
 		base.MOnEnable ();
 		M_Event.logicEvents [(int)LogicEvents.DisplayDialog] += OnDisplayDialog;
+		M_Event.logicEvents [(int)LogicEvents.DisplayIconDialog] += OnDisplayIconDialog;
 	}
 
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
 		M_Event.logicEvents [(int)LogicEvents.DisplayDialog] -= OnDisplayDialog;
+		M_Event.logicEvents [(int)LogicEvents.DisplayIconDialog] -= OnDisplayIconDialog;
 	}
 
 	protected override void MAwake ()
@@ -104,28 +106,38 @@ public class NarrativeManager : MBehavior {
 		return res;
 	}
 
+	void OnDisplayIconDialog(LogicArg arg)
+	{
+		if (!HideIconDialog) {
+			IconNarrativeDialog dialog = (IconNarrativeDialog)arg.GetMessage (M_Event.EVENT_ICON_NARRATIV_DIALOG);
+			DisplayIconDialog (dialog);
+		}
+	}
+
 	void OnDisplayDialog(LogicArg arg)
 	{
-		NarrativePlotScriptableObject tem_Plot = (NarrativePlotScriptableObject)arg.GetMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT);
-		MonoBehaviour other =(MonoBehaviour) arg.sender;
-		AudioSource otherSpeaker = AddSpeaker (other.gameObject);
-		TalkableCharacter sender = (TalkableCharacter)arg.sender;
+		if (!HideDialog) {
+			NarrativePlotScriptableObject tem_Plot = (NarrativePlotScriptableObject)arg.GetMessage (M_Event.EVENT_DISPLAY_DIALOG_PLOT);
+			MonoBehaviour other = (MonoBehaviour)arg.sender;
+			AudioSource otherSpeaker = AddSpeaker (other.gameObject);
+			TalkableCharacter sender = (TalkableCharacter)arg.sender;
 
-		if (tem_Plot != null) {
-			if (!tem_Plot.important) {
-				if ( tem_Plot.dialogs != null && tem_Plot.dialogs.Count > 0 )
-					DisplayUnimportantDialog (tem_Plot.dialogs [0] , new DisplayPlot (tem_Plot, otherSpeaker, sender) );
-			} else {
-				PlotArray.Add (new DisplayPlot (tem_Plot, otherSpeaker, sender));
-				if (!IsDisplaying)
-					NextDialog ();
+			if (tem_Plot != null) {
+				if (!tem_Plot.important) {
+					if (tem_Plot.dialogs != null && tem_Plot.dialogs.Count > 0)
+						DisplayUnimportantDialog (tem_Plot.dialogs [0], new DisplayPlot (tem_Plot, otherSpeaker, sender));
+				} else {
+					PlotArray.Add (new DisplayPlot (tem_Plot, otherSpeaker, sender));
+					if (!IsDisplaying)
+						NextDialog ();
+				}
 			}
 		}
 	}
 
 	void DisplayUnimportantDialog( NarrativeDialog dialog , DisplayPlot plot )
 	{
-		if (m_test_ShowDialog) {
+		if (m_test_ShowDialog && !HideDialog ) {
 			plot.otherSpeaker.clip = dialog.clip;
 			plot.otherSpeaker.Play ();
 
@@ -140,6 +152,30 @@ public class NarrativeManager : MBehavior {
 
 	}
 
+	void DisplayIconDialog( IconNarrativeDialog dialog  )
+	{
+//		if (m_test_ShowDialog && !HideDialog ) {
+//			plot.otherSpeaker.clip = dialog.clip;
+//			plot.otherSpeaker.Play ();
+//
+//
+//			GameObject smallDialog = Instantiate (smallDialogPrefab) as GameObject;
+//			smallDialog.transform.SetParent (UIManager.Instance.transform);
+//			Dialog dialogCom = smallDialog.GetComponent<Dialog> ();
+//
+//			if (dialogCom != null)
+//				dialogCom.Init (plot.character, dialog);
+//		}
+		if (!HideIconDialog ) {
+			GameObject smallDialog = Instantiate (iconDialogPrefab) as GameObject;
+			smallDialog.transform.SetParent (UIManager.Instance.transform);
+			IconDialog dialogCom = smallDialog.GetComponent<IconDialog> ();
+
+			if (dialogCom != null)
+				dialogCom.Init (dialog);
+		}
+	}
+
 	Color GetDialogColorFromType( NarrativeDialog.SpeakerType type )
 	{
 		if (type == NarrativeDialog.SpeakerType.MainCharacter)
@@ -152,55 +188,58 @@ public class NarrativeManager : MBehavior {
 
 	void DisplayDialog( NarrativeDialog dialog , DisplayPlot plot )
 	{
-		if (m_text != null) {
-			m_text.DOKill ();
-			m_text.text =  dialog.word;
+		if (!HideDialog) {
+			if (m_text != null) {
+				m_text.DOKill ();
+				m_text.text = dialog.word;
 //			m_text.DOText( dialog.word , dialog.word.Length * 0.06f + 0.3f );
-			m_text.DOFade (1f, showUpTime);
-		}
-		if (m_backImage != null) {
-			m_backImage.DOKill ();
-			m_backImage.color = GetDialogColorFromType (dialog.type);
-			m_backImage.transform.localScale = Vector3.one * 0.01f;
-			m_backImage.transform.DOScale (1f, showUpTime);
-			m_backImage.DOFade (backImageOriginalAlpha, showUpTime);
-		}
-		if (m_arrow != null) {
-			m_arrow.DOKill ();
-			m_arrow.DOFade (backImageOriginalAlpha, showUpTime);
-		}
+				m_text.DOFade (1f, showUpTime);
+			}
+			if (m_backImage != null) {
+				m_backImage.DOKill ();
+				m_backImage.color = GetDialogColorFromType (dialog.type);
+				m_backImage.transform.localScale = Vector3.one * 0.01f;
+				m_backImage.transform.DOScale (1f, showUpTime);
+				m_backImage.DOFade (backImageOriginalAlpha, showUpTime);
+			}
+			if (m_arrow != null) {
+				m_arrow.DOKill ();
+				m_arrow.DOFade (backImageOriginalAlpha, showUpTime);
+			}
 
-		if (temSpeaker != null)
-			temSpeaker.Stop ();
+			if (temSpeaker != null)
+				temSpeaker.Stop ();
 		
-		switch (dialog.type) {
-		case NarrativeDialog.SpeakerType.ThisCharacter:
-		case NarrativeDialog.SpeakerType.Girl:
-			temSpeaker = plot.otherSpeaker;
-			break;
-		case NarrativeDialog.SpeakerType.MainCharacter:
-			temSpeaker = mainCharacterSpeaker;
-			break;
-		default:
-			break;
-		};
+			switch (dialog.type) {
+			case NarrativeDialog.SpeakerType.ThisCharacter:
+			case NarrativeDialog.SpeakerType.Girl:
+				temSpeaker = plot.otherSpeaker;
+				break;
+			case NarrativeDialog.SpeakerType.MainCharacter:
+				temSpeaker = mainCharacterSpeaker;
+				break;
+			default:
+				break;
+			}
+			;
 
-		if (dialog.clip != null) {
-			temSpeaker.clip = dialog.clip;
-			temSpeaker.Play ();
+			if (dialog.clip != null) {
+				temSpeaker.clip = dialog.clip;
+				temSpeaker.Play ();
+			}
+
+			temDialog = dialog;
+
+			UpdateDialogFramePosition ();
+
+			LogicArg arg = new LogicArg (this);
+			arg.AddMessage ("word", dialog.word);
+			arg.AddMessage ("character", dialog.type.ToString ());
+			arg.AddMessage ("important", plot.plot.important);
+			M_Event.FireLogicEvent (LogicEvents.DisplayNextDialog, arg);
+
+			dialogTimer = 0;
 		}
-
-		temDialog = dialog;
-
-		UpdateDialogFramePosition ();
-
-		LogicArg arg = new LogicArg (this);
-		arg.AddMessage ("word", dialog.word);
-		arg.AddMessage ("character", dialog.type.ToString ());
-		arg.AddMessage ("important", plot.plot.important );
-		M_Event.FireLogicEvent (LogicEvents.DisplayNextDialog, arg);
-
-		dialogTimer = 0;
 	}
 
 	void NextDialog()
@@ -279,26 +318,30 @@ public class NarrativeManager : MBehavior {
 
 	protected override void MUpdate ()
 	{
+		
 		base.MUpdate ();
+
 		if ( dialogTimer > 0 )
 			dialogTimer += Time.deltaTime;
 
-		if ( CrossPlatformInputManager.GetButtonDown("SkipDialog") && m_isDisplaying) {
-			NextDialog ();
-		}
+		if (!HideDialog) {
+			if (CrossPlatformInputManager.GetButtonDown ("SkipDialog") && m_isDisplaying) {
+				NextDialog ();
+			}
 
-		if (dialogTimer > autoSkipTime && m_isDisplaying ) {
-			NextDialog ();
-		}
+			if (dialogTimer > autoSkipTime && m_isDisplaying) {
+				NextDialog ();
+			}
 
-		if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.L)) {
-			m_test_ShowDialog = !m_test_ShowDialog;
-		}
+			if (Input.GetKey (KeyCode.LeftControl) && Input.GetKeyDown (KeyCode.L)) {
+				m_test_ShowDialog = !m_test_ShowDialog;
+			}
 			
 //		if (temSpeaker != null && !temSpeaker.isPlaying) {
 //			NextDialog ();
 //		}
-		UpdateDialogArrow();
+			UpdateDialogArrow ();
+		}
 	}
 
 	void UpdateDialogArrow()

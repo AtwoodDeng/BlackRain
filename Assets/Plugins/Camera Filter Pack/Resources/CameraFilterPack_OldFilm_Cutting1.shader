@@ -28,6 +28,7 @@ uniform float _Speed;
 uniform float _Value;
 uniform float _Value2;
 uniform float _Value3;
+uniform float _Shake;
 uniform float4 _ScreenResolution;
 uniform float2 _MainTex_TexelSize;
 
@@ -64,13 +65,13 @@ fixed4 frag (v2f i) : COLOR
 {
 float2 uv = i.texcoord.xy;
 float t = float(int(_TimeX * 15.0));
-float2 suv = uv + 0.004* float2( nrand(t)*-2, nrand(t + 23.0));
+float2 suv = uv + _Shake * float2( nrand(t)*-2, nrand(t + 23.0));
 float3 col = tex2D(_MainTex,suv).rgb;
 #if UNITY_UV_STARTS_AT_TOP
 if (_MainTex_TexelSize.y < 0)
 uv.y = 1-uv.y;
 #endif
-suv = uv + 0.010 * float2( nrand(t), nrand(t + 23.0));
+suv = uv + _Shake * 2.0 * float2( nrand(t), nrand(t + 23.0));
 uv.y=suv.y;
 
 uv.x+=_TimeX*_Speed;
@@ -80,7 +81,7 @@ float3 oldfilm = tex2D(_MainTex2,uv).rgb;
 uv = i.texcoord.xy;
 float calc=(pow(16.0 * uv.x * (1.0-uv.x) * uv.y * (1.0-uv.y), 0.4)*1+_Value2);
 col=lerp(col*calc,col/calc,_Value3);
-col = dot( float3(0.2126, 0.7152, 0.0722), col);
+// col = dot( float3(0.2126, 0.7152, 0.0722), col);
 col= col * _Value;
 col=col/(oldfilm*4);
 //	col=col/((oldfilm+oldfilm2)*4);

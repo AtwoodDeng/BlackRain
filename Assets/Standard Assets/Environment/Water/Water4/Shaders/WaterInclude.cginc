@@ -1,3 +1,6 @@
+// Upgrade NOTE: unity_Scale shader variable was removed; replaced 'unity_Scale.w' with '1.0'
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 
 #ifndef WATER_CG_INCLUDED
 #define WATER_CG_INCLUDED
@@ -8,7 +11,8 @@ half _GerstnerIntensity;
 
 inline half3 PerPixelNormal(sampler2D bumpMap, half4 coords, half3 vertexNormal, half bumpStrength) 
 {
-	half3 bump = (UnpackNormal(tex2D(bumpMap, coords.xy)) + UnpackNormal(tex2D(bumpMap, coords.zw))) * 0.5;
+	half4 bump = tex2D(bumpMap, coords.xy) + tex2D(bumpMap, coords.zw);
+	bump.xy = bump.wy - half2(1.0, 1.0);
 	half3 worldNormal = vertexNormal + bump.xxy * bumpStrength * half3(1,0,1);
 	return normalize(worldNormal);
 } 
@@ -120,6 +124,14 @@ inline half FresnelViaTexture(half3 viewVector, half3 worldNormal, sampler2D fre
 	half facing =  saturate(dot(-viewVector, worldNormal));	
 	half fresn = tex2D(fresnel, half2(facing, 0.5f)).b;	
 	return fresn;
+}
+
+inline half2 GetTileableUv(half4 vertex) 
+{
+	// @NOTE: use worldSpaceVertex.xz instead of ws to make it rotation independent
+	half2 ws = half2(unity_ObjectToWorld[0][3],unity_ObjectToWorld[2][3]);
+	half2 tileableUv = (ws + vertex.xz/1.0);	
+	return tileableUv;
 }
 
 inline void VertexDisplacementHQ(	sampler2D mapA, sampler2D mapB,

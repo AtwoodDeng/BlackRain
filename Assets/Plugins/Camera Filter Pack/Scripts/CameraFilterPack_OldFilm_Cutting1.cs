@@ -19,6 +19,8 @@ public float Luminosity = 1.50f;
 public float Vignette = 1.0f;
 [Range(0, 2)]
 public float Negative = 0.0f;
+[Range(0, 0.01f)]
+public float Shake = 0.004f;
 private Material SCMaterial;
 private Texture2D Texture2;
 
@@ -40,7 +42,7 @@ return SCMaterial;
 #endregion
 void Start () 
 {
-Texture2 = Resources.Load ("CameraFilterPack_OldFilm1") as Texture2D;
+Texture2 = Resources.Load ("CameraFilterPack_OldFilm4") as Texture2D;
 SCShader = Shader.Find("CameraFilterPack/OldFilm_Cutting1");
 if(!SystemInfo.supportsImageEffects)
 {
@@ -59,7 +61,8 @@ material.SetFloat("_TimeX", TimeX);
 material.SetFloat("_Value", Luminosity);
 material.SetFloat("_Value2", 1-Vignette);
 material.SetFloat("_Value3", Negative);
-material.SetFloat("_Speed", Speed);
+			material.SetFloat("_Speed", Speed);
+			material.SetFloat("_Shake", Shake);
 material.SetTexture("_MainTex2", Texture2);
 
 Graphics.Blit(sourceTexture, destTexture, material);
@@ -79,7 +82,7 @@ void Update ()
 if (Application.isPlaying!=true)
 {
 SCShader = Shader.Find("CameraFilterPack/OldFilm_Cutting1");
-Texture2 = Resources.Load ("CameraFilterPack_OldFilm1") as Texture2D;
+Texture2 = Resources.Load ("CameraFilterPack_OldFilm4") as Texture2D;
 
 }
 #endif

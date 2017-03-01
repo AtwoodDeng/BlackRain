@@ -17,6 +17,7 @@ public class ThoughtManager : MBehavior {
 	[SerializeField] private ThoughtScritableObject enterStateThoughtList;
 	[SerializeField] private ThoughtScritableObject damageThoughtList;
 	[SerializeField] private float tiredTime = 30f;
+	[SerializeField] bool hideThought;
 	private float tiredTimer = 0;
 
 	List<Thought> thoughtsForState = new List<Thought>();
@@ -42,6 +43,7 @@ public class ThoughtManager : MBehavior {
 	bool isDamaged = false;
 	void OnEvent( LogicArg arg )
 	{
+		
 		if (arg.type == LogicEvents.BeginDamage) {
 			if (LogicManager.Instance.State <= LogicManager.GameState.WalkInStreetTwo) {
 				if (!isDamaged) {
@@ -88,7 +90,7 @@ public class ThoughtManager : MBehavior {
 
 	public void SendThought( Thought thought )
 	{
-		if ( thought.thought != "" && m_test_showThought ) {
+		if ( thought.thought != "" && m_test_showThought && !hideThought ) {
 			LogicArg arg = new LogicArg (this);
 			arg.AddMessage (M_Event.EVENT_THOUGHT, thought);
 //			Debug.Log ("Send thought " + thought.thought);

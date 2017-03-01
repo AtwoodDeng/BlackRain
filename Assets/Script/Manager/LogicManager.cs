@@ -49,11 +49,10 @@ public class LogicManager : MonoBehaviour {
 		/// Level One
 		/// </summary>
 		Enter = 1,
-		TalkWithManInCafe = 2,
-		TryGoInRain = 3,
+		CafeReadyToGo = 2,
 		TalkWithGirlInCafe = 4,
 		WalkInStreetOne = 5,
-		SeeBuilding = 6,
+		StreetOneToOld = 6,
 		BorrowUmbrella = 7,
 
 		/// <summary>
@@ -141,6 +140,16 @@ public class LogicManager : MonoBehaviour {
 
 		M_Event.FireLogicEvent (LogicEvents.LockCamera, new LogicArg (this));
 	}
+
+//Control + Q to exit the gameObject
+//Control + G to turn on the green light
+//Control + C to Show Credit
+//Control + I to bring in the ship
+//Control + E to toggle the effect manager
+//Alt + number to select the camera
+//Control + K to toggle the main Character
+//Control + M to toggle the music player
+//Control + L to toggle the UI
 
 	void Update()
 	{
@@ -236,14 +245,12 @@ public class LogicManager : MonoBehaviour {
 
 	void OnEnable()
 	{
-		for (int i = 0; i < M_Event.logicEvents.Length; ++i)
-			M_Event.logicEvents [i] += OnEvent;
+		M_Event.RegisterAll (OnEvent);
 	}
 
 	void OnDisable()
 	{
-		for (int i = 0; i < M_Event.logicEvents.Length; ++i)
-			M_Event.logicEvents [i] -= OnEvent;
+		M_Event.RegisterAll (OnEvent);
 	}
 
 	void OnEvent(LogicArg arg)
@@ -276,8 +283,8 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine =  new AStateMachine<GameState, LogicEvents>( GameState.None );
 
 //		m_stateMachine.BlindTimeStateChange (GameState.Enter, GameState.TalkWithManInCafe, 1f);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.EndTalkManInCafe, GameState.Enter, GameState.TalkWithManInCafe);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.BeginDamage, GameState.TalkWithManInCafe, GameState.TryGoInRain);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.CafeEndPackUp, GameState.Enter, GameState.CafeReadyToGo);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetOneWatchCorw, GameState.WalkInStreetOne, GameState.StreetOneToOld);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.SeeGirlStreetTwo, GameState.SeeTakePhoto, GameState.SeeGirlStreetTwo);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.UnfocusCamera, GameState.SeeGirlStreetTwo, GameState.FindGirlStreetTwo);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEndTalkGirl, GameState.InBusStop, GameState.WalkWithGirl);
@@ -293,7 +300,7 @@ public class LogicManager : MonoBehaviour {
 
 		m_stateMachine.BlindFromEveryState (LogicEvents.EndTalkWithGirl, GameState.TalkWithGirlInCafe);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetOne, GameState.WalkInStreetOne);
-		m_stateMachine.BlindFromEveryState (LogicEvents.EnterRotateBuilding, GameState.SeeBuilding);
+//		m_stateMachine.BlindFromEveryState (LogicEvents.EnterRotateBuilding, GameState.SeeBuilding);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterBorrowUmbrella, GameState.BorrowUmbrella);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetTwo, GameState.WalkInStreetTwo);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterTakePhoto, GameState.SeeTakePhoto);
@@ -308,6 +315,10 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterApartment, GameState.BackToApartment);
 		m_stateMachine.BlindFromEveryState (LogicEvents.WalkInApartment, GameState.PlayEndAnimation);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EndHitThree, GameState.ShowCredit);
+
+		m_stateMachine.AddEnter (GameState.StreetOneToOld, delegate() {
+			M_Event.FireLogicEvent(LogicEvents.ToOld, new LogicArg(this));	
+		});
 
 		m_stateMachine.AddEnter (GameState.WalkAcrossRoadWithGirl, delegate() {
 			M_Event.FireLogicEvent(LogicEvents.TrafficGreenLight,new LogicArg(this));
@@ -336,6 +347,8 @@ public class LogicManager : MonoBehaviour {
 
 		m_stateMachine.State = startState;
 	}
+
+
 
 	void OnGUI()
 	{

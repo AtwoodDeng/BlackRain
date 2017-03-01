@@ -73,7 +73,7 @@ public class MainCharacter : MonoBehaviour {
 
 	[SerializeField] Transform headTransform;
 	public Vector3 GetInteractiveCenter() {
-		return headTransform.position + TalkableCharacter.InteractionPointOffset;
+		return headTransform.position ;
 	}
 
 	private bool m_Moveable = true;
@@ -134,9 +134,6 @@ public class MainCharacter : MonoBehaviour {
 		if ( m_animator != null )
 			m_animator = GetComponentInChildren<Animator> ();
 
-		if (model != null) {
-		}
-
 		cameraBot.InputSetting.Sensitive = CameraSensity;
 		oriCamBotSensity = CameraSensity;
 	}
@@ -153,6 +150,8 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] += OnUnfocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.Sneeze] += OnSneeze;
 		M_Event.logicEvents [(int)LogicEvents.Breath] += OnBreath;
+		M_Event.RegisterEvent (LogicEvents.ToOld, OnToOld);
+		M_Event.RegisterEvent (LogicEvents.ToModern, OnToMorden);
 	}
 
 	void OnDisable()
@@ -167,6 +166,19 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.Sneeze] -= OnSneeze;
 		M_Event.logicEvents [(int)LogicEvents.Breath] -= OnBreath;
+		M_Event.UnregisterEvent (LogicEvents.ToOld, OnToOld);
+		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToMorden);
+	}
+
+	void OnToOld( LogicArg arg )
+	{
+		m_animator.SetTrigger ("Old");
+	}
+
+	void OnToMorden( LogicArg arg )
+	{
+		m_animator.SetTrigger ("Morden");
+		
 	}
 
 	void OnBreath( LogicArg arg )
@@ -358,7 +370,6 @@ public class MainCharacter : MonoBehaviour {
 //		if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 		#endif
 
-
 		// pass all parameters to the character control script
 		if ( Moveable )
 			Move( m_Move );
@@ -422,5 +433,10 @@ public class MainCharacter : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 
 		Moveable = true;
+	}
+
+	public static Camera MainCameara
+	{
+		get { return Instance.m_MainCamera; }
 	}
 }

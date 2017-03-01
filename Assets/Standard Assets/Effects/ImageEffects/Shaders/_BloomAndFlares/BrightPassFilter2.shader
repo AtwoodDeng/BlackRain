@@ -11,12 +11,11 @@ Shader "Hidden/BrightPassFilter2"
 	
 	struct v2f 
 	{
-		float4 pos : SV_POSITION;
+		float4 pos : POSITION;
 		float2 uv : TEXCOORD0;
 	};
 	
 	sampler2D _MainTex;	
-	half4     _MainTex_ST;
 	
 	half4 _Threshhold;
 		
@@ -24,11 +23,11 @@ Shader "Hidden/BrightPassFilter2"
 	{
 		v2f o;
 		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-		o.uv = UnityStereoScreenSpaceUVAdjust(v.texcoord.xy, _MainTex_ST);
+		o.uv =  v.texcoord.xy;
 		return o;
 	} 
 	
-	half4 fragScalarThresh(v2f i) : SV_Target 
+	half4 fragScalarThresh(v2f i) : COLOR 
 	{
 		half4 color = tex2D(_MainTex, i.uv);
 		color.rgb = color.rgb;
@@ -36,7 +35,7 @@ Shader "Hidden/BrightPassFilter2"
 		return color;
 	}
 
-	half4 fragColorThresh(v2f i) : SV_Target 
+	half4 fragColorThresh(v2f i) : COLOR 
 	{
 		half4 color = tex2D(_MainTex, i.uv);
 		color.rgb = max(half3(0,0,0), color.rgb-_Threshhold.rgb);
@@ -50,9 +49,11 @@ Shader "Hidden/BrightPassFilter2"
 		Pass 
  		{
 			ZTest Always Cull Off ZWrite Off
+			Fog { Mode off }      
 
 			CGPROGRAM
 
+			#pragma fragmentoption ARB_precision_hint_fastest
 			#pragma vertex vert
 			#pragma fragment fragScalarThresh
 
@@ -62,9 +63,11 @@ Shader "Hidden/BrightPassFilter2"
 		Pass 
  		{
 			ZTest Always Cull Off ZWrite Off
+			Fog { Mode off }      
 
 			CGPROGRAM
 
+			#pragma fragmentoption ARB_precision_hint_fastest
 			#pragma vertex vert
 			#pragma fragment fragColorThresh
 

@@ -10,10 +10,12 @@ public class EffectManager : MBehavior {
 	[SerializeField] BlurOptimized BlurEffect;
 	[SerializeField] CameraFilterPack_Color_BrightContrastSaturation saturationEffect;
 	[SerializeField] CameraFilterPack_Colors_Adjust_PreFilters photoShopEffect;
+	[SerializeField] CameraFilterPack_Blend2Camera_Blend blendToOld;
 	[Range(0,1f)]
 	[SerializeField] float damgeAffectThreshod = 0.1f;
 	[Range(0,1f)]
 	[SerializeField] float illusionAffectThreshod = 0.3f;
+	[SerializeField] float ToOldDuration = 2f;
 	// Use this for initialization
 
 	protected override void MAwake ()
@@ -29,6 +31,8 @@ public class EffectManager : MBehavior {
 			photoShopEffect = Camera.main.GetComponent<CameraFilterPack_Colors_Adjust_PreFilters> ();
 			photoShopEffect.enabled = false;
 		}
+		if (blendToOld == null)
+			blendToOld = Camera.main.GetComponent<CameraFilterPack_Blend2Camera_Blend> ();
 	}
 
 	protected override void MStart ()
@@ -79,6 +83,8 @@ public class EffectManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.DisPlayClimaxEffect] += OnClimax;
 		M_Event.logicEvents [(int)LogicEvents.FocusCamera] += OnFocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] += OnUnfocusCamera;
+		M_Event.RegisterEvent (LogicEvents.ToOld, OnToOld);
+		M_Event.RegisterEvent (LogicEvents.ToModern, OnToMorden);
 	}
 
 	protected override void MOnDisable ()
@@ -90,9 +96,21 @@ public class EffectManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.DisPlayClimaxEffect] -= OnClimax;
 		M_Event.logicEvents [(int)LogicEvents.FocusCamera] -= OnFocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
+		M_Event.UnregisterEvent (LogicEvents.ToOld, OnToOld);
+		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToMorden);
 	}
 
 	bool isCameraLocked = false;
+
+	void OnToOld( LogicArg arg )
+	{
+		DOTween.To ( (x) => blendToOld.BlendFX = x, 0 , 1f, ToOldDuration);
+	}
+
+	void OnToMorden( LogicArg arg )
+	{
+		DOTween.To ( (x) => blendToOld.BlendFX = x, 1f , 0f, ToOldDuration);
+	}
 
 	void OnFocusCamera( LogicArg arg )
 	{
@@ -172,7 +190,7 @@ public class EffectManager : MBehavior {
 //		}
 		if (waterDropEffect != null) {
 			if (isCameraLocked || NarrativeManager.Instance.IsDisplaying) {
-				Debug.Log ("Water Drop false");
+//				Debug.Log ("Water Drop false");
 				waterDropEffect.enabled = false;
 			}else
 			{

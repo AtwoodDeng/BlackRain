@@ -223,4 +223,15 @@ public class AudioManager : MBehavior {
 
 	}
 
+	static public AudioSource PlaySoundOn( AudioClip clip , GameObject target , float delay = 0 , float volume = 0.65f)
+	{
+		AudioSource source = target.AddComponent<AudioSource> ();
+		source.clip = clip;
+		source.spatialBlend = 1f;
+		source.volume = volume;
+
+		source.PlayDelayed (delay);
+		return source;
+	}
+
 }

@@ -1,0 +1,131 @@
+fileFormatVersion: 2
+guid: 91909c1a96b0b884db6050a07fb24e68
+timeCreated: 1486836894
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: eness3d_00
+    100004: eness3d_02
+    100006: eness3d_03
+    100008: eness3d_04
+    100010: eness3d_05
+    100012: eness3d_06
+    100014: eness3d_07
+    100016: ENESS3D_Objet_Decoratif_Sacoche_cuir
+    100018: Plane001
+    100020: paper
+    100022: paper1
+    400000: //RootNode
+    400002: eness3d_00
+    400004: eness3d_02
+    400006: eness3d_03
+    400008: eness3d_04
+    400010: eness3d_05
+    400012: eness3d_06
+    400014: eness3d_07
+    400016: ENESS3D_Objet_Decoratif_Sacoche_cuir
+    400018: Plane001
+    400020: paper
+    400022: paper1
+    2300000: eness3d_00
+    2300002: eness3d_02
+    2300004: eness3d_03
+    2300006: eness3d_04
+    2300008: eness3d_05
+    2300010: eness3d_06
+    2300012: eness3d_07
+    2300014: Plane001
+    2300016: paper
+    2300018: paper1
+    3300000: eness3d_00
+    3300002: eness3d_02
+    3300004: eness3d_03
+    3300006: eness3d_04
+    3300008: eness3d_05
+    3300010: eness3d_06
+    3300012: eness3d_07
+    3300014: Plane001
+    3300016: paper
+    3300018: paper1
+    4300000: Plane001
+    4300002: eness3d_07
+    4300004: eness3d_06
+    4300006: eness3d_05
+    4300008: eness3d_04
+    4300010: eness3d_03
+    4300012: eness3d_02
+    4300014: eness3d_00
+    4300016: paper
+    4300018: paper1
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
