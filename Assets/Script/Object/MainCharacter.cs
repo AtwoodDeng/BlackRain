@@ -72,8 +72,17 @@ public class MainCharacter : MonoBehaviour {
 	private float CameraNarrativeSensity = 1f;
 
 	[SerializeField] Transform headTransform;
+	[SerializeField] Transform umbrellaTransform;
+	public Vector3 GetViewCenter() {
+		return headTransform.position;
+	}
 	public Vector3 GetInteractiveCenter() {
 		return headTransform.position ;
+	}
+	public Vector3 GetShareUmbrellaCenter() {
+		Vector3 toward = umbrellaTransform.position - transform.position;
+		toward.y = 0;
+		return transform.position + toward * 1.5f; 
 	}
 
 	private bool m_Moveable = true;
@@ -151,7 +160,7 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.Sneeze] += OnSneeze;
 		M_Event.logicEvents [(int)LogicEvents.Breath] += OnBreath;
 		M_Event.RegisterEvent (LogicEvents.ToOld, OnToOld);
-		M_Event.RegisterEvent (LogicEvents.ToModern, OnToMorden);
+		M_Event.RegisterEvent (LogicEvents.ToModern, OnToModern);
 	}
 
 	void OnDisable()
@@ -167,18 +176,43 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.Sneeze] -= OnSneeze;
 		M_Event.logicEvents [(int)LogicEvents.Breath] -= OnBreath;
 		M_Event.UnregisterEvent (LogicEvents.ToOld, OnToOld);
-		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToMorden);
+		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToModern);
 	}
 
 	void OnToOld( LogicArg arg )
 	{
-		m_animator.SetTrigger ("Old");
+
+		float delay = 0;
+		float duration = 0;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+
+		StartCoroutine (SetTriggerDelay ("Old", delay));
+
 	}
 
-	void OnToMorden( LogicArg arg )
+	void OnToModern( LogicArg arg )
 	{
-		m_animator.SetTrigger ("Morden");
-		
+		float delay = 0;
+		float duration = 0;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+
+
+		StartCoroutine (SetTriggerDelay ("Morden", delay));
+	}
+
+	IEnumerator SetTriggerDelay( string trigger , float delay )
+	{
+		yield return new WaitForSeconds (delay);
+		if ( m_animator != null )
+			m_animator.SetTrigger (trigger);
 	}
 
 	void OnBreath( LogicArg arg )
@@ -347,38 +381,34 @@ public class MainCharacter : MonoBehaviour {
 	void LateUpdate()
 	{
 
-		// read inputs
-		float h = CrossPlatformInputManager.GetAxis("Horizontal");
-		float v = CrossPlatformInputManager.GetAxis("Vertical");
+		m_Move = Vector3.zero;
+
+		if (Moveable) {
+			// read inputs
+			float h = CrossPlatformInputManager.GetAxis ("Horizontal");
+			float v = CrossPlatformInputManager.GetAxis ("Vertical");
 //		bool crouch = Input.GetKey(KeyCode.C);
 
-		// calculate move direction to pass to character
-		if (m_CamTransform != null)
-		{
-			// calculate camera relative direction to move:
-			m_CamForward = Vector3.Scale(m_CamTransform.forward, new Vector3(1, 0, 1)).normalized;
-			 m_Move = v * m_CamForward + h * m_CamTransform.right;
+			// calculate move direction to pass to character
+			if (m_CamTransform != null) {
+				// calculate camera relative direction to move:
+				m_CamForward = Vector3.Scale (m_CamTransform.forward, new Vector3 (1, 0, 1)).normalized;
+				m_Move = v * m_CamForward + h * m_CamTransform.right;
+			} else {
+				// we use world-relative directions in the case of no main camera
+				m_Move = v * Vector3.forward + h * Vector3.right;
+			}
 		}
-		else
-		{
-			// we use world-relative directions in the case of no main camera
-			m_Move = v * Vector3.forward + h * Vector3.right;
-		}
-			
 		#if !MOBILE_INPUT
 		// walk speed multiplier
 //		if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 		#endif
 
-		// pass all parameters to the character control script
-		if ( Moveable )
-			Move( m_Move );
 
+		Move (m_Move);
 
 		// set the animator 
-		if (Moveable) {
-			m_animator.SetBool ("isMoving", m_IsMoving );
-		}
+		m_animator.SetBool ("isMoving", m_IsMoving);
 
 		// update the sensity
 		if (MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.UnderDamage) {

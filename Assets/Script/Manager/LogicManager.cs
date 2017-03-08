@@ -52,16 +52,16 @@ public class LogicManager : MonoBehaviour {
 		CafeReadyToGo = 2,
 		TalkWithGirlInCafe = 4,
 		WalkInStreetOne = 5,
-		StreetOneToOld = 6,
 		BorrowUmbrella = 7,
 
 		/// <summary>
 		/// Level Two
 		/// </summary>
 		WalkInStreetTwo = 10,
-		SeeTakePhoto = 11,
-		SeeGirlStreetTwo = 12,
-		FindGirlStreetTwo = 13,
+		ToOldStreetTwo = 12,
+		BackToMordenStreetTwo = 15,
+		SeeGirlStreetTwo = 16,
+		FindGirlStreetTwo = 17,
 
 		/// <summary>
 		/// Level Three
@@ -284,8 +284,9 @@ public class LogicManager : MonoBehaviour {
 
 //		m_stateMachine.BlindTimeStateChange (GameState.Enter, GameState.TalkWithManInCafe, 1f);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.CafeEndPackUp, GameState.Enter, GameState.CafeReadyToGo);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetOneWatchCorw, GameState.WalkInStreetOne, GameState.StreetOneToOld);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.SeeGirlStreetTwo, GameState.SeeTakePhoto, GameState.SeeGirlStreetTwo);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.ReflectGirlInCarStreetTwo, GameState.WalkInStreetTwo, GameState.ToOldStreetTwo);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetTwoWatchCrowEnd, GameState.ToOldStreetTwo, GameState.BackToMordenStreetTwo);
+//		m_stateMachine.BlindStateChangeEvent (LogicEvents.SeeGirlStreetTwo, GameState.SeeTakePhoto, GameState.SeeGirlStreetTwo);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.UnfocusCamera, GameState.SeeGirlStreetTwo, GameState.FindGirlStreetTwo);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEndTalkGirl, GameState.InBusStop, GameState.WalkWithGirl);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.TrafficRedLight, GameState.WalkOutStreetFour, GameState.WalkIntoPeople);
@@ -303,7 +304,7 @@ public class LogicManager : MonoBehaviour {
 //		m_stateMachine.BlindFromEveryState (LogicEvents.EnterRotateBuilding, GameState.SeeBuilding);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterBorrowUmbrella, GameState.BorrowUmbrella);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetTwo, GameState.WalkInStreetTwo);
-		m_stateMachine.BlindFromEveryState (LogicEvents.EnterTakePhoto, GameState.SeeTakePhoto);
+//		m_stateMachine.BlindFromEveryState (LogicEvents.EnterTakePhoto, GameState.SeeTakePhoto);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetThree, GameState.WalkInStreetThree);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterBusStop, GameState.InBusStop);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetThreeEnd, GameState.WalkOutStreetThree);
@@ -316,8 +317,19 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine.BlindFromEveryState (LogicEvents.WalkInApartment, GameState.PlayEndAnimation);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EndHitThree, GameState.ShowCredit);
 
-		m_stateMachine.AddEnter (GameState.StreetOneToOld, delegate() {
-			M_Event.FireLogicEvent(LogicEvents.ToOld, new LogicArg(this));	
+		m_stateMachine.AddEnter (GameState.ToOldStreetTwo, delegate() {
+			LogicArg arg = new LogicArg(this);
+			arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 2f );
+			arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 4f );
+			M_Event.FireLogicEvent(LogicEvents.ToOld, arg );
+		});
+
+		m_stateMachine.AddEnter (GameState.BackToMordenStreetTwo, delegate() {
+			LogicArg arg = new LogicArg(this);
+			arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 2f );
+			arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 4f );
+			M_Event.FireLogicEvent(LogicEvents.ToModern, arg );
+			
 		});
 
 		m_stateMachine.AddEnter (GameState.WalkAcrossRoadWithGirl, delegate() {

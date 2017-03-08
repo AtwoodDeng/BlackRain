@@ -54,7 +54,7 @@ public enum LogicEvents
 
 	CafeEndPackUp = 100,
 	EnterStreetOne = 101,
-	SeeGrilInStreetOne = 102,
+	SeeGrilInCar = 102,
 	EnterStreetTwo = 103,
 	EnterStreetThree = 104,
 	EnterTakePhoto = 105,
@@ -63,7 +63,14 @@ public enum LogicEvents
 	EnterStreetThreeEnd = 108,
 	CafePackUpBag = 200,
 	CafePhoneRing = 201,
+	GirlInCarTurnOn = 205,
 	StreetOneWatchCorw = 210,
+	StreetTwoWatchCrow = 211,
+	StreetTwoWatchCrowEnd = 212,
+	SeeOldGrilStreetTwo = 220,
+	ReflectGirlInCarStreetTwo = 225,
+	BackToMordenStreetTwo = 240,
+
 
 	EnterBusStop = 110,
 	BusStopEndTalkGirl = 111,
@@ -223,6 +230,8 @@ public class M_Event : MonoBehaviour {
 	public const string EVENT_PLAY_MUSIC_NAME = "MUSIC_NAME";
 	public const string EVENT_BGM_FADE_TIME = "BGM_FADE_TIME";
 	public const string EVENT_ICON_NARRATIV_DIALOG = "ICON_DIALOG";
+	public const string EVENT_OMSWITCH_DELAY = "TOOLD_DELAY";
+	public const string EVENT_OMSWITCH_DURATION = "TOOLD_DURATION";
 
 
 }

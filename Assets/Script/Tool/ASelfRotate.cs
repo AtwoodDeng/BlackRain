@@ -5,7 +5,6 @@ using DG.Tweening;
 //[ExecuteInEditMode]
 public class ASelfRotate : MBehavior {
 
-	[SerializeField] bool ifRotateOnAwake = true;
 	[SerializeField] Vector3 rotateDirection;
 	[Tooltip("The cycle Time to rotate 360 degree")]
 	[SerializeField] float rotateCycleTime = 1f;

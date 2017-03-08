@@ -84,7 +84,7 @@ public class EffectManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.FocusCamera] += OnFocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] += OnUnfocusCamera;
 		M_Event.RegisterEvent (LogicEvents.ToOld, OnToOld);
-		M_Event.RegisterEvent (LogicEvents.ToModern, OnToMorden);
+		M_Event.RegisterEvent (LogicEvents.ToModern, OnToModern);
 	}
 
 	protected override void MOnDisable ()
@@ -97,19 +97,34 @@ public class EffectManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.FocusCamera] -= OnFocusCamera;
 		M_Event.logicEvents [(int)LogicEvents.UnfocusCamera] -= OnUnfocusCamera;
 		M_Event.UnregisterEvent (LogicEvents.ToOld, OnToOld);
-		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToMorden);
+		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToModern);
 	}
 
 	bool isCameraLocked = false;
 
 	void OnToOld( LogicArg arg )
 	{
-		DOTween.To ( (x) => blendToOld.BlendFX = x, 0 , 1f, ToOldDuration);
+		float delay = 0;
+		float duration = ToOldDuration;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+		
+		DOTween.To ( (x) => blendToOld.BlendFX = x, 0 , 1f, duration).SetDelay(delay);
 	}
 
-	void OnToMorden( LogicArg arg )
+	void OnToModern( LogicArg arg )
 	{
-		DOTween.To ( (x) => blendToOld.BlendFX = x, 1f , 0f, ToOldDuration);
+		float delay = 0;
+		float duration = ToOldDuration;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+		DOTween.To ( (x) => blendToOld.BlendFX = x, 1f , 0f, duration).SetDelay(delay);
 	}
 
 	void OnFocusCamera( LogicArg arg )

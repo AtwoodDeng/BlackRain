@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 public class TakePhotoCharacter : TalkableCharacter {
 
@@ -17,6 +18,7 @@ public class TakePhotoCharacter : TalkableCharacter {
 		public Transform cellPhone;
 		public Light flashLight;
 		public ParticleSystem flashLightPar;
+		public AudioSource flashLightSouce;
 		public AudioClip flashLightSound;
 		/// <summary>
 		/// The interval between two flash light
@@ -28,7 +30,16 @@ public class TakePhotoCharacter : TalkableCharacter {
 		public float flashLightTime;
 	}
 	[SerializeField] TakePhotoSetting takePhotoSetting;
-
+	[System.Serializable]
+	public struct WalkBetweenSetting
+	{
+		public bool IfWork;
+		public Transform[] WalkList;
+		[ReadOnlyAttribute] public int index;
+		public NavMeshAgent agent;
+		public float speed;
+	}
+	[SerializeField] WalkBetweenSetting walkBetweenSetting;
 	AudioSource flashLightAudioSource;
 
 
@@ -36,8 +47,9 @@ public class TakePhotoCharacter : TalkableCharacter {
 	{
 		base.MAwake ();
 
-
-		if (takePhotoSetting.flashLightSound != null) {
+		if (takePhotoSetting.flashLightSouce != null) {
+			flashLightAudioSource = takePhotoSetting.flashLightSouce;
+		} else if (takePhotoSetting.flashLightSound != null) {
 			flashLightAudioSource = gameObject.AddComponent<AudioSource> ();
 			flashLightAudioSource.playOnAwake = false;
 			flashLightAudioSource.Stop ();
@@ -71,6 +83,13 @@ public class TakePhotoCharacter : TalkableCharacter {
 			Vector3 towardPos = toward.position;
 			towardPos.y = 0;
 			transform.LookAt (towardPos );
+		}
+
+		if (walkBetweenSetting.IfWork) {
+			walkBetweenSetting.agent = gameObject.AddComponent<NavMeshAgent> ();
+			walkBetweenSetting.agent.stoppingDistance = 0.1f;
+			walkBetweenSetting.agent.speed = walkBetweenSetting.speed;
+			walkBetweenSetting.agent.angularSpeed = 60f;
 		}
 			
 	}
@@ -137,39 +156,52 @@ public class TakePhotoCharacter : TalkableCharacter {
 				takePhotoSetting.flashLight.enabled = false;
 			timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
 		}
+		UpdateAI ();
 	}
 
-	IEnumerator TakePhoto()
+	public void UpdateAI()
 	{
-
-		float timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
-		float lastTime = 0;
-
-		while (true) {
-			lastTime = timer;
-			timer -= Time.deltaTime;
-			if (timer < 0 && lastTime >= 0 ) {
-				if (takePhotoSetting.flashLight != null)
-					takePhotoSetting.flashLight.enabled = true;
-				if (takePhotoSetting.flashLightPar != null) {
-					takePhotoSetting.flashLightPar.startLifetime = takePhotoSetting.flashLightTime;
-					takePhotoSetting.flashLightPar.Emit (1);
+		if (walkBetweenSetting.IfWork) {
+			if (walkBetweenSetting.agent.remainingDistance <= walkBetweenSetting.agent.stoppingDistance) {
+				if (!walkBetweenSetting.agent.hasPath || walkBetweenSetting.agent.velocity.magnitude == 0) {
+					walkBetweenSetting.agent.destination = walkBetweenSetting.WalkList [walkBetweenSetting.index % walkBetweenSetting.WalkList.Length].position;
+					walkBetweenSetting.index++;
 				}
-				if (flashLightAudioSource != null)
-					flashLightAudioSource.Play ();
 			}
-
-			if (timer < -takePhotoSetting.flashLightTime) {
-				if (takePhotoSetting.flashLight != null)
-					takePhotoSetting.flashLight.enabled = false;
-				timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
-			}
-
-
-
-			yield return new WaitForEndOfFrame ();
 		}
-		yield return null;
 	}
+
+//	IEnumerator TakePhoto()
+//	{
+//
+//		float timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
+//		float lastTime = 0;
+//
+//		while (true) {
+//			lastTime = timer;
+//			timer -= Time.deltaTime;
+//			if (timer < 0 && lastTime >= 0 ) {
+//				if (takePhotoSetting.flashLight != null)
+//					takePhotoSetting.flashLight.enabled = true;
+//				if (takePhotoSetting.flashLightPar != null) {
+//					takePhotoSetting.flashLightPar.startLifetime = takePhotoSetting.flashLightTime;
+//					takePhotoSetting.flashLightPar.Emit (1);
+//				}
+//				if (flashLightAudioSource != null)
+//					flashLightAudioSource.Play ();
+//			}
+//
+//			if (timer < -takePhotoSetting.flashLightTime) {
+//				if (takePhotoSetting.flashLight != null)
+//					takePhotoSetting.flashLight.enabled = false;
+//				timer = Random.Range (takePhotoSetting.takePhotoInterval / 3f, takePhotoSetting.takePhotoInterval);
+//			}
+//
+//
+//
+//			yield return new WaitForEndOfFrame ();
+//		}
+//		yield return null;
+//	}
 
 }

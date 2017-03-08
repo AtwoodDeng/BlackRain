@@ -9,15 +9,24 @@ public class MoveOnEvent : OnEventResponsor {
 	[SerializeField] float delay = 0;
 	[SerializeField] bool relative;
 	[SerializeField] bool disableOnEnd;
+	[SerializeField] bool isFrom = false;
+	[SerializeField] Ease easeType = Ease.Linear;
 
 	public override void OnEvent (LogicArg arg)
 	{
 		base.OnEvent (arg);
-		Debug.Log ("Move");
-		target.DOMove (move, Time).SetRelative (relative).SetDelay(delay).SetEase(Ease.Linear).OnComplete (delegate() {
-			if ( disableOnEnd )
-				target.gameObject.SetActive( false );	
-		});
+//		Debug.Log ("Move");
+		if (isFrom) {
+			target.DOMove (move, Time).From().SetRelative (relative).SetDelay(delay).SetEase(easeType).OnComplete (delegate() {
+				if ( disableOnEnd )
+					target.gameObject.SetActive( false );	
+			});
+		} else {
+			target.DOMove (move, Time).SetRelative (relative).SetDelay (delay).SetEase (easeType).OnComplete (delegate() {
+				if (disableOnEnd)
+					target.gameObject.SetActive (false);	
+			});
+		}
 	}
 
 	void OnDrawGizmosSelected()

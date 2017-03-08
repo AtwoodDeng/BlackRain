@@ -70,9 +70,37 @@ public class NarrativeDialog
 
 
 public enum NarrativeIcon {
-	None,
-	Umbrella,
-	Happy,
+	None = 0,
+	Happy = 1,
+	Question = 2,
+	Cry = 3,
+	Shy = 4,
+	Smirking = 5,
+	LoveEyes = 6,
+	Angry = 7,
+	Exclamation = 8,
+	DotDotDot = 10,
+
+	Kappa = 31,
+	Yao = 32,
+
+	OK = 50,
+	QuestionGirl = 51,
+	Stop = 52,
+
+	Umbrella = 100,
+	ShareUmbrella = 101,
+	LostUmbrella = 102,
+	Crow = 103,
+	CrowInRainMC = 104,
+	CrowInRainGirl = 105,
+	Money = 110,
+	Ladies = 111,
+	Wine = 112,
+
+	HappyOld = 201,
+	QuestionOld = 202,
+	ShareUmbrellaOld = 203,
 }
 
 
@@ -104,6 +132,11 @@ public class IconNarrativeDialog
 	/// Who send the dialog
 	/// </summary>
 	public TalkableCharacter thisCharacter;
+
+	/// <summary>
+	/// If set the dialog to a bigger one
+	/// </summary>
+	public bool IsBig = false;
 
 
 }

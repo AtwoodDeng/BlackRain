@@ -6,7 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class IconDialog : MBehavior {
 
-	public TalkableCharacter character;
+	[ReadOnlyAttribute] public TalkableCharacter character;
 	[SerializeField] RectTransform dialogFrame;
 	[SerializeField] RectTransform dialogArrow;
 	[SerializeField] Image m_backImage;
@@ -24,8 +24,16 @@ public class IconDialog : MBehavior {
 //	public void Init( TalkableCharacter _char , NarrativeDialog dialog )
 	public void Init( IconNarrativeDialog dialog )
 	{
+		
 		character = dialog.thisCharacter;
 		type = dialog.type;
+		if (dialog.soundVolumn <= 0)
+			dialog.soundVolumn = 0.8f;
+
+		if (dialog.IsBig) {
+			dialogFrame.sizeDelta = dialogFrame.sizeDelta * 2f;
+			ScreenOffset.x *= 2f;
+		}
 
 		if (m_backImage != null) {
 			m_backImage.transform.localScale = Vector3.one * 0.01f;
@@ -37,7 +45,7 @@ public class IconDialog : MBehavior {
 		}
 		if (m_iconImage != null) {
 			Sprite icon = Resources.Load<Sprite> ("Icon/" + dialog.icon.ToString ());
-			Debug.Log ("Get Icon " + icon);
+//			Debug.Log ("Get Icon " + icon);
 			m_iconImage.sprite = icon;
 			m_iconImage.DOFade (backImageOriginalAlpha, showUpTime).SetDelay(dialog.delay);
 		}
@@ -49,7 +57,7 @@ public class IconDialog : MBehavior {
 		}
 		timer = 0;
 		if (dialog.duration > 0) {
-			disappearTime = dialog.duration;
+			disappearTime = dialog.duration + dialog.delay;
 		}
 		UpdateDialogFramePosition ();
 	}
@@ -60,6 +68,7 @@ public class IconDialog : MBehavior {
 	{
 		base.MUpdate ();
 		UpdateDialogArrow ();
+		UpdateDialogFramePosition ();
 
 		timer += Time.deltaTime;
 		if (timer > disappearTime) {

@@ -2,27 +2,44 @@
 using System.Collections;
 using DG.Tweening;
 
+[RequireComponent(typeof(CapsuleCollider))]
 public class TalkableCharacter : Character {
 
+	[SerializeField] Transform head;
 	[SerializeField] protected NarrativePlotScriptableObject mainPlot;
 	[SerializeField] protected NarrativePlotScriptableObject[] subPlots;
-
-	[SerializeField] Transform head;
-
 	[SerializeField] bool OnlySubPlots;
-	[HideInInspector] public bool IsMainEnded = false;
-	[HideInInspector] public bool IsTalking = false;
+	[ReadOnlyAttribute] public bool IsMainEnded = false;
+	[ReadOnlyAttribute] public bool IsTalking = false;
+	public bool IsTalkable{
+		get {
+			if (mainPlot != null && !IsMainEnded)
+				return true;
+			if (subPlots.Length > 0)
+				return true;
+			return false;
+		}
+	}
 	float becomeTalkableDelay = 1.5f;
-	[HideInInspector] public bool isMainTalking = false;
+	[ReadOnlyAttribute] public bool isMainTalking = false;
 	[SerializeField] LogicEvents MainTalkEndEvent;
 	[SerializeField] Transform talkCamera;
 	[SerializeField] float talkCameraChangeDuration = 1f;
-	[SerializeField] FilmController filmController;
-	[SerializeField] bool filmOnce;
-	bool isFilmPlayed = false;
+	[SerializeField] protected FilmController filmController;
+	[SerializeField] protected bool filmOnce;
+	protected bool isFilmPlayed = false;
 	public bool IsFlimPlayable{
 		get {
-			return (!filmOnce) || (!isFilmPlayed);
+			
+			return ( filmController != null ) && ((!filmOnce) || (!isFilmPlayed));
+		}
+	}
+	[SerializeField] IconNarrativeDialog[] iconNarrativeList;
+	[SerializeField] bool isLockIconNarrative;
+	[ReadOnlyAttribute] int iconNarrativeIndex = -1;
+	public bool IsIconNarrativePlayable{
+		get {
+			return iconNarrativeList != null && iconNarrativeList.Length > 0;
 		}
 	}
 
@@ -98,15 +115,29 @@ public class TalkableCharacter : Character {
 		if (!IsTalking) {
 			base.Interact ();
 
-			if (filmController != null) {
-				filmController.Work ();
-				isFilmPlayed = true;
-			}else if (OnlySubPlots || IsMainEnded ) {
-				DisplaySubDialog ();
-			} else {
-				DisplayDialog (mainPlot);
-				isMainTalking = true;
+			if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog) {
+				if (OnlySubPlots || IsMainEnded ) {
+					DisplaySubDialog ();
+				} else {
+					DisplayDialog (mainPlot);
+					isMainTalking = true;
+				}
 			}
+			if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Icon) {
+				if (IsFlimPlayable) {
+					if (filmController.character == null)
+						filmController.character = this;
+					filmController.Work ();
+					isFilmPlayed = true;
+				} else if (IsIconNarrativePlayable) {
+					LogicArg arg = new LogicArg (this);
+					if (iconNarrativeIndex == -1 || !isLockIconNarrative)
+						iconNarrativeIndex = Random.Range (0, iconNarrativeList.Length);
+					arg.AddMessage(M_Event.EVENT_ICON_NARRATIV_DIALOG , iconNarrativeList[ iconNarrativeIndex ] );
+					M_Event.FireLogicEvent (LogicEvents.DisplayIconDialog, arg);
+				}
+			}
+
 		}
 	}
 	protected void DisplaySubDialog()
@@ -143,10 +174,17 @@ public class TalkableCharacter : Character {
 		cam.transform.DORotate (talkCamera.eulerAngles, talkCameraChangeDuration);
 	}
 
+	public Vector3 GetViewCenter()
+	{
+		if (head != null) {
+			return head.transform.position;
+		}
+		return transform.position;
+	}
+
 	public override Vector3 GetInteractCenter ()
 	{
 		if (head != null) {
-//			Debug.Log ("Head " + head.transform.position + "offset " + InteractionPointOffset);
 			return head.transform.position + InteractionPointOffset;
 		}
 
@@ -155,7 +193,7 @@ public class TalkableCharacter : Character {
 
 	public override bool IsInteractable ()
 	{
-		return base.IsInteractable () && !IsTalking && ( mainPlot != null || subPlots.Length > 0 || (filmController != null && IsFlimPlayable) );
+		return base.IsInteractable () && !IsTalking && ( IsTalkable ||  IsFlimPlayable || IsIconNarrativePlayable );
 	}
 
 }

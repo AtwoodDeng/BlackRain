@@ -7,6 +7,11 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class NarrativeManager : MBehavior {
 
+	public enum NarrativeType
+	{
+		Dialog,
+		Icon,
+	}
 
 	static NarrativeManager m_Instance;
 	public static NarrativeManager Instance{ 
@@ -23,6 +28,13 @@ public class NarrativeManager : MBehavior {
 	[SerializeField] GameObject iconDialogPrefab;
 	[SerializeField] bool HideDialog;
 	[SerializeField] bool HideIconDialog;
+	public NarrativeType narrativeType{
+		get {
+			if (HideDialog)
+				return NarrativeType.Icon;
+			return NarrativeType.Dialog;
+		}
+	}
 
 	private AudioSource mainCharacterSpeaker;
 	private AudioSource temSpeaker;
@@ -154,18 +166,6 @@ public class NarrativeManager : MBehavior {
 
 	void DisplayIconDialog( IconNarrativeDialog dialog  )
 	{
-//		if (m_test_ShowDialog && !HideDialog ) {
-//			plot.otherSpeaker.clip = dialog.clip;
-//			plot.otherSpeaker.Play ();
-//
-//
-//			GameObject smallDialog = Instantiate (smallDialogPrefab) as GameObject;
-//			smallDialog.transform.SetParent (UIManager.Instance.transform);
-//			Dialog dialogCom = smallDialog.GetComponent<Dialog> ();
-//
-//			if (dialogCom != null)
-//				dialogCom.Init (plot.character, dialog);
-//		}
 		if (!HideIconDialog ) {
 			GameObject smallDialog = Instantiate (iconDialogPrefab) as GameObject;
 			smallDialog.transform.SetParent (UIManager.Instance.transform);

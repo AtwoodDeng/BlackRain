@@ -16,6 +16,7 @@ public class PlaySoundOnEvent : OnEventResponsor {
 	{
 		base.OnEvent (arg);
 
+		Debug.Log ("Play Sound " + target.name);
 		if (target != null) {
 			target.loop = loop;
 			target.DOFade (fadeto, duration).SetRelative (isRelative).SetDelay(delay).OnStart(delegate() {

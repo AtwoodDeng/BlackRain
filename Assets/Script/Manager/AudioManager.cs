@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 /// <summary>
 /// manage the sound effect
@@ -9,6 +10,10 @@ using System.Collections.Generic;
 /// 
 /// </summary>
 public class AudioManager : MBehavior {
+	public enum SnapshotType{
+		Old = 1,
+		Modern = 2,
+	}
 
 	public AudioManager() { s_Instance = this; }
 	public static AudioManager Instance { get { return s_Instance; } }
@@ -42,6 +47,8 @@ public class AudioManager : MBehavior {
 	[SerializeField] AudioClip illusionBGM;
 	[SerializeField] AudioClip endingBGM;
 	[SerializeField] List<AudioClip> playableMusicList;
+	[SerializeField] AudioMixerSnapshot old;
+	[SerializeField] AudioMixerSnapshot modern;
 	private AudioSource bgmSource;
 	private AudioSource bgmSwitchableSource;
 	public string switchBGMName{
@@ -73,6 +80,8 @@ public class AudioManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.BeginDamage] += OnBeginDamage;
 		M_Event.logicEvents [(int)LogicEvents.EndDamage] += OnEndDamge;
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
+		M_Event.logicEvents [(int)LogicEvents.ToOld] += OnToOld;
+		M_Event.logicEvents [(int)LogicEvents.ToModern] += OnToModern;
 	}
 
 	protected override void MOnDisable ()
@@ -88,7 +97,47 @@ public class AudioManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.BeginDamage] -= OnBeginDamage;
 		M_Event.logicEvents [(int)LogicEvents.EndDamage] -= OnEndDamge;
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] -= OnDeathEnd;
+		M_Event.logicEvents [(int)LogicEvents.ToOld] -= OnToOld;
+		M_Event.logicEvents [(int)LogicEvents.ToModern] -= OnToModern;
 
+	}
+
+	public void OnToOld( LogicArg arg )
+	{
+
+		float delay = 0;
+		float duration = 0;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+
+		StartCoroutine( ChangeSnapshotTo( delay , duration , SnapshotType.Old ));
+	}
+
+	public void OnToModern( LogicArg arg )
+	{
+
+		float delay = 0;
+		float duration = 0;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+		
+		StartCoroutine( ChangeSnapshotTo( delay , duration , SnapshotType.Modern ));
+				
+	}
+
+	IEnumerator ChangeSnapshotTo( float delay , float duration, SnapshotType type )
+	{
+		yield return new WaitForSeconds (delay);
+		if ( type == SnapshotType.Old )
+			old.TransitionTo (duration);
+		if ( type == SnapshotType.Modern )
+			modern.TransitionTo (duration);
 	}
 
 	public void OnPlayEndBGM( LogicArg arg )
@@ -231,6 +280,9 @@ public class AudioManager : MBehavior {
 		source.volume = volume;
 
 		source.PlayDelayed (delay);
+		source.DOFade (0, 0.5f).SetDelay (clip.length + delay).OnComplete (delegate {
+			DestroyObject(source);	
+		});
 		return source;
 	}
 
