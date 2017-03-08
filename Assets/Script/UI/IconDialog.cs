@@ -21,10 +21,8 @@ public class IconDialog : MBehavior {
 
 	[SerializeField] float backImageOriginalAlpha = 1f;
 
-//	public void Init( TalkableCharacter _char , NarrativeDialog dialog )
 	public void Init( IconNarrativeDialog dialog )
 	{
-		
 		character = dialog.thisCharacter;
 		type = dialog.type;
 		if (dialog.soundVolumn <= 0)
@@ -45,7 +43,6 @@ public class IconDialog : MBehavior {
 		}
 		if (m_iconImage != null) {
 			Sprite icon = Resources.Load<Sprite> ("Icon/" + dialog.icon.ToString ());
-//			Debug.Log ("Get Icon " + icon);
 			m_iconImage.sprite = icon;
 			m_iconImage.DOFade (backImageOriginalAlpha, showUpTime).SetDelay(dialog.delay);
 		}

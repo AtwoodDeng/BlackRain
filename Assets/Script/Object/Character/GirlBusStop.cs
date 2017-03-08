@@ -222,8 +222,8 @@ public class GirlBusStop : TalkableCharacter {
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
-		M_Event.RegisterEvent (LogicEvents.BustStopTalkPointOne, OnEvent);
-		M_Event.RegisterEvent (LogicEvents.BustStopTalkPointTwo, OnEvent);
+		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
+		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
 		M_Event.RegisterEvent (LogicEvents.EnterStone, OnEvent);
 		M_Event.RegisterEvent (LogicEvents.ForceGirlLeave, OnEvent);
 		M_Event.RegisterEvent (LogicEvents.PlayMusic, OnEvent);
@@ -233,8 +233,8 @@ public class GirlBusStop : TalkableCharacter {
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
-		M_Event.UnregisterEvent (LogicEvents.BustStopTalkPointOne, OnEvent);
-		M_Event.UnregisterEvent (LogicEvents.BustStopTalkPointTwo, OnEvent);
+		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
+		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
 		M_Event.UnregisterEvent (LogicEvents.EnterStone, OnEvent);
 		M_Event.UnregisterEvent (LogicEvents.ForceGirlLeave, OnEvent);
 		M_Event.UnregisterEvent (LogicEvents.PlayMusic, OnEvent);
@@ -243,9 +243,9 @@ public class GirlBusStop : TalkableCharacter {
 
 	void OnEvent(LogicArg arg)
 	{
-		if (arg.type == LogicEvents.BustStopTalkPointOne) {
+		if (arg.type == LogicEvents.BusStopTalkPointOne) {
 			DisplayDialog (talkPointOne);
-		} else if (arg.type == LogicEvents.BustStopTalkPointTwo) {
+		} else if (arg.type == LogicEvents.BusStopTalkPointTwo) {
 			DisplayDialog (talkPointTwo);
 		} else if (arg.type == LogicEvents.EnterStone) {
 			DisplayDialog (stonePlot);

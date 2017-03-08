@@ -44,7 +44,7 @@ public class GirlStreetOne : TalkableCharacter {
 	void InitStateMachine()
 	{
 		m_stateMachine = new AStateMachine<State, LogicEvents> (State.None);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.SeeOldGrilStreetTwo, State.See, State.Follow); 
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetTwoSeeOldGril, State.See, State.Follow); 
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetTwoWatchCrow, State.Follow, State.ToWatchCrow);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetTwoWatchCrowEnd, State.StayWatchCrow, State.FollowEnd);
 		m_stateMachine.BlindTimeStateChange (State.FollowEnd, State.End, 5f);

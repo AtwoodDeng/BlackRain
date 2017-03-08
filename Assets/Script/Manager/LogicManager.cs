@@ -284,7 +284,7 @@ public class LogicManager : MonoBehaviour {
 
 //		m_stateMachine.BlindTimeStateChange (GameState.Enter, GameState.TalkWithManInCafe, 1f);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.CafeEndPackUp, GameState.Enter, GameState.CafeReadyToGo);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.ReflectGirlInCarStreetTwo, GameState.WalkInStreetTwo, GameState.ToOldStreetTwo);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetTwoReflectGirlInCar, GameState.WalkInStreetTwo, GameState.ToOldStreetTwo);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetTwoWatchCrowEnd, GameState.ToOldStreetTwo, GameState.BackToMordenStreetTwo);
 //		m_stateMachine.BlindStateChangeEvent (LogicEvents.SeeGirlStreetTwo, GameState.SeeTakePhoto, GameState.SeeGirlStreetTwo);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.UnfocusCamera, GameState.SeeGirlStreetTwo, GameState.FindGirlStreetTwo);
@@ -302,12 +302,12 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine.BlindFromEveryState (LogicEvents.EndTalkWithGirl, GameState.TalkWithGirlInCafe);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetOne, GameState.WalkInStreetOne);
 //		m_stateMachine.BlindFromEveryState (LogicEvents.EnterRotateBuilding, GameState.SeeBuilding);
-		m_stateMachine.BlindFromEveryState (LogicEvents.EnterBorrowUmbrella, GameState.BorrowUmbrella);
+		m_stateMachine.BlindFromEveryState (LogicEvents.StreetOneEnterBorrowUmbrella, GameState.BorrowUmbrella);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetTwo, GameState.WalkInStreetTwo);
 //		m_stateMachine.BlindFromEveryState (LogicEvents.EnterTakePhoto, GameState.SeeTakePhoto);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetThree, GameState.WalkInStreetThree);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterBusStop, GameState.InBusStop);
-		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetThreeEnd, GameState.WalkOutStreetThree);
+		m_stateMachine.BlindFromEveryState (LogicEvents.StreetThreeEnterEnd, GameState.WalkOutStreetThree);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetFour, GameState.WalkInStreetFour);
 		m_stateMachine.BlindFromEveryState (LogicEvents.GirlSayPlayMusic, GameState.ListenToMusic);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetFourEnd, GameState.WalkOutStreetFour);
