@@ -200,8 +200,8 @@ public class GirlStreetOne : TalkableCharacter {
 		Gizmos.DrawSphere (transform.position, followDistance);
 	}
 
-	void OnGUI()
-	{
-		GUILayout.Label ("Girl's State " + m_stateMachine.State);
-	}
+//	void OnGUI()
+//	{
+//		GUILayout.Label ("Girl's State " + m_stateMachine.State);
+//	}
 }

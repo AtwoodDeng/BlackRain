@@ -24,6 +24,8 @@ public enum LogicEvents
 	Death = 10,
 	DeathEnd = 11,
 
+	MusicBeat = 15,
+
 	BeginDamage = 20,
 	EndDamage = 21,
 	BeginRun = 22,
@@ -33,6 +35,7 @@ public enum LogicEvents
 	EndDisplayDialog = 31,
 	DisplayNextDialog = 32,
 	DisplayIconDialog = 35,
+	EndFilmControl = 36,
 
 	DisplayThought = 40,
 	SwitchThoughtBox = 41,
@@ -43,11 +46,15 @@ public enum LogicEvents
 	HideThought = 45,
 
 	PlayMusic = 50,
+	ShowFrameCamera = 51,
+	CompleteFrameCamera = 51,
+	HideFrameCamera = 52,
 
 	Sneeze = 60,
 	Breath = 70,
 	ToOld = 80,
 	ToModern = 81,
+	ToDark = 82,
 	EndFilm = 85,
 
 	EndGame = 99,
@@ -77,7 +84,20 @@ public enum LogicEvents
 	BusStopEndTalkGirl = 111,
 	BusStopTalkPointOne = 112,
 	BusStopTalkPointTwo = 113,
+	BusStopTalkPointThree = 114,
 	BusStopSeeGirl = 115,
+	StreetFourToDark = 116,
+	StreetFourToOld = 117,
+	BusStopEnterLevel = 300,
+	BusStopLevelOne = 305,
+	BusStopLevelTwo = 310,
+	BusStopLevelThree = 315,
+	BusStopLevelFour = 320,
+
+	BusStartMove = 325,
+	BusStopBusPushForward = 330,
+	BusStopBusPushBack = 335,
+
 
 	TrafficRedLight = 120,
 	TrafficGreenLight = 121,
@@ -120,15 +140,15 @@ public enum LogicEvents
 
 	EndCredit = 160,
 
-	FilmShotOne = 180,
-	FilmShotTwo = 181,
-	FilmShotThree = 182,
-	FilmShotFour = 183,
-	FilmShotFive = 184,
-	FilmShotSix = 185,
-	FilmShotSeven = 186,
-	FilmShotEight = 187,
-	FilmShotNine = 188,
+//	FilmShotOne = 180,
+//	FilmShotTwo = 181,
+//	FilmShotThree = 182,
+//	FilmShotFour = 183,
+//	FilmShotFive = 184,
+//	FilmShotSix = 185,
+//	FilmShotSeven = 186,
+//	FilmShotEight = 187,
+//	FilmShotNine = 188,
 
 }
 
@@ -234,6 +254,7 @@ public class M_Event : MonoBehaviour {
 	public const string EVENT_ICON_NARRATIV_DIALOG = "ICON_DIALOG";
 	public const string EVENT_OMSWITCH_DELAY = "TOOLD_DELAY";
 	public const string EVENT_OMSWITCH_DURATION = "TOOLD_DURATION";
+	public const string EVENT_BEAT_COUNT = "BEAT_COUNT";
 
 
 }

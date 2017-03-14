@@ -6,6 +6,7 @@ public class OldColliderControl : MBehavior {
 	[ReadOnlyAttribute] public bool isActiveOnAwake;
 	[ReadOnlyAttribute] public bool isOld;
 	[ReadOnlyAttribute] public bool isMorden;
+	[ReadOnlyAttribute] public bool isDark;
 	[SerializeField] bool resetCollider = true;
 	[ReadOnlyAttribute] public Collider m_collider;
 	[SerializeField] bool resetColliderInChildren = true;
@@ -23,6 +24,7 @@ public class OldColliderControl : MBehavior {
 		base.MStart ();
 		isOld = gameObject.layer == LayerMask.NameToLayer ("Old");
 		isMorden = gameObject.layer == LayerMask.NameToLayer ("Morden");
+		isDark = gameObject.layer == LayerMask.NameToLayer ("Dark");
 
 		m_collider = GetComponent<Collider> ();
 		collidersInChildren = GetComponentsInChildren<Collider> ();
@@ -35,6 +37,7 @@ public class OldColliderControl : MBehavior {
 		base.MOnEnable ();
 		M_Event.RegisterEvent (LogicEvents.ToOld, OnToOld);
 		M_Event.RegisterEvent (LogicEvents.ToModern, OnToModern);
+		M_Event.RegisterEvent (LogicEvents.ToDark, OnToDark);
 
 	}
 
@@ -43,7 +46,27 @@ public class OldColliderControl : MBehavior {
 		base.MOnDisable ();
 		M_Event.UnregisterEvent (LogicEvents.ToOld, OnToOld);
 		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToModern);
+		M_Event.UnregisterEvent (LogicEvents.ToDark, OnToDark);
 
+	}
+
+	void OnToDark( LogicArg arg )
+	{
+		float delay = 0;
+		float duration = 0;
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DELAY ) )
+			delay = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DELAY);
+
+		if ( arg.ContainMessage(M_Event.EVENT_OMSWITCH_DURATION ) )
+			duration = (float)arg.GetMessage(M_Event.EVENT_OMSWITCH_DURATION);
+
+		if (isDark) {
+			StartCoroutine (SetToDelay (true, delay));
+		}
+
+		if (isMorden || isOld) {
+			StartCoroutine (SetToDelay (false, delay));
+		}
 	}
 
 	void OnToOld( LogicArg arg )
@@ -60,7 +83,7 @@ public class OldColliderControl : MBehavior {
 			StartCoroutine (SetToDelay (true, delay));
 		}
 
-		if (isMorden) {
+		if (isMorden || isDark) {
 			StartCoroutine (SetToDelay (false, delay));
 		}
 	}
@@ -81,7 +104,7 @@ public class OldColliderControl : MBehavior {
 			StartCoroutine (SetToDelay (true, delay));
 		}
 
-		if (isOld) {
+		if (isOld || isDark) {
 			StartCoroutine (SetToDelay (false, delay));
 		}
 	}

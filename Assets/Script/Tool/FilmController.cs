@@ -13,6 +13,8 @@ public class FilmController : MonoBehaviour {
 		RelativeToThisCharacter,
 		Original,
 		NoMove,
+		Path,
+		FilmController
 	}
 
 	public enum ShootPerspectiveType
@@ -23,6 +25,8 @@ public class FilmController : MonoBehaviour {
 		ToMiddle,
 		Original,
 		NoMove,
+		Path,
+		FilmController
 	}
 
 	public enum SoundTargetType
@@ -37,16 +41,33 @@ public class FilmController : MonoBehaviour {
 		
 		[SerializeField] ShootPositionType positionType;
 		[SerializeField] ShootPerspectiveType perspectiveType;
-		[SerializeField] Camera targetCamera;
+		[SerializeField] public Camera targetCamera;
 		[SerializeField] float duration;
 		[SerializeField] float moveTime;
+		[SerializeField] RotateMode rotateMode;
 		[SerializeField] Ease easeType;
 		[SerializeField] IconNarrativeDialog iconNarrative;
 		[SerializeField] LogicEvents endEvent;
+		[SerializeField] FilmController filmController;
 		[ReadOnlyAttribute] public Vector3 originalPosition;
 		[ReadOnlyAttribute] public Vector3 originalAngle;
 		[ReadOnlyAttribute] public float originalFOV;
 		[ReadOnlyAttribute] public Transform temCamera;
+		public bool IsPath{
+			get {
+				return (positionType == ShootPositionType.Path) &&
+				(perspectiveType == ShootPerspectiveType.Path) &&
+					(targetCamera != null ) &&
+				(targetCamera.GetComponent<DOTweenPath> () != null);
+			}
+		}
+		public bool IsFilmController{
+			get {
+				return (positionType == ShootPositionType.FilmController) &&
+				(perspectiveType == ShootPerspectiveType.FilmController) &&
+				(filmController != null);
+			}
+		}
 
 		public void DisplayIconNarrative( float delay , float duration , TalkableCharacter thisCharacter )
 		{
@@ -56,6 +77,8 @@ public class FilmController : MonoBehaviour {
 					iconNarrative.delay = delay;
 				if (iconNarrative.duration < 0)
 					iconNarrative.duration = duration;
+				if (iconNarrative.soundVolumn <= 0)
+					iconNarrative.soundVolumn = 0.8f;
 				if (iconNarrative.thisCharacter == null) {
 					iconNarrative.thisCharacter = thisCharacter;
 				}
@@ -67,7 +90,6 @@ public class FilmController : MonoBehaviour {
 
 		public Vector3 GetTargetPosition( TalkableCharacter thisCharacter  )
 		{
-			Assert.IsNotNull<TalkableCharacter> (thisCharacter);
 			temCamera.transform.position = Vector3.zero;
 			if (targetCamera != null) {
 				if (positionType == ShootPositionType.Normal) {
@@ -75,6 +97,7 @@ public class FilmController : MonoBehaviour {
 				} else if (positionType == ShootPositionType.RelativeToMainCharacter) {
 					temCamera.transform.position = targetCamera.transform.localPosition + MainCharacter.Instance.transform.position;
 				} else if (positionType == ShootPositionType.RelativeToThisCharacter) {
+					Assert.IsNotNull<TalkableCharacter> (thisCharacter);
 					temCamera.transform.position = targetCamera.transform.localPosition + thisCharacter.transform.position;
 				} 
 			}
@@ -88,7 +111,6 @@ public class FilmController : MonoBehaviour {
 
 		public Vector3 GetTargetAngel( TalkableCharacter thisCharacter )
 		{
-			Assert.IsNotNull<TalkableCharacter> (thisCharacter);
 			temCamera.transform.eulerAngles = Vector3.zero;
 			if (targetCamera != null) {
 				if (perspectiveType == ShootPerspectiveType.Normal) {
@@ -98,15 +120,17 @@ public class FilmController : MonoBehaviour {
 			if (perspectiveType == ShootPerspectiveType.ToMainCharacter) {
 				temCamera.transform.LookAt (MainCharacter.Instance.GetViewCenter ());
 			} else if (perspectiveType == ShootPerspectiveType.ToThisCharacter) {
+				Assert.IsNotNull<TalkableCharacter> (thisCharacter);
 //				if (thisCharacter != null)
 //					temCamera.transform.LookAt (thisCharacter.GetViewCenter ());
 //				else
-					temCamera.transform.LookAt (thisCharacter.transform.position);
+				temCamera.transform.LookAt (thisCharacter.GetViewCenter());
 			} else if (perspectiveType == ShootPerspectiveType.ToMiddle) {
+				Assert.IsNotNull<TalkableCharacter> (thisCharacter);
 //				if (thisCharacter != null)
 //					temCamera.transform.LookAt ((thisCharacter.GetViewCenter () + MainCharacter.Instance.GetViewCenter ()) / 2f);
 //				else
-					temCamera.transform.LookAt ((thisCharacter.transform.position + MainCharacter.Instance.GetViewCenter ()) / 2f);
+				temCamera.transform.LookAt ((thisCharacter.GetViewCenter() + MainCharacter.Instance.GetViewCenter ()) / 2f);
 			}else if (perspectiveType == ShootPerspectiveType.Original) {
 				temCamera.transform.eulerAngles = originalAngle;
 			} else if (perspectiveType == ShootPerspectiveType.NoMove) {
@@ -127,11 +151,16 @@ public class FilmController : MonoBehaviour {
 
 		public float GetMoveTime()
 		{
+			if (IsPath) {
+				return targetCamera.GetComponent<DOTweenPath> ().duration;
+			}
 			return moveTime;
 		}
 
 		public float GetDuration()
 		{
+			if (IsFilmController)
+				return GetFilmControllDuration ();
 			return duration;
 		}
 
@@ -144,6 +173,10 @@ public class FilmController : MonoBehaviour {
 		{
 			return easeType;
 		}
+		public RotateMode GetRotateMode()
+		{
+			return rotateMode;
+		}
 
 		public void SetOriginal( Vector3 pos , Vector3 angle , float FOV , Transform temCam)
 		{
@@ -153,6 +186,18 @@ public class FilmController : MonoBehaviour {
 			temCamera = temCam;
 		}
 
+		public float GetFilmControllDuration()
+		{
+			if (filmController != null)
+				return filmController.GetTotalTime ();
+			return 0;
+		}
+
+		public void PlayFilmController()
+		{
+			if (filmController != null)
+				filmController.Work ();
+		}
 
 	}
 	[SerializeField] LogicEvents startEvent;
@@ -162,6 +207,14 @@ public class FilmController : MonoBehaviour {
 	[ReadOnlyAttribute] Vector3 originalPos;
 	[ReadOnlyAttribute] Vector3 originalRotation;
 	[ReadOnlyAttribute] float originalFOV;
+
+	public float GetTotalTime()
+	{
+		float totalTime = 0;
+		foreach (Shoot shoot in shootList)
+			totalTime += shoot.GetDuration () + shoot.GetMoveTime ();
+		return totalTime;
+	}
 
 	public void Work()
 	{
@@ -184,10 +237,32 @@ public class FilmController : MonoBehaviour {
 			seq.AppendCallback (delegate() {
 				s.DisplayIconNarrative(s.GetMoveTime() , s.GetDuration() , character );
 			});
+			if (s.IsPath) {
+				DOTweenPath path = s.targetCamera.GetComponent<DOTweenPath> ();
+				seq.AppendCallback (delegate {
+					s.targetCamera.enabled = true;
+					Debug.Log ("Path " + path.name);
+				});
+				path.DOPlay ();
+				seq.AppendInterval (path.duration);
+				seq.AppendCallback (delegate {
+					MainCharacter.MainCameara.transform.position = s.targetCamera.transform.position;
+					MainCharacter.MainCameara.transform.rotation = s.targetCamera.transform.rotation;
+					MainCharacter.MainCameara.fieldOfView = s.targetCamera.fieldOfView;
+					s.targetCamera.enabled = false;	
+				});
 
-			seq.Append (MainCharacter.MainCameara.transform.DOMove (s.GetTargetPosition(character), s.GetMoveTime()).SetEase(s.GetEaseType()));
-			seq.Join (MainCharacter.MainCameara.transform.DORotate (s.GetTargetAngel(character), s.GetMoveTime()).SetEase(s.GetEaseType()));
-			seq.Join (MainCharacter.MainCameara.DOFieldOfView (s.GetTargetFOV(), s.GetMoveTime()).SetEase(s.GetEaseType()));
+			} else if (s.IsFilmController) {
+				seq.AppendCallback (delegate() {
+					s.PlayFilmController ();
+					Debug.Log("duration " + s.GetDuration());
+					}
+				);
+			}else {
+				seq.Append (MainCharacter.MainCameara.transform.DOMove (s.GetTargetPosition (character), s.GetMoveTime ()).SetEase (s.GetEaseType ()));
+				seq.Join (MainCharacter.MainCameara.transform.DORotate (s.GetTargetAngel (character), s.GetMoveTime (), s.GetRotateMode ()).SetEase (s.GetEaseType ()));
+				seq.Join (MainCharacter.MainCameara.DOFieldOfView (s.GetTargetFOV (), s.GetMoveTime ()).SetEase (s.GetEaseType ()));
+			}
 			seq.AppendInterval (s.GetDuration());
 			if (s.GetEndEvent() != LogicEvents.None) {
 				seq.AppendCallback (delegate {
@@ -198,11 +273,12 @@ public class FilmController : MonoBehaviour {
 
 		if (backTime > 0) {
 			seq.Append (MainCharacter.MainCameara.transform.DOMove (originalPos, backTime));
-			seq.Join (MainCharacter.MainCameara.transform.DORotate (originalRotation , backTime));
-			seq.Join (MainCharacter.MainCameara.DOFieldOfView (originalFOV,backTime));
+			seq.Join (MainCharacter.MainCameara.transform.DORotate (originalRotation, backTime));
+			seq.Join (MainCharacter.MainCameara.DOFieldOfView (originalFOV, backTime));
 		}
 		seq.AppendCallback (delegate {
 			M_Event.FireLogicEvent(LogicEvents.UnfocusCamera, new LogicArg(this));
+			M_Event.FireLogicEvent(LogicEvents.EndFilmControl , new LogicArg(this));
 		});
 	}
 

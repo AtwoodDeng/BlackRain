@@ -44,12 +44,14 @@ public class MainCharacter : MonoBehaviour {
 	{
 		get { return m_MovingTurnSpeed * MechanismManager.health.HealthRate; }
 	}
-	[SerializeField] float m_MoveSpeedMultiplier = 1f;
+	[SerializeField] float m_MoveSpeedMultiplier = 2f;
+	[SerializeField] float m_SlowMoveSpeedMultiplier = 1f;
 	public float MoveSpeed
 	{
 //		get { return m_MoveSpeedMultiplier * MechanismManager.health.HealthRate; }
-		get { return m_MoveSpeedMultiplier ; }
+		get { return m_MoveSpeed ; }
 	}
+	float m_MoveSpeed;
 	/// <summary>
 	/// The speed for the passerby and girl to follow
 	/// </summary>
@@ -145,6 +147,7 @@ public class MainCharacter : MonoBehaviour {
 
 		cameraBot.InputSetting.Sensitive = CameraSensity;
 		oriCamBotSensity = CameraSensity;
+		SetToNormalSpeed ();
 	}
 
 	void OnEnable()
@@ -177,6 +180,20 @@ public class MainCharacter : MonoBehaviour {
 		M_Event.logicEvents [(int)LogicEvents.Breath] -= OnBreath;
 		M_Event.UnregisterEvent (LogicEvents.ToOld, OnToOld);
 		M_Event.UnregisterEvent (LogicEvents.ToModern, OnToModern);
+	}
+
+	public void SetToNormalSpeed()
+	{
+		m_MoveSpeed = m_MoveSpeedMultiplier;
+	}
+
+	public void SetToSlowSpeed()
+	{
+		m_MoveSpeed = m_SlowMoveSpeedMultiplier;
+	}
+
+	public void SetToSuperSlowSpeed (){
+		m_MoveSpeed = m_SlowMoveSpeedMultiplier ;
 	}
 
 	void OnToOld( LogicArg arg )

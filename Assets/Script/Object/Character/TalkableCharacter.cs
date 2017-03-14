@@ -52,12 +52,14 @@ public class TalkableCharacter : Character {
 	{
 		base.MOnEnable ();
 		M_Event.logicEvents [(int)LogicEvents.EndDisplayDialog] += OnEndDisplayDialog;
+		M_Event.logicEvents [(int)LogicEvents.EndFilmControl] += OnEndFilmControl;
 	}
 
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
 		M_Event.logicEvents [(int)LogicEvents.EndDisplayDialog] -= OnEndDisplayDialog;
+		M_Event.logicEvents [(int)LogicEvents.EndFilmControl] -= OnEndFilmControl;
 	}
 
 	protected override void MAwake ()
@@ -82,6 +84,11 @@ public class TalkableCharacter : Character {
 //			}
 			}
 		}
+	}
+
+	virtual protected void OnEndFilmControl( LogicArg arg )
+	{
+		
 	}
 
 	virtual protected void OnEndDisplayDialog( LogicArg arg )

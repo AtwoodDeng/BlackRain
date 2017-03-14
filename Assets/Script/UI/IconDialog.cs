@@ -98,10 +98,10 @@ public class IconDialog : MBehavior {
 				m_arrow.DOFade (0, showUpTime * 0.2f);
 			}
 
-			LogicArg arg = new LogicArg (this);
-			arg.AddMessage (M_Event.EVENT_END_DISPLAY_SENDER, character);
-			arg.AddMessage (M_Event.EVENT_END_DISPLAY_FRAME, false);
-			M_Event.FireLogicEvent (LogicEvents.EndDisplayDialog, arg );
+//			LogicArg arg = new LogicArg (this);
+//			arg.AddMessage (M_Event.EVENT_END_DISPLAY_SENDER, character);
+//			arg.AddMessage (M_Event.EVENT_END_DISPLAY_FRAME, false);
+//			M_Event.FireLogicEvent (LogicEvents.EndDisplayDialog, arg );
 		}
 	}
 

@@ -15,6 +15,7 @@ public class UIManager : MBehavior {
 		}
 	}
 
+	[Header("Dialog")]
 	public Image DialogBackImage;
 	public Image DialogArrowImage;
 	public Text DialogText;
@@ -28,32 +29,48 @@ public class UIManager : MBehavior {
 	}
 	public Canvas UICanvas;
 
+	[Header("Interaction")]
 	public InteractTips interactableTips;
+
+	[Header("Thought")]
 	public Image thoughtBackground;
 	public Text thoughtText;
 	public float thoughtShowTime = 5f;
 //	public Image screenBlack;
 	public Text skipTips;
+	[Header("Cursor")]
 	public Transform cursorTransform;
 	public Image cursorImage;
 	public Sprite ScanSprite;
 	public Sprite normalSprite;
 	public Sprite runSprite;
 
+	[Header("Energy")]
 	public Image EnergyIcon;
 	public Image EnergyBar;
 	public Image EnergyFrame;
 
+	[Header("Ending")]
 	public RectTransform ending;
 	public Image endingBack;
 	public RectTransform endingCredit;
 	public Image white;
 
+	[Header("Music")]
 	public RectTransform musicPlayer;
 	public Image normalMusicPlayer;
 	public Image brokenMusicPlayer;
-	[SerializeField] float musicHide = -300f;
+	public Image movingScreenBackground;
+	public MovingScreen movingScreen;
+	public float musicHide = -300f;
+	public float musicMinimize = -140f;
 
+	[Header("FrameCamera")]
+	public Image frameDown;
+	public Image frameUp;
+	public float frameDuration;
+
+	[Header("Menu")]
 	public RectTransform Menu;
 	public Text languageText;
 	public Text MenuMainMenuButtonText;
@@ -95,7 +112,9 @@ public class UIManager : MBehavior {
 		if ( normalMusicPlayer != null)
 			normalMusicPlayer.gameObject.SetActive( true ) ;
 		if ( brokenMusicPlayer != null)
-			brokenMusicPlayer.gameObject.SetActive( false );
+			brokenMusicPlayer.gameObject.SetActive( false ) ;
+
+		HideFrame (0);
 	}
 
 	protected override void MOnEnable ()
@@ -117,6 +136,10 @@ public class UIManager : MBehavior {
 		M_Event.RegisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
 		M_Event.RegisterEvent (LogicEvents.PauseGame, OnPause);
 		M_Event.RegisterEvent (LogicEvents.UnpauseGame, OnUnpause);
+		M_Event.RegisterEvent (LogicEvents.ShowFrameCamera, OnShowFrameCamera);
+		M_Event.RegisterEvent (LogicEvents.HideFrameCamera, OnHideFrameCamera);
+		M_Event.RegisterEvent (LogicEvents.CompleteFrameCamera, OnCompleteFrameCamera);
+//		M_Event.RegisterEvent (LogicEvents.EnterStreetFour, OnEnterStreetFour);
 	}
 
 	protected override void MOnDisable ()
@@ -137,8 +160,55 @@ public class UIManager : MBehavior {
 		M_Event.UnregisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
 		M_Event.UnregisterEvent (LogicEvents.PauseGame, OnPause);
 		M_Event.UnregisterEvent (LogicEvents.UnpauseGame, OnUnpause);
+		M_Event.UnregisterEvent (LogicEvents.ShowFrameCamera, OnShowFrameCamera);
+		M_Event.UnregisterEvent (LogicEvents.HideFrameCamera, OnHideFrameCamera);
+		M_Event.UnregisterEvent (LogicEvents.CompleteFrameCamera, OnCompleteFrameCamera);
+//		M_Event.UnregisterEvent (LogicEvents.EnterStreetFour, OnEnterStreetFour);
 	
 	}
+
+	void OnCompleteFrameCamera(LogicArg arg)
+	{
+		CompleteFrame (frameDuration);
+	}
+
+	void OnShowFrameCamera(LogicArg arg)
+	{
+		ShowFrame (frameDuration);
+	}
+
+	void OnHideFrameCamera(LogicArg arg)
+	{
+		HideFrame (frameDuration);
+	}
+	public void CompleteFrame( float duration )
+	{
+		//		Debug.Log (frameUp.rectTransform.anchoredPosition + " " + frameUp.rectTransform.localPosition + " " + frameUp.rectTransform.position);
+		//		Debug.Log (frameDown.rectTransform.anchoredPosition + " " + frameDown.rectTransform.localPosition + " " + frameDown.rectTransform.position);
+		frameUp.transform.DOLocalMoveY (0, duration).SetEase(Ease.InOutCubic);
+		frameUp.transform.DOScaleY (1f, duration).SetEase(Ease.OutCubic);
+		frameDown.transform.DOLocalMoveY (-0, duration).SetEase(Ease.InOutCubic);
+		frameDown.transform.DOScaleY (1f, duration).SetEase(Ease.OutCubic);
+	}
+
+	public void ShowFrame( float duration )
+	{
+//		Debug.Log (frameUp.rectTransform.anchoredPosition + " " + frameUp.rectTransform.localPosition + " " + frameUp.rectTransform.position);
+//		Debug.Log (frameDown.rectTransform.anchoredPosition + " " + frameDown.rectTransform.localPosition + " " + frameDown.rectTransform.position);
+		frameUp.transform.DOLocalMoveY (230f, duration).SetEase(Ease.InOutCubic);
+		frameUp.transform.DOScaleY (1f, duration).SetEase(Ease.OutCubic);
+		frameDown.transform.DOLocalMoveY (-230f, duration).SetEase(Ease.InOutCubic);
+		frameDown.transform.DOScaleY (1f, duration).SetEase(Ease.OutCubic);
+	}
+
+	public void HideFrame( float duration )
+	{
+		frameUp.transform.DOLocalMoveY (540f, duration).SetEase(Ease.InOutCubic);
+		frameUp.transform.DOScaleY (0, duration).SetEase(Ease.InCubic);
+		frameDown.transform.DOLocalMoveY (-540f, duration).SetEase(Ease.InOutCubic);
+		frameDown.transform.DOScaleY (0, duration).SetEase(Ease.InCubic);
+	}
+		
 
 	void OnShowBrokenMusicPlayer( LogicArg arg )
 	{
@@ -213,7 +283,7 @@ public class UIManager : MBehavior {
 //	}
 
 
-	Vector3 musicPlayerOriPlace;
+	[ReadOnlyAttribute] public Vector3 musicPlayerOriPlace;
 
 	protected override void MStart ()
 	{
@@ -282,14 +352,24 @@ public class UIManager : MBehavior {
 
 	public void ShowMusicPlayer( float time )
 	{
-		musicPlayer.DOMove (musicPlayerOriPlace, time).SetEase (Ease.OutCubic);
+		musicPlayer.DOMove (musicPlayerOriPlace, time).SetEase (Ease.InOutCirc);
 		isMusicPlayerShown = true;
+
+		movingScreenBackground.rectTransform.DOScaleY (0, 0);
 	}
 
 	public void HideMusicPlayer( float time )
 	{
-		musicPlayer.DOMove (musicPlayerOriPlace + Vector3.up * musicHide , time ).SetEase (Ease.OutCubic);
+		musicPlayer.DOMove (musicPlayerOriPlace + Vector3.up * musicHide , time ).SetEase (Ease.InOutCirc);
 		isMusicPlayerShown = false;
+	}
+
+	public void MinimizeMusicPlayer( float time )
+	{
+		
+		musicPlayer.DOMove (musicPlayerOriPlace + Vector3.up * musicMinimize, time).SetEase (Ease.InOutCirc);
+		movingScreenBackground.rectTransform.DOScaleY (1f, time);
+		isMusicPlayerShown = true;
 	}
 
 //	public void OnSwitchThought()
@@ -418,6 +498,11 @@ public class UIManager : MBehavior {
 		LogicArg arg = new LogicArg (this);
 		arg.AddMessage (M_Event.EVENT_PLAY_MUSIC_NAME, musicName);
 		M_Event.FireLogicEvent (LogicEvents.PlayMusic, arg);
+
+		movingScreen.SetWord (musicName);
+
+
+		MinimizeMusicPlayer (1f);
 	}
 
 	public void EndGame()

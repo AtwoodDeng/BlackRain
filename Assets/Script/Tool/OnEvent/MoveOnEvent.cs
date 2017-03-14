@@ -11,6 +11,7 @@ public class MoveOnEvent : OnEventResponsor {
 	[SerializeField] bool disableOnEnd;
 	[SerializeField] bool isFrom = false;
 	[SerializeField] Ease easeType = Ease.Linear;
+	[SerializeField] LogicEvents endEvents;
 
 	public override void OnEvent (LogicArg arg)
 	{
@@ -20,11 +21,15 @@ public class MoveOnEvent : OnEventResponsor {
 			target.DOMove (move, Time).From().SetRelative (relative).SetDelay(delay).SetEase(easeType).OnComplete (delegate() {
 				if ( disableOnEnd )
 					target.gameObject.SetActive( false );	
+				if ( endEvents != LogicEvents.None )
+					M_Event.FireLogicEvent(endEvents, new LogicArg(this) );
 			});
 		} else {
 			target.DOMove (move, Time).SetRelative (relative).SetDelay (delay).SetEase (easeType).OnComplete (delegate() {
 				if (disableOnEnd)
 					target.gameObject.SetActive (false);	
+				if ( endEvents != LogicEvents.None )
+					M_Event.FireLogicEvent(endEvents, new LogicArg(this) );
 			});
 		}
 	}

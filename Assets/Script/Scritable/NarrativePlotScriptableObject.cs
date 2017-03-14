@@ -80,6 +80,9 @@ public enum NarrativeIcon {
 	Angry = 7,
 	Exclamation = 8,
 	DotDotDot = 10,
+	Sad = 11,
+	Nervous = 12,
+	Consider = 13,
 
 	Kappa = 31,
 	Yao = 32,
@@ -87,6 +90,7 @@ public enum NarrativeIcon {
 	OK = 50,
 	QuestionGirl = 51,
 	Stop = 52,
+	Music = 53,
 
 	Umbrella = 100,
 	ShareUmbrella = 101,
@@ -97,6 +101,8 @@ public enum NarrativeIcon {
 	Money = 110,
 	Ladies = 111,
 	Wine = 112,
+	ShareUmbrellaMC = 113,
+	ShareUmbrellaGirl = 114,
 
 	HappyOld = 201,
 	QuestionOld = 202,

@@ -7,17 +7,20 @@ public class GirlBusStop : TalkableCharacter {
 	[SerializeField] RangeTarget[] target;
 	[SerializeField] float targetToleranceRange = 0.3f;
 	[SerializeField] NarrativePlotScriptableObject talkPointOne;
+	[SerializeField] FilmController talkPointOneFilm;
 	[SerializeField] NarrativePlotScriptableObject talkPointTwo;
+	[SerializeField] FilmController talkPointTwoFilm;
 	[SerializeField] NarrativePlotScriptableObject stonePlot;
 	[SerializeField] NarrativePlotScriptableObject wait;
 //	[SerializeField] NarrativePlotScriptableObject[] playMusic;
 	[SerializeField] float waitSpeakInterval = 5f;
-	[SerializeField] Rigidbody ropeTop;
-	[SerializeField] Rigidbody ropeEnd;
+//	[SerializeField] Rigidbody ropeTop;
+//	[SerializeField] Rigidbody ropeEnd;
 	[SerializeField] LayerMask damageMask;
 	UnityEngine.AI.NavMeshAgent m_agent;
 	[SerializeField] Animator m_animator;
 	[SerializeField] GameObject Model;
+	[SerializeField] GirlState initState;
 	[System.Serializable]
 	public struct SoundSetting
 	{
@@ -33,12 +36,15 @@ public class GirlBusStop : TalkableCharacter {
 	{
 		None,
 		Init,
+		InLevel,
+		WaitToTalk,
 		Walk, // walk with out umbrella
 		TalkWithOutUmbrella,
 		WalkWithUmbrella, 
 		TakeOutUmbrella,
 		TakeOffUmbrella,
 		WaitForPlayer,
+		WaitToChooseMusic,
 		TalkWithPlayerInUmbrella,
 		LeavePlayer,
 		WalkAway,
@@ -78,8 +84,36 @@ public class GirlBusStop : TalkableCharacter {
 	float stateTimer = 0;
 	void InitStateMachine()
 	{
+
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEnterLevel, GirlState.Init, GirlState.InLevel);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopLevelFour, GirlState.InLevel, GirlState.WaitToTalk);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEndTalkGirl, GirlState.WaitToTalk, GirlState.Walk);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.PlayMusic, GirlState.WaitToChooseMusic, GirlState.WalkWithUmbrella);
+
 		m_stateMachine.AddEnter (GirlState.Init, delegate() {
 			m_agent.speed = 0;
+			interactTips.wordChinese = "观察";
+			interactTips.wordEng = "View";
+		});
+
+		m_stateMachine.AddEnter (GirlState.WaitToTalk, delegate {
+
+			m_agent.speed = 0;
+			interactTips.wordChinese = "交谈";
+			interactTips.wordEng = "Talk";
+		});
+
+		m_stateMachine.AddExit (GirlState.WaitToTalk, delegate {
+			NextTarget();	
+		});
+
+		m_stateMachine.AddEnter (GirlState.WaitToChooseMusic, delegate {
+			m_agent.speed = 0;	
+			m_agent.acceleration *= 10f;
+		});
+
+		m_stateMachine.AddEnter (GirlState.WaitToChooseMusic, delegate {
+			m_agent.acceleration /= 10f;
 		});
 
 		m_stateMachine.AddEnter (GirlState.Walk, delegate() {
@@ -94,6 +128,9 @@ public class GirlBusStop : TalkableCharacter {
 			{
 				m_stateMachine.State = GirlState.TalkWithOutUmbrella;
 			}
+
+			if ( CheckTarget () )
+				NextTarget();
 		});
 
 		m_stateMachine.AddEnter (GirlState.TakeOutUmbrella, delegate() {
@@ -127,7 +164,7 @@ public class GirlBusStop : TalkableCharacter {
 		});
 
 		m_stateMachine.AddEnter (GirlState.WalkWithUmbrella, delegate() {
-			m_collider.radius = 1.5f;
+			m_collider.radius = 0.7f;
 
 			if (m_umbrellaAudioSource != null) {
 				m_umbrellaAudioSource.clip = soundSetting.umbrellaWalk;
@@ -153,6 +190,8 @@ public class GirlBusStop : TalkableCharacter {
 			{
 				m_stateMachine.State = GirlState.TakeOffUmbrella;
 			}
+			if ( CheckTarget () )
+				NextTarget();
 
 		});
 
@@ -166,6 +205,10 @@ public class GirlBusStop : TalkableCharacter {
 				m_stateMachine.State = GirlState.WalkWithUmbrella;
 			}
 
+		});
+
+		m_stateMachine.AddExit (GirlState.WaitForPlayer, delegate {
+			
 		});
 
 		m_stateMachine.AddEnter (GirlState.TalkWithPlayerInUmbrella, delegate() {
@@ -215,40 +258,57 @@ public class GirlBusStop : TalkableCharacter {
 			M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM, new LogicArg (this));
 		});
 
-
-		m_stateMachine.State = GirlState.Init;
+		if (Application.isEditor)
+			m_stateMachine.State = initState;
+		else
+			m_stateMachine.State = GirlState.Init;
 	}
 
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
-		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
-		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
-		M_Event.RegisterEvent (LogicEvents.EnterStone, OnEvent);
-		M_Event.RegisterEvent (LogicEvents.ForceGirlLeave, OnEvent);
-		M_Event.RegisterEvent (LogicEvents.PlayMusic, OnEvent);
+		M_Event.RegisterAll (OnEvent);
+//		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
+//		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
+//		M_Event.RegisterEvent (LogicEvents.EnterStone, OnEvent);
+//		M_Event.RegisterEvent (LogicEvents.ForceGirlLeave, OnEvent);
+//		M_Event.RegisterEvent (LogicEvents.PlayMusic, OnEvent);
 
 	}
 
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
-		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
-		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
-		M_Event.UnregisterEvent (LogicEvents.EnterStone, OnEvent);
-		M_Event.UnregisterEvent (LogicEvents.ForceGirlLeave, OnEvent);
-		M_Event.UnregisterEvent (LogicEvents.PlayMusic, OnEvent);
+		M_Event.RegisterAll (OnEvent);
+//		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
+//		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
+//		M_Event.UnregisterEvent (LogicEvents.EnterStone, OnEvent);
+//		M_Event.UnregisterEvent (LogicEvents.ForceGirlLeave, OnEvent);
+//		M_Event.UnregisterEvent (LogicEvents.PlayMusic, OnEvent);
 	}
 
 
 	void OnEvent(LogicArg arg)
 	{
 		if (arg.type == LogicEvents.BusStopTalkPointOne) {
-			DisplayDialog (talkPointOne);
+			if ( NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog )
+				DisplayDialog (talkPointOne);
+			if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Icon) {
+				m_realTalking = true;
+				talkPointOneFilm.Work ();
+			}
 		} else if (arg.type == LogicEvents.BusStopTalkPointTwo) {
-			DisplayDialog (talkPointTwo);
+			if ( NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog )
+				DisplayDialog (talkPointTwo);
+
+			if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Icon) {
+				m_stateMachine.State = GirlState.WaitToChooseMusic;
+				talkPointTwoFilm.Work ();
+				m_realTalking = true;
+			}
 		} else if (arg.type == LogicEvents.EnterStone) {
-			DisplayDialog (stonePlot);
+			if ( NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog )
+				DisplayDialog (stonePlot);
 		} else if (arg.type == LogicEvents.ForceGirlLeave) {
 //			MechanismManager.health.SetHealthToMin ();
 //			Leave ();
@@ -264,17 +324,17 @@ public class GirlBusStop : TalkableCharacter {
 		base.MUpdate ();
 		UpdateSenseRain ();
 		m_stateMachine.Update ();
-		CheckTarget ();
 	}
 
-	void CheckTarget()
+	public bool CheckTarget()
 	{
-
-		Vector3 offset = transform.position - m_agent.destination;
-		offset.y = 0;
-		if ( offset.magnitude < targetToleranceRange ) {
-			NextTarget ();
-		}
+		return (m_agent.remainingDistance <= m_agent.stoppingDistance ) &&
+			( !m_agent.hasPath || m_agent.velocity.magnitude == 0);
+//		Vector3 offset = transform.position - m_agent.destination;
+//		offset.y = 0;
+//		if ( offset.magnitude < targetToleranceRange ) {
+//			NextTarget ();
+//		}
 	}
 
 	protected override void DisplayDialog (NarrativePlotScriptableObject plot)
@@ -291,18 +351,6 @@ public class GirlBusStop : TalkableCharacter {
 	protected bool isInRain = false;
 	void UpdateSenseRain()
 	{
-//		bool isNowInRain = CheckIfInRain ();
-//		if (isInRain != isNowInRain) {
-//			if (isNowInRain) {
-//				LockMove ();
-//				m_animator.SetTrigger ("TakeOut");
-//				//				Debug.Log ("Set TakeOut");
-//			} else {
-//				LockMove ();
-//				m_animator.SetTrigger ("TakeOff");
-//				//				Debug.Log ("Set TakeOff");
-//			}
-//		}
 		isInRain = CheckIfInRain();
 	}
 	virtual protected bool CheckIfInRain()
@@ -314,14 +362,16 @@ public class GirlBusStop : TalkableCharacter {
 		return true;
 	}
 
-	int targetIndex = 0;
+	[ReadOnlyAttribute] public int targetIndex = 0;
 	virtual protected void NextTarget()
 	{
 		if (m_agent != null && m_agent.enabled && targetIndex < target.Length) {
 
 			m_agent.destination = target [targetIndex].GetRangeTarget();
-
+		
 			targetIndex++;
+
+			Debug.Log ("Next Target");
 		}
 	}
 
@@ -350,6 +400,13 @@ public class GirlBusStop : TalkableCharacter {
 		}
 	}
 
+	protected override void OnEndFilmControl (LogicArg arg)
+	{
+		base.OnEndFilmControl (arg);
+
+		m_realTalking = false;
+	}
+
 
 	bool m_IsPlayerIn;
 	protected override void MOnTriggerEnter (Collider col)
@@ -367,11 +424,32 @@ public class GirlBusStop : TalkableCharacter {
 			m_IsPlayerIn = false;
 	}
 
+	public override void Interact ()
+	{
+		if (m_stateMachine.State == GirlState.Init) {
+			M_Event.FireLogicEvent (LogicEvents.BusStopSeeGirl, new LogicArg (this));
+			Debug.Log ("Fire Bus stop see girl");
+		}
+		else {
+			base.Interact ();
+		}
+	}
+
+	public override bool IsInteractable ()
+	{
+		if (m_stateMachine.State == GirlState.Init)
+			return true;
+		if (m_stateMachine.State == GirlState.WaitToTalk)
+			return true;
+		return false;
+	}
+
+
 	void OnGUI()
 	{
-//		GUILayout.Label ("");
-//		GUILayout.Label ("GirlState" + m_stateMachine.State);
-//		GUILayout.Label ("Girl is end talking " + m_realTalking);
+		GUILayout.Label ("");
+		GUILayout.Label ("GirlState" + m_stateMachine.State);
+		GUILayout.Label ("Girl is end talking " + m_realTalking);
 	}
 
 //	void ReactToMusic( LogicArg arg )
