@@ -242,8 +242,8 @@ public class FilmController : MonoBehaviour {
 				seq.AppendCallback (delegate {
 					s.targetCamera.enabled = true;
 					Debug.Log ("Path " + path.name);
+					path.DOPlay ();
 				});
-				path.DOPlay ();
 				seq.AppendInterval (path.duration);
 				seq.AppendCallback (delegate {
 					MainCharacter.MainCameara.transform.position = s.targetCamera.transform.position;

@@ -64,9 +64,9 @@ Shader "C4Cat/SimplePlanarShadow(Shadow Only)" {
 				//"IgnoreProjector"="True"      
             }
                
-            //ZTest on             
+            ZTest on             
             Blend OneMinusSrcAlpha SrcAlpha 
-            //Cull back          
+            Cull off          
                           
          	//use Stencil Buffer to prevent multi Blending
          	//you can try to command out this Stencil code,you should see some part of the shadow are render twice if you object is not convex.             
@@ -122,10 +122,11 @@ Shader "C4Cat/SimplePlanarShadow(Shadow Only)" {
                 //pack up for output to fragment shader(pos & color)
                 o.Pos = result; //screen space Pos
                 o.Color = _GlobalDynamicShadowColor; //the color we pick in material
-                
+                 
                 //the higher the original vertex, the more transparent it will be.
                 //you can edit this line,changing the number...remove it...
-                o.Color.a *= originalWorldY*0.15 + 0.45; 
+//                o.Color.a *= originalWorldY*0.15 + 0.45; 
+				 o.Color.a *= 0.8;
                 
                 
                 return o;

@@ -193,7 +193,7 @@ public class MainCharacter : MonoBehaviour {
 	}
 
 	public void SetToSuperSlowSpeed (){
-		m_MoveSpeed = m_SlowMoveSpeedMultiplier ;
+		m_MoveSpeed = m_SlowMoveSpeedMultiplier * 0.8f ;
 	}
 
 	void OnToOld( LogicArg arg )

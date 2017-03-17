@@ -55,17 +55,17 @@ public class FrameCamera : MBehavior {
 
 			DOTween.To ( () => m_camera.rect.y , delegate(float x) {
 				Rect r = m_camera.rect; r.y = x; m_camera.rect = r;
-			} , 0.5f, duration).SetEase (Ease.InOutCubic);
+			} , 0.6f, duration).SetEase (Ease.InOutCubic);
 			DOTween.To ( () => m_camera.rect.height , delegate(float x) {
 				Rect r = m_camera.rect; r.height = x; m_camera.rect = r;
-			} , 0.5f, duration).SetEase (Ease.InOutCubic);
+			} , 0.4f, duration).SetEase (Ease.InOutCubic);
 
 		}
 
 		if (type == Type.Down) {
 			DOTween.To(  () => m_camera.rect.height , delegate(float x) {
 				Rect r = m_camera.rect; r.height = x; m_camera.rect = r;
-			}  , 0.5f , duration).SetEase(Ease.InOutCubic);
+			}  , 0.6f , duration).SetEase(Ease.InOutCubic);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class FrameCamera : MBehavior {
 		}
 	}
 
-	[SerializeField] float degreedSpeed = 30f;
+	[SerializeField] float degreedSpeed = 15f;
 	[ReadOnlyAttribute] public float temDegreed = 0;
 	[SerializeField] public float radius = 12f;
 	Vector3 velocity;
@@ -130,15 +130,20 @@ public class FrameCamera : MBehavior {
 	{
 		base.MUpdate ();
 
-		if ( ( LogicManager.Instance.State == LogicManager.GameState.WalkWithGirlFrame || 
-			LogicManager.Instance.State == LogicManager.GameState.WalkWithGirlInDark ) &&
-			type == Type.Down )
-		{
-			Vector3 target = girl.transform.position + new Vector3 (-Mathf.Cos (temDegreed * Mathf.Deg2Rad) * radius , 0 , Mathf.Sin (temDegreed * Mathf.Deg2Rad) * radius / 3f );
-			target.y = 1.5f; // + Mathf.Sin (temDegreed * Mathf.Deg2Rad + Mathf.PI / 4f ) * 0.5f ;
-			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, 0.1f);
-			transform.LookAt ( girl.GetViewCenter() );
-			temDegreed += degreedSpeed * Time.deltaTime;
+		if ((LogicManager.Instance.State == LogicManager.GameState.WalkWithGirlFrame ||
+		    LogicManager.Instance.State == LogicManager.GameState.WalkWithGirlInDark)) {
+			if (type == Type.Down) {
+				Vector3 target = girl.transform.position + new Vector3 (-Mathf.Cos (temDegreed * Mathf.Deg2Rad) * radius, 0, Mathf.Sin (temDegreed * Mathf.Deg2Rad) * radius / 3f);
+				target.y = 1.5f; // + Mathf.Sin (temDegreed * Mathf.Deg2Rad + Mathf.PI / 4f ) * 0.5f ;
+				transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, 0.2f);
+				transform.LookAt (girl.GetViewCenter ());
+				temDegreed += degreedSpeed * Time.deltaTime;
+			} else {
+				Vector3 target = MainCharacter.Instance.transform.position;
+				target.y = 100f; 
+				transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, 0.2f);
+
+			}
 		}
 	}
 }

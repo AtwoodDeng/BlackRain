@@ -7,11 +7,13 @@ public class BasicCharacter : MBehavior {
 	[System.Serializable]
 	public class RenderSetting
 	{
-		[ReadOnlyAttribute] public MeshRenderer umbrellaUp;
-		[ReadOnlyAttribute] public MeshRenderer umbrellaDown;
-		[ReadOnlyAttribute] public MeshRenderer umbrellaShadow;
-		[ReadOnlyAttribute] public MeshRenderer head;
-		[ReadOnlyAttribute] public MeshRenderer body;
+		[ReadOnlyAttribute] public Renderer umbrellaUp;
+		[ReadOnlyAttribute] public Renderer umbrellaDown;
+		[ReadOnlyAttribute] public Renderer umbrellaShadow;
+		[ReadOnlyAttribute] public bool newUmbrellaMesh = false;
+		[ReadOnlyAttribute] public Renderer head;
+		[ReadOnlyAttribute] public Renderer body;
+		[ReadOnlyAttribute] public bool newCharacterMesh = false;
 		public Gradient UmbrellaColor;
 		public Gradient bodyColor;
 		public bool UseColorfulUmbrella;
@@ -22,33 +24,44 @@ public class BasicCharacter : MBehavior {
 	[ReadOnlyAttribute] public Transform WholeBody;
 	[ReadOnlyAttribute] public Animator m_animator;
 	[ReadOnlyAttribute] public Collider m_bodyCollider;
+	[SerializeField] public bool isShowShadow = false;
+	[ReadOnlyAttribute] public GameObject fakeShadow;
 
 	protected override void MAwake ()
 	{
 		base.MAwake ();
 
 		// set up render settings
-		MeshRenderer[] renders = GetComponentsInChildren<MeshRenderer> ();
+		Renderer[] renders = GetComponentsInChildren<Renderer> ();
 
 		if (renderSetting.umbrellaUp == null) {
-			foreach ( MeshRenderer r in renders) {	
+			foreach ( Renderer r in renders) {	
 				if (r.name.EndsWith ("top1"))
 					renderSetting.umbrellaUp = r;
 			}
 		}
 
 		if (renderSetting.umbrellaDown == null) {
-			foreach ( MeshRenderer r in renders) {	
+			foreach ( Renderer r in renders) {	
 				if (r.name.EndsWith ("top2"))
 					renderSetting.umbrellaDown = r;
 			}
 		}
 
 		if (renderSetting.umbrellaShadow == null) {
-			foreach ( MeshRenderer r in renders) {	
+			foreach ( Renderer r in renders) {	
 				if (r.name.EndsWith ("Shadow"))
 					renderSetting.umbrellaShadow = r;
 			}
+		}
+			
+		if (fakeShadow == null) {
+			SpriteRenderer[] sprites = gameObject.GetComponentsInChildren<SpriteRenderer> ();
+			foreach (SpriteRenderer s in sprites)
+				if (s.name.StartsWith ("FakeShadow")) {
+					fakeShadow = s.gameObject;
+					fakeShadow.gameObject.SetActive (false);
+				}
 		}
 
 //		if (renderSetting.umbrellaShadow != null)
@@ -56,38 +69,17 @@ public class BasicCharacter : MBehavior {
 
 
 		if (renderSetting.head == null) {
-			foreach ( MeshRenderer r in renders) {	
-				if (r.name.Equals ("Head"))
+			foreach ( Renderer r in renders) {	
+				if (r.name.EndsWith ("Head"))
 					renderSetting.head = r;
 			}
 		}
 
 		if (renderSetting.body == null) {
-			foreach ( MeshRenderer r in renders) {	
-				if (r.name.Equals ("body"))
+			foreach ( Renderer r in renders) {	
+				if (r.name.EndsWith ("body"))
 					renderSetting.body = r;
 			}
-		}
-
-		if (renderSetting.UseColorfulUmbrella) {
-			Color umbrellaColor = renderSetting.UmbrellaColor.Evaluate (Random.Range (0, 1f));
-			umbrellaColor.a = 0.3f;
-			renderSetting.umbrellaUp.material = new Material (renderSetting.umbrellaUp.material.shader);
-			renderSetting.umbrellaUp.material.SetColor ("_Color", umbrellaColor);
-			renderSetting.umbrellaDown.material = renderSetting.umbrellaUp.material;
-		}
-
-		if (renderSetting.UseColorfulSkin) {
-			Color bodyColor = renderSetting.bodyColor.Evaluate (Random.Range (0, 1f));// * Mathf.LinearToGammaSpace(0.35f);
-			renderSetting.head.material = new Material (renderSetting.head.material.shader);
-			if ( renderSetting.head.material.HasProperty( "_EmissionColor" ) )
-				renderSetting.head.material.SetColor ("_EmissionColor", bodyColor);
-			if ( renderSetting.head.material.HasProperty( "_MainColor" ) )
-				renderSetting.head.material.SetColor ("_MainColor", bodyColor);
-			if ( renderSetting.head.material.HasProperty( "_Color" ) )
-				renderSetting.head.material.SetColor ("_Color", bodyColor);
-			
-			renderSetting.body.material = renderSetting.head.material;
 		}
 
 		Transform[] transforms = gameObject.GetComponentsInChildren<Transform> ();
@@ -105,6 +97,50 @@ public class BasicCharacter : MBehavior {
 		m_animator = gameObject.GetComponent<Animator> ();
 		if ( m_animator == null )
 			m_animator = gameObject.GetComponentInChildren<Animator> ();
+
+		UpdateColor ();
+	}
+
+	public void UpdateColor( Gradient _umbrellaColor = null , Gradient _bodyColor = null )
+	{
+		if (_umbrellaColor != null)
+			renderSetting.UmbrellaColor = _umbrellaColor;
+		if (_bodyColor != null)
+			renderSetting.bodyColor = _bodyColor;
+		
+		if (renderSetting.UseColorfulUmbrella  && renderSetting.umbrellaUp != null) {
+			Color umbrellaColor = renderSetting.UmbrellaColor.Evaluate (Random.Range (0, 1f));
+			umbrellaColor.a = 0.3f;
+			if (!renderSetting.newUmbrellaMesh) {
+				renderSetting.umbrellaUp.material = new Material (renderSetting.umbrellaUp.material.shader);
+				renderSetting.newUmbrellaMesh = true;
+			}
+			renderSetting.umbrellaUp.material.SetColor ("_Color", umbrellaColor);
+			renderSetting.umbrellaDown.material = renderSetting.umbrellaUp.material;
+		}
+
+		if (renderSetting.UseColorfulSkin && renderSetting.head != null ) {
+			Color bodyColor = renderSetting.bodyColor.Evaluate (Random.Range (0, 1f));// * Mathf.LinearToGammaSpace(0.35f);
+			if (!renderSetting.newCharacterMesh) {
+				renderSetting.head.material = new Material (renderSetting.head.material.shader);
+				renderSetting.newCharacterMesh = true;
+			}
+//			if ( renderSetting.head.material.HasProperty( "_EmissionColor" ) )
+//				renderSetting.head.material.SetColor ("_EmissionColor", bodyColor);
+//			if ( renderSetting.head.material.HasProperty( "_MainColor" ) )
+//				renderSetting.head.material.SetColor ("_MainColor", bodyColor);
+//			if ( renderSetting.head.material.HasProperty( "_Color" ) )
+				renderSetting.head.material.SetColor ("_Color", bodyColor);
+
+			renderSetting.body.material = renderSetting.head.material;
+		}
+
+		if (isShowShadow && fakeShadow != null) {
+			fakeShadow.SetActive (true);
+			if (renderSetting.umbrellaShadow != null)
+				renderSetting.umbrellaShadow.enabled = false;
+		}
+		
 	}
 
 

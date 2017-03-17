@@ -48,15 +48,15 @@ public class Ship : MBehavior {
 	{
 		ship.SetActive (true);
 
-		Sequence seq = DOTween.Sequence ();
-
-		seq.Append (transform.DOMoveY (10f, 1f).SetRelative (true).From ());
-		if ( targets != null &&  targets.Length > 0 )
-		{
-			Vector3 target = targets [0].GetRangeTarget ();
-			target.y = transform.position.y;
-			seq.Append (transform.DOMove ( target , 25f ));
-		}
+//		Sequence seq = DOTween.Sequence ();
+//
+//		seq.Append (transform.DOMoveY (10f, 1f).SetRelative (true).From ());
+//		if ( targets != null &&  targets.Length > 0 )
+//		{
+//			Vector3 target = targets [0].GetRangeTarget ();
+//			target.y = transform.position.y;
+//			seq.Append (transform.DOMove ( target , 25f ));
+//		}
 
 		if (horn != null)
 			horn.Play ();

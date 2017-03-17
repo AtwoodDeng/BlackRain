@@ -62,7 +62,9 @@ public class AudioManager : MBehavior {
 	[SerializeField] AudioMixerSnapshot modern;
 	[SerializeField] AudioMixerSnapshot dark;
 	[SerializeField] private AudioSource bgmSource;
-	 private AudioSource bgmSwitchableSource;
+	private AudioSource bgmSwitchableSource;
+	public AudioSource BackgroundMusicSource { get { return bgmSource; } }
+
 	public string switchBGMName {
 		get {
 			string name = "";
@@ -357,7 +359,7 @@ public class AudioManager : MBehavior {
 			beatCoroutine = null;
 		}
 		if (pair.playBeat) {
-			StartCoroutine (StartBeat (pair.beatStartPoint , pair.beatInterval));
+			StartCoroutine (StartBeat (pair.beatStartPoint, pair.beatInterval));
 		}
 
 	}

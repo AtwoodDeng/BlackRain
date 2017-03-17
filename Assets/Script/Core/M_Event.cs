@@ -45,10 +45,12 @@ public enum LogicEvents
 
 	HideThought = 45,
 
+	HideMusicPlayer = 49,
 	PlayMusic = 50,
 	ShowFrameCamera = 51,
-	CompleteFrameCamera = 51,
 	HideFrameCamera = 52,
+	CompleteFrameCamera = 53,
+
 
 	Sneeze = 60,
 	Breath = 70,
@@ -88,6 +90,7 @@ public enum LogicEvents
 	BusStopSeeGirl = 115,
 	StreetFourToDark = 116,
 	StreetFourToOld = 117,
+
 	BusStopEnterLevel = 300,
 	BusStopLevelOne = 305,
 	BusStopLevelTwo = 310,
@@ -98,6 +101,10 @@ public enum LogicEvents
 	BusStopBusPushForward = 330,
 	BusStopBusPushBack = 335,
 
+	BusStopGirlArriveEnd = 350,
+
+	StreetFiveGirlEndTalk = 400,
+
 
 	TrafficRedLight = 120,
 	TrafficGreenLight = 121,
@@ -107,6 +114,23 @@ public enum LogicEvents
 	ForceGirlLeave = 125,
 	GirlSayPlayMusic = 126,
 	GirlJudgeMusic = 127,
+
+
+	StreetFiveGirlArriveEnd = 500,
+	AcrossStreetEndTalkGirl = 550,
+	AcrossStreetEnterDance = 560,
+	AcrossStreetLevelOneHalf = 565,
+	AcrossStreetLevelOne = 570,
+	AcrossStreetLevelTwoHalf = 575,
+	AcrossStreetLevelTwo = 580,
+	AcrossStreetLevelThreeHalf = 585,
+	AcrossStreetLevelThree = 590,
+	AcrossStreetLevelFour = 600, 
+	AcrossStreetLevelFive = 610,
+	AcrossStreetLevelSix = 620,
+	AcrossStreetStartEndFilm = 640,
+	AcrossStreetGirlLeave = 660,
+	AcrossStreetEndFilmFinish = 700,
 
 	EnterStreetColorful = 130,
 	EndTalkWithGirl = 131,

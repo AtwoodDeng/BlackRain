@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnterStrategy : DanceStrategy {
 	[SerializeField] DanceCharacter.DanceAnimation beatUpAnimation = DanceCharacter.DanceAnimation.None;
@@ -35,15 +36,34 @@ public class EnterStrategy : DanceStrategy {
 				M_Event.FireLogicEvent (exitEvent, new LogicArg (this));
 		}
 	}
-	public override void OnBeat (int count)
+
+	public override void OnDanceEnter ()
 	{
-		base.OnBeat (count);
-		if (!isPlayerIn && (count % beatFliter == 0)) {
-			int beatIndex = (count / beatFliter) % 2;
-			if (beatIndex == 0 )
+		base.OnDanceEnter ();
+		transform.DOMove (parent.OriginalPosition, 1f).SetEase(Ease.InOutCirc);
+		transform.DORotate (parent.OriginalRotation.eulerAngles, 1f);
+	}
+
+	public override void OnBeatRhythm (int index)
+	{
+		if ( !isPlayerIn) {
+			if (index == 0)
 				parent.SetTrigger (beatUpAnimation);
 			else
 				parent.SetTrigger (beatDownAnimation);
 		}
 	}
+
+//	public override void OnBeat (int count)
+//	{
+//		base.OnBeat (count);
+//		if (!isPlayerIn && (GetBeatIndex(count) == 0)) {
+//			int beatIndex = ((count - beatOffset) / beatFliter) % 2;
+////			Debug.Log ("Enter Strategy On Beat " + count + " " + beatIndex);
+//			if (beatIndex == 0 )
+//				parent.SetTrigger (beatUpAnimation);
+//			else
+//				parent.SetTrigger (beatDownAnimation);
+//		}
+//	}
 }

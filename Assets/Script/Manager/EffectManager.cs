@@ -8,6 +8,7 @@ public class EffectManager : MBehavior {
 	[SerializeField] GameObject deathPrefab;
 	[SerializeField] CameraFilterPack_AAA_WaterDropPro waterDropEffect;
 	[SerializeField] BlurOptimized BlurEffect;
+	[SerializeField] MotionBlur MotionBlurEffect;
 	[SerializeField] CameraFilterPack_Color_BrightContrastSaturation saturationEffect;
 	[SerializeField] CameraFilterPack_Colors_Adjust_PreFilters photoShopEffect;
 	[SerializeField] CameraFilterPack_Blend2Camera_Blend blendToOld;
@@ -34,6 +35,10 @@ public class EffectManager : MBehavior {
 		if (photoShopEffect == null) {
 			photoShopEffect = Camera.main.GetComponentInChildren<CameraFilterPack_Colors_Adjust_PreFilters> ();
 			photoShopEffect.enabled = false;
+		}
+		if (MotionBlurEffect == null) {
+			MotionBlurEffect = Camera.main.GetComponentInChildren<MotionBlur> ();
+			MotionBlurEffect.enabled = false;
 		}
 		if (blendToOld == null) {
 			CameraFilterPack_Blend2Camera_Blend[] coms = Camera.main.GetComponentsInChildren<CameraFilterPack_Blend2Camera_Blend> ();
@@ -90,8 +95,8 @@ public class EffectManager : MBehavior {
 //			DOTween.To (() => saturationEffect.Saturation, (x) => saturationEffect.Saturation = x, 2f, 30f);
 //		}
 
-		Debug.Log("To state effect" + toState);
-		if (toState == LogicManager.GameState.BeginShip) {
+		if (toState == LogicManager.GameState.AcrossStreetEndDance) {
+			Debug.Log("To state effect" + toState);
 			photoShopEffect.enabled = true;
 			DOTween.To (() => photoShopEffect.FadeFX, (x) => photoShopEffect.FadeFX = x, 0.3f, 15f);
 		}
@@ -140,7 +145,6 @@ public class EffectManager : MBehavior {
 	}
 
 	bool isCameraLocked = false;
-
 
 	void OnToDark( LogicArg arg )
 	{

@@ -134,6 +134,7 @@ public class UIManager : MBehavior {
 		M_Event.RegisterEvent (LogicEvents.PickUpMusicPlayer, OnShowBrokenMusicPlayer);
 //		M_Event.RegisterEvent (LogicEvents.InvisibleFromPlayer, OnHideMusicPlayer );
 		M_Event.RegisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
+		M_Event.RegisterEvent (LogicEvents.HideMusicPlayer, OnHideMusicPlayer );
 		M_Event.RegisterEvent (LogicEvents.PauseGame, OnPause);
 		M_Event.RegisterEvent (LogicEvents.UnpauseGame, OnUnpause);
 		M_Event.RegisterEvent (LogicEvents.ShowFrameCamera, OnShowFrameCamera);
@@ -158,6 +159,7 @@ public class UIManager : MBehavior {
 		M_Event.UnregisterEvent (LogicEvents.PickUpMusicPlayer, OnShowBrokenMusicPlayer);
 //		M_Event.UnregisterEvent (LogicEvents.InvisibleFromPlayer, OnHideMusicPlayer );
 		M_Event.UnregisterEvent (LogicEvents.WalkInApartment, OnHideMusicPlayer );
+		M_Event.UnregisterEvent (LogicEvents.HideMusicPlayer, OnHideMusicPlayer );
 		M_Event.UnregisterEvent (LogicEvents.PauseGame, OnPause);
 		M_Event.UnregisterEvent (LogicEvents.UnpauseGame, OnUnpause);
 		M_Event.UnregisterEvent (LogicEvents.ShowFrameCamera, OnShowFrameCamera);
@@ -183,16 +185,18 @@ public class UIManager : MBehavior {
 	}
 	public void CompleteFrame( float duration )
 	{
+		Debug.Log ("Complete frame ");
 		//		Debug.Log (frameUp.rectTransform.anchoredPosition + " " + frameUp.rectTransform.localPosition + " " + frameUp.rectTransform.position);
 		//		Debug.Log (frameDown.rectTransform.anchoredPosition + " " + frameDown.rectTransform.localPosition + " " + frameDown.rectTransform.position);
-		frameUp.transform.DOLocalMoveY (0, duration).SetEase(Ease.InOutCubic);
+		frameUp.transform.DOLocalMoveY (100f, duration).SetEase(Ease.InOutCubic);
 		frameUp.transform.DOScaleY (1f, duration).SetEase(Ease.OutCubic);
-		frameDown.transform.DOLocalMoveY (-0, duration).SetEase(Ease.InOutCubic);
+		frameDown.transform.DOLocalMoveY (100f, duration).SetEase(Ease.InOutCubic);
 		frameDown.transform.DOScaleY (1f, duration).SetEase(Ease.OutCubic);
 	}
 
 	public void ShowFrame( float duration )
 	{
+		Debug.Log ("Show frame ");
 //		Debug.Log (frameUp.rectTransform.anchoredPosition + " " + frameUp.rectTransform.localPosition + " " + frameUp.rectTransform.position);
 //		Debug.Log (frameDown.rectTransform.anchoredPosition + " " + frameDown.rectTransform.localPosition + " " + frameDown.rectTransform.position);
 		frameUp.transform.DOLocalMoveY (230f, duration).SetEase(Ease.InOutCubic);
@@ -295,7 +299,7 @@ public class UIManager : MBehavior {
 
 		ending.gameObject.SetActive (false);
 
-		musicPlayerOriPlace = musicPlayer.position;
+		musicPlayerOriPlace = musicPlayer.localPosition;
 
 		HideThought ();
 
@@ -352,7 +356,7 @@ public class UIManager : MBehavior {
 
 	public void ShowMusicPlayer( float time )
 	{
-		musicPlayer.DOMove (musicPlayerOriPlace, time).SetEase (Ease.InOutCirc);
+		musicPlayer.DOLocalMoveY (musicPlayerOriPlace.y, time).SetEase (Ease.InOutCirc);
 		isMusicPlayerShown = true;
 
 		movingScreenBackground.rectTransform.DOScaleY (0, 0);
@@ -360,14 +364,14 @@ public class UIManager : MBehavior {
 
 	public void HideMusicPlayer( float time )
 	{
-		musicPlayer.DOMove (musicPlayerOriPlace + Vector3.up * musicHide , time ).SetEase (Ease.InOutCirc);
+		musicPlayer.DOLocalMoveY (musicPlayerOriPlace.y + musicHide , time ).SetEase (Ease.InOutCirc);
 		isMusicPlayerShown = false;
 	}
 
 	public void MinimizeMusicPlayer( float time )
 	{
 		
-		musicPlayer.DOMove (musicPlayerOriPlace + Vector3.up * musicMinimize, time).SetEase (Ease.InOutCirc);
+		musicPlayer.DOLocalMoveY (musicPlayerOriPlace.y + musicMinimize, time).SetEase (Ease.InOutCirc);
 		movingScreenBackground.rectTransform.DOScaleY (1f, time);
 		isMusicPlayerShown = true;
 	}
@@ -499,10 +503,12 @@ public class UIManager : MBehavior {
 		arg.AddMessage (M_Event.EVENT_PLAY_MUSIC_NAME, musicName);
 		M_Event.FireLogicEvent (LogicEvents.PlayMusic, arg);
 
-		movingScreen.SetWord (musicName);
-
-
 		MinimizeMusicPlayer (1f);
+	}
+	public void OnShowMovingScreen( GameObject textObj )
+	{
+		Text text = textObj.GetComponent<Text> ();
+		movingScreen.SetWord (text.text);
 	}
 
 	public void EndGame()

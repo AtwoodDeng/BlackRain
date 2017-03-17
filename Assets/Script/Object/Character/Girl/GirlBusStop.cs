@@ -21,6 +21,7 @@ public class GirlBusStop : TalkableCharacter {
 	[SerializeField] Animator m_animator;
 	[SerializeField] GameObject Model;
 	[SerializeField] GirlState initState;
+	[SerializeField] LogicEvents arriveEndEvent = LogicEvents.BusStopGirlArriveEnd;
 	[System.Serializable]
 	public struct SoundSetting
 	{
@@ -46,6 +47,8 @@ public class GirlBusStop : TalkableCharacter {
 		WaitForPlayer,
 		WaitToChooseMusic,
 		TalkWithPlayerInUmbrella,
+		ArriveEnd,
+		Disappear,
 		LeavePlayer,
 		WalkAway,
 	}
@@ -89,6 +92,7 @@ public class GirlBusStop : TalkableCharacter {
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopLevelFour, GirlState.InLevel, GirlState.WaitToTalk);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEndTalkGirl, GirlState.WaitToTalk, GirlState.Walk);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.PlayMusic, GirlState.WaitToChooseMusic, GirlState.WalkWithUmbrella);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.StreetFourToOld, GirlState.ArriveEnd, GirlState.Disappear);
 
 		m_stateMachine.AddEnter (GirlState.Init, delegate() {
 			m_agent.speed = 0;
@@ -112,7 +116,7 @@ public class GirlBusStop : TalkableCharacter {
 			m_agent.acceleration *= 10f;
 		});
 
-		m_stateMachine.AddEnter (GirlState.WaitToChooseMusic, delegate {
+		m_stateMachine.AddExit (GirlState.WaitToChooseMusic, delegate {
 			m_agent.acceleration /= 10f;
 		});
 
@@ -175,9 +179,21 @@ public class GirlBusStop : TalkableCharacter {
 		m_stateMachine.AddUpdate (GirlState.WalkWithUmbrella, delegate() {
 			m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.96f;
 
-			if ( !m_IsPlayerIn && LogicManager.Instance.State < LogicManager.GameState.WalkOutStreetFour)
+			if ( LogicManager.Instance.State < LogicManager.GameState.WalkWithGirlFrame )
 			{
-				m_stateMachine.State = GirlState.WaitForPlayer;
+				if (!m_IsPlayerIn ) 	
+					m_stateMachine.State = GirlState.WaitForPlayer;
+			}
+
+			if ( LogicManager.Instance.State < LogicManager.GameState.WalkWithGirlModern )
+			{
+				// if behind player
+				if ( transform.position.x < MainCharacter.Instance.transform.position.x )
+				{
+					
+				}else {
+					m_agent.speed = MainCharacter.Instance.MoveSpeed * 0.5f;
+				}
 			}
 
 //			if ( IsTalking && !m_IsEndTalking )
@@ -190,8 +206,12 @@ public class GirlBusStop : TalkableCharacter {
 			{
 				m_stateMachine.State = GirlState.TakeOffUmbrella;
 			}
+
 			if ( CheckTarget () )
 				NextTarget();
+
+//			if ( CheckGetToDestination())
+//				m_stateMachine.State = GirlState.ArriveEnd;
 
 		});
 
@@ -257,6 +277,19 @@ public class GirlBusStop : TalkableCharacter {
 			M_Event.FireLogicEvent (LogicEvents.InvisibleFromPlayer, new LogicArg (this));
 			M_Event.FireLogicEvent (LogicEvents.SwitchDefaultBGM, new LogicArg (this));
 		});
+
+
+		m_stateMachine.AddEnter (GirlState.ArriveEnd, delegate {
+			M_Event.FireLogicEvent(arriveEndEvent , new LogicArg(this));	 
+			m_stateMachine.State = GirlState.Disappear;
+		});
+
+		m_stateMachine.AddEnter (GirlState.Disappear, delegate() {
+			Model.SetActive(false);
+			m_collider.enabled = false;
+			m_agent.enabled = false;
+		});
+
 
 		if (Application.isEditor)
 			m_stateMachine.State = initState;
@@ -326,6 +359,14 @@ public class GirlBusStop : TalkableCharacter {
 		m_stateMachine.Update ();
 	}
 
+//	public bool CheckGetToDestination()
+//	{
+//		Transform destination = target [target.Length - 1].transform;
+//		Vector3 toward = (transform.position - destination.position);
+//		toward.y = 0;
+//		return toward.magnitude < 0.1f;
+//	}
+
 	public bool CheckTarget()
 	{
 		return (m_agent.remainingDistance <= m_agent.stoppingDistance ) &&
@@ -365,13 +406,17 @@ public class GirlBusStop : TalkableCharacter {
 	[ReadOnlyAttribute] public int targetIndex = 0;
 	virtual protected void NextTarget()
 	{
-		if (m_agent != null && m_agent.enabled && targetIndex < target.Length) {
+		if (m_agent != null && m_agent.enabled ) {
 
-			m_agent.destination = target [targetIndex].GetRangeTarget();
-		
-			targetIndex++;
+			if (targetIndex < target.Length) {
+				m_agent.destination = target [targetIndex].GetRangeTarget ();
+			
+				targetIndex++;
 
-			Debug.Log ("Next Target");
+				Debug.Log ("Next Target");
+			} else {
+				m_stateMachine.State = GirlState.ArriveEnd;
+			}
 		}
 	}
 
@@ -447,9 +492,11 @@ public class GirlBusStop : TalkableCharacter {
 
 	void OnGUI()
 	{
-		GUILayout.Label ("");
-		GUILayout.Label ("GirlState" + m_stateMachine.State);
-		GUILayout.Label ("Girl is end talking " + m_realTalking);
+		if (m_stateMachine.State != GirlState.Disappear && m_stateMachine.State != GirlState.Init ) {
+			GUILayout.Label ("");
+			GUILayout.Label ("GirlBusStopState" + m_stateMachine.State);
+			GUILayout.Label ("Girl is end talking " + m_realTalking);
+		}
 	}
 
 //	void ReactToMusic( LogicArg arg )

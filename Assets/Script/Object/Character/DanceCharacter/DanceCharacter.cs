@@ -18,15 +18,25 @@ public class DanceCharacter : MBehavior {
 		BackToNormal,
 	}
 
+//	public enum NormalState
+//	{
+//		None,
+//		RandomMove,
+//		Stand,
+//	}
+
 	public enum DanceAnimation
 	{
-		None,
-		Normal,
-		HoldUp,
-		Spin,
-		Front,
-		SpinFront,
-		Run,
+		None = 0,
+		Normal = 1,
+		HoldUp = 2,
+		Spin = 3 ,
+		Front = 4,
+		SpinFront = 5,
+		Run = 6,
+		FrontHold = 7,
+		HoldDown = 8,
+		SpinSide = 9,
 	}
 
 	[ReadOnlyAttribute] public Collider m_collider;
@@ -36,17 +46,32 @@ public class DanceCharacter : MBehavior {
 	AStateMachine<State,LogicEvents> m_stateMachine = new AStateMachine<State,LogicEvents>(State.None);
 	[ReadOnlyAttribute] public State m_state;
 	[SerializeField] State initState;
+//	[SerializeField] NormalState normalType;
 	[SerializeField] RangeTarget rangeTarget;
 	[SerializeField] BasicCharacter dancerCharacter;
 	[SerializeField] BasicCharacter normalCharacter;
 	[ReadOnlyAttribute] public DanceStrategy m_strategy;
+	[ReadOnlyAttribute] public NormalStrategy m_normalStrategy;
 	[ReadOnlyAttribute] public Vector3 OriginalPosition;
+	[ReadOnlyAttribute] public Quaternion OriginalRotation;
 	[SerializeField] DanceCharacter nextCharacter;
 //	[SerializeField] LogicEvents startEvent;
 	[SerializeField] bool isShowUpOnStart = true;
 	[SerializeField] bool isAliveOnEnd = false;
 	[SerializeField] LogicEvents endEvent;
 	public float runSpeedUp = 2.25f;
+	[HideInInspector] public int countRecord;
+
+	[System.Serializable]
+	public class CharacterColor
+	{
+		public Gradient DancerUmbrellaColor;
+		public Gradient DancerBodyColor;
+		public Gradient NormalUmbrellaColor;
+		public Gradient NormalBodyColor;
+		public bool UseFakeShadow;
+	}
+	[SerializeField] CharacterColor characterColor;
 	 
 	protected override void MAwake ()
 	{
@@ -63,18 +88,30 @@ public class DanceCharacter : MBehavior {
 		}
 		if (m_strategy == null) {
 			m_strategy = gameObject.GetComponent<DanceStrategy> ();
+			if (m_strategy == null)
+				m_strategy = gameObject.AddComponent<DanceStrategy> ();
 			m_strategy.Init (this);
 		}
+		if (m_normalStrategy == null) {
+			m_normalStrategy = gameObject.GetComponent<NormalStrategy> ();
+			if (m_normalStrategy != null)
+				m_normalStrategy.Init (this);
+		}
 		OriginalPosition = transform.position;
-		
+		OriginalRotation = transform.rotation;
+	
+		dancerCharacter.isShowShadow = characterColor.UseFakeShadow;
+		dancerCharacter.UpdateColor (characterColor.DancerUmbrellaColor, characterColor.DancerBodyColor );
+		normalCharacter.UpdateColor (characterColor.NormalUmbrellaColor, characterColor.NormalBodyColor );
 	}
 
 	protected override void MStart ()
 	{
 		base.MStart ();
 		InitStateMachine ();
+
 		if ( isShowUpOnStart )
-			transform.position = GetNormalDestination();
+			transform.position = GetInitPosition ();
 	}
 
 
@@ -94,18 +131,31 @@ public class DanceCharacter : MBehavior {
 			m_stateMachine.BlindStateChangeEvent (LogicEvents.ToModern, State.Dance, State.GotoDisappear);
 		}
 
-//		m_stateMachine.AddEnter (State.Normal, delegate() {
-////			m_agent.SetDestination( transform.position );
-//		});
 
 		m_stateMachine.AddUpdate (State.Normal, delegate() {
-			if ( IsGetDestination()) {
-				m_agent.SetDestination( GetNormalDestination() );
+			if ( m_normalStrategy == null )
+			{
+				if ( IsGetDestination()) {
+					m_agent.SetDestination( GetNormalDestination() );
+				}
 			}
+			else{
+				m_normalStrategy.OnNormalUpdate();
+			}
+//			switch(normalType )
+//			{
+//				case NormalState.RandomMove:
+//					break;
+//				case NormalState.Stand:
+//					// just stand
+//					break;
+//			}
 		});
+
 
 		m_stateMachine.AddEnter (State.StandRight, delegate() {
 			transform.position = OriginalPosition;
+			transform.rotation = OriginalRotation;
 			m_stateMachine.State = State.Dance;	
 		});
 
@@ -238,6 +288,11 @@ public class DanceCharacter : MBehavior {
 		}
 	}
 
+	public Vector3 GetInitPosition()
+	{
+		return GetNormalDestination ();
+	}
+
 	public Vector3 GetNormalDestination()
 	{
 		Vector3 destination = transform.position;
@@ -281,9 +336,12 @@ public class DanceCharacter : MBehavior {
 	void OnEvent( LogicArg arg )
 	{
 		m_stateMachine.OnEvent (arg.type);
-		if (arg.type == LogicEvents.MusicBeat && m_stateMachine.State == State.Dance) {
+		if (arg.type == LogicEvents.MusicBeat) {
 			int count = (int)arg.GetMessage (M_Event.EVENT_BEAT_COUNT);
-			OnBeat (count);
+			countRecord = count;
+			if ( m_stateMachine.State == State.Dance) {
+				OnBeat (count);
+			}
 		}
 	}
 

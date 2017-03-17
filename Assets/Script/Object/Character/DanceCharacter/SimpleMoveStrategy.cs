@@ -12,7 +12,7 @@ public class SimpleMoveStrategy : DanceStrategy {
 	}
 	[SerializeField] float angle;
 	[SerializeField] float length;
-	[SerializeField] bool MoveOnBeat;
+//	[SerializeField] bool MoveOnBeat;
 	Vector3 nowDirection;
 
 	public override void Init (DanceCharacter _p)
@@ -22,15 +22,15 @@ public class SimpleMoveStrategy : DanceStrategy {
 	}
 	public override void OnDanceUpdate ()
 	{
-		base.OnGotoDanceUpdate ();
+		base.OnDanceUpdate ();
 		if ( !MoveOnBeat && parent.IsGetDestination ()) {
 			parent.m_agent.SetDestination (GetDestination ());
 		}
 	}
 
-	Vector3 GetDestinationCount( int count )
+	Vector3 GetDestinationIndex( int beatIndex )
 	{
-		int beatIndex = ( count / beatFliter ) % 2;
+//		int beatIndex = ( ( count - beatOffset) / beatFliter ) % 2;
 		nowDirection = (beatIndex == 0 ) ? moveDirection : Vector3.zero;
 
 		return parent.OriginalPosition + nowDirection * beatFliter;
@@ -46,15 +46,20 @@ public class SimpleMoveStrategy : DanceStrategy {
 		return parent.OriginalPosition + nowDirection * beatFliter;
 	}
 
-	public override void OnBeat ( int count )
+	public override void OnBeatRhythm (int index)
 	{
-		base.OnBeat ( count );
-
-		if (MoveOnBeat && (count % beatFliter == 0)) {
-//			Debug.Log ("Get Destination " + count);
-			parent.m_agent.SetDestination (GetDestinationCount ( count ));
-		}
+		parent.m_agent.SetDestination (GetDestinationIndex (index));
 	}
+
+//	public override void OnBeat ( int count )
+//	{
+//		base.OnBeat ( count );
+//
+//		if (MoveOnBeat && GetBeatIndex(count) == 0 ) {
+////			Debug.Log ("Get Destination " + count);
+//			parent.m_agent.SetDestination (GetDestinationCount ( count ));
+//		}
+//	}
 
 	void OnDrawGizmos()
 	{

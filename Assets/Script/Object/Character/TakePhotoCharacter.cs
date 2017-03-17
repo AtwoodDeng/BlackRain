@@ -64,7 +64,7 @@ public class TakePhotoCharacter : TalkableCharacter {
 		if (umbrellaUp != null ) {
 			Color color = umbrellaColor.Evaluate (Random.Range (0, 1f));
 			color.a = 0.55f;
-			umbrellaUp.material = new Material (Shader.Find ("AlphaSelfIllum_NoFog"));
+			umbrellaUp.material = new Material (umbrellaUp.material.shader);
 			umbrellaUp.material.SetColor ("_Color", color);
 			if (umbrellaDown != null)
 				umbrellaDown.material = umbrellaUp.material;

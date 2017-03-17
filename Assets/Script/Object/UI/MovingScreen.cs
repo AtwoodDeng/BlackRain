@@ -12,7 +12,8 @@ public class MovingScreen : MBehavior {
 	public void SetWord( string word )
 	{
 		words = string.Copy (word);
-		while( words.Length < 20 ) {
+		words += "    ";
+		while( words.Length < maxWords ) {
 			words += " ";
 		}
 
@@ -45,6 +46,6 @@ public class MovingScreen : MBehavior {
 	void UpdateWord()
 	{
 		words = words.Substring (1) + words [0];
-		m_text.text = words;
+		m_text.text = words.Substring(0,maxWords);
 	}
 }

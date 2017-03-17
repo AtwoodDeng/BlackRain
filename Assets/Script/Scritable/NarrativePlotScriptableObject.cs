@@ -65,10 +65,8 @@ public class NarrativeDialog
 		Girl,
 	}
 	public SpeakerType type;
-
 }
-
-
+	
 public enum NarrativeIcon {
 	None = 0,
 	Happy = 1,
@@ -83,14 +81,21 @@ public enum NarrativeIcon {
 	Sad = 11,
 	Nervous = 12,
 	Consider = 13,
+	Sad2 = 14,
 
 	Kappa = 31,
 	Yao = 32,
+	Crazy = 33,
 
 	OK = 50,
 	QuestionGirl = 51,
 	Stop = 52,
 	Music = 53,
+	Ship = 54,
+	Flower = 55,
+	Firework = 56,
+	RedLight = 57,
+	Present = 58,
 
 	Umbrella = 100,
 	ShareUmbrella = 101,
@@ -107,6 +112,7 @@ public enum NarrativeIcon {
 	HappyOld = 201,
 	QuestionOld = 202,
 	ShareUmbrellaOld = 203,
+	MusicOld = 204,
 }
 
 

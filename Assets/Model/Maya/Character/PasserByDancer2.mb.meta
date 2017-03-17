@@ -58,6 +58,11 @@ ModelImporter:
     7400012: HoldUp
     7400014: FrontUmbrella
     7400016: SpinFrontUmbrella
+    7400018: FrontUmbrellaHold
+    7400020: HoldDown
+    7400022: WholdBodyNormal
+    7400024: WholeBodySpin
+    7400026: SpinSide
     9500000: //RootNode
     13700000: MainCharacterRig:body
     13700002: MainCharacterRig:Head
@@ -433,7 +438,7 @@ ModelImporter:
     - serializedVersion: 16
       name: HoldUp
       takeName: Take 001
-      firstFrame: 215
+      firstFrame: 216
       lastFrame: 220
       wrapMode: 0
       orientationOffsetY: 0
@@ -551,6 +556,296 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 280
       lastFrame: 319
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: MainCharacterRig:bot
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck/MainCharacterRig:head
+        weight: 1
+      - path: MainCharacterRig:Character
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body/MainCharacterRig:Head
+        weight: 1
+      - path: UMBRELLA:group1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: FrontUmbrellaHold
+      takeName: Take 001
+      firstFrame: 276
+      lastFrame: 278
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: MainCharacterRig:bot
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck/MainCharacterRig:head
+        weight: 1
+      - path: MainCharacterRig:Character
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body/MainCharacterRig:Head
+        weight: 1
+      - path: UMBRELLA:group1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: HoldDown
+      takeName: Take 001
+      firstFrame: 210
+      lastFrame: 215
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: MainCharacterRig:bot
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck/MainCharacterRig:head
+        weight: 1
+      - path: MainCharacterRig:Character
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body/MainCharacterRig:Head
+        weight: 1
+      - path: UMBRELLA:group1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: WholdBodyNormal
+      takeName: Take 001
+      firstFrame: 400
+      lastFrame: 405
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: MainCharacterRig:bot
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck/MainCharacterRig:head
+        weight: 1
+      - path: MainCharacterRig:Character
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body/MainCharacterRig:Head
+        weight: 1
+      - path: UMBRELLA:group1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: WholeBodySpin
+      takeName: Take 001
+      firstFrame: 406
+      lastFrame: 425
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: MainCharacterRig:bot
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck
+        weight: 1
+      - path: MainCharacterRig:bot/MainCharacterRig:knee/MainCharacterRig:mid/MainCharacterRig:chest/MainCharacterRig:neck/MainCharacterRig:head
+        weight: 1
+      - path: MainCharacterRig:Character
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body
+        weight: 1
+      - path: MainCharacterRig:Character/MainCharacterRig:body/MainCharacterRig:Head
+        weight: 1
+      - path: UMBRELLA:group1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:bar
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top1
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:top2
+        weight: 1
+      - path: UMBRELLA:group1/UMBRELLA:TopShadow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: SpinSide
+      takeName: Take 001
+      firstFrame: 321
+      lastFrame: 359
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

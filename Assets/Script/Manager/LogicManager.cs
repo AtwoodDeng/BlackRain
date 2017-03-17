@@ -78,17 +78,25 @@ public class LogicManager : MonoBehaviour {
 
 		WalkInStreetFour = 40,
 		ListenToMusic = 41,
-		WalkWithGirlInDark = 43,
-		WalkWithGirlFrame = 44,
-		WalkWithGirlOld = 45,
+		WalkWithGirlFrame = 43,
+		WalkWithGirlInDark = 44,
+		WalkWithGirlModern = 45,
 		WalkOutStreetFour = 47,
 
-		WalkIntoPeople = 50,
-		WalkAcrossRoadWithGirl = 51,
+		WalkIntoPeople = 52,
+		WalkAcrossRoadWithGirl = 53,
 		DepartFromGirl = 54,
 		BeginShip = 56,
 		PickUpMusicPlayer = 59,
 
+		EnterAcrossStreet = 60,
+		AcrossStreetBeginLevel = 62,
+		AcrossStreetLevelOneHalf = 63,
+		AcrossStreetLevelTwo = 64,
+		AcrossStreetThreeAndChangeMusic = 65,
+		AcrossStreetLevelFour = 66,
+		AcrossStreetGirlLeave = 67,
+		AcrossStreetEndDance = 68,
 
 		WalkInStreetColorful = 70,
 
@@ -186,7 +194,8 @@ public class LogicManager : MonoBehaviour {
 
 		// for test
 		if (Input.GetKeyDown (KeyCode.G) && Input.GetKey(KeyCode.LeftControl) ) {
-			m_stateMachine.State = GameState.WalkAcrossRoadWithGirl;
+//			m_stateMachine.State = GameState.WalkAcrossRoadWithGirl;
+			M_Event.FireLogicEvent(LogicEvents.AcrossStreetEnterDance, new LogicArg(this));
 		}
 
 		if (Input.GetKeyDown (KeyCode.L) && Input.GetKey (KeyCode.RightControl)) {
@@ -221,6 +230,10 @@ public class LogicManager : MonoBehaviour {
 			EffectManager effectManager = FindObjectOfType<EffectManager> ();
 			effectManager.enabled = !effectManager.isActiveAndEnabled;
 		}
+
+//		if (Input.GetKeyDown (KeyCode.C) && Input.GetKey(KeyCode.LeftControl) ) {
+//			m_stateMachine.State = GameState.ShowCredit;
+//		}
 
 //		if (Input.GetKey (KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt) ) {
 //			if (Input.GetKeyDown (KeyCode.Alpha1)) {
@@ -313,7 +326,12 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEnterLevel, GameState.WalkOutStreetThree, GameState.BusStopLevel);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopLevelFour, GameState.BusStopLevel, GameState.InBusStop);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.BusStopEndTalkGirl, GameState.InBusStop, GameState.WalkWithGirl);
-		m_stateMachine.BlindStateChangeEvent (LogicEvents.TrafficRedLight, GameState.WalkOutStreetFour, GameState.WalkIntoPeople);
+//		m_stateMachine.BlindStateChangeEvent (LogicEvents.AcrossStreetEndTalkGirl, GameState.EnterAcrossStreet, GameState.AcrossStreetWalk);
+		//		m_stateMachine.BlindStateChangeEvent (LogicEvents.TrafficRedLight, GameState.WalkOutStreetFour, GameState.WalkIntoPeople);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.AcrossStreetLevelOneHalf, GameState.AcrossStreetBeginLevel , GameState.AcrossStreetLevelOneHalf);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.AcrossStreetLevelTwo, GameState.AcrossStreetLevelOneHalf , GameState.AcrossStreetLevelTwo);
+		m_stateMachine.BlindStateChangeEvent (LogicEvents.AcrossStreetLevelFour, GameState.AcrossStreetThreeAndChangeMusic, GameState.AcrossStreetLevelFour);
+//		m_stateMachine.BlindStateChangeEvent (LogicEvents.ForceGirlLeave, GameState.AcrossStreetLevelFour, GameState.AcrossStreetBeginShip);
 		m_stateMachine.BlindTimeStateChange (GameState.WalkIntoPeople, GameState.WalkAcrossRoadWithGirl, 35f);
 		m_stateMachine.BlindStateChangeEvent (LogicEvents.ForceGirlLeave, GameState.WalkAcrossRoadWithGirl, GameState.DepartFromGirl);
 //		m_stateMachine.BlindTimeStateChange (GameState.WalkAcrossRoadWithGirl, GameState.DepartFromGirl, 10f);
@@ -335,9 +353,15 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetFour, GameState.WalkInStreetFour);
 		m_stateMachine.BlindFromEveryState (LogicEvents.BusStopTalkPointThree, GameState.WalkWithGirlFrame);
 		m_stateMachine.BlindFromEveryState (LogicEvents.StreetFourToDark, GameState.WalkWithGirlInDark);
-		m_stateMachine.BlindFromEveryState (LogicEvents.StreetFourToOld, GameState.WalkWithGirlOld);
+		m_stateMachine.BlindFromEveryState (LogicEvents.BusStopGirlArriveEnd, GameState.WalkWithGirlModern);
 		m_stateMachine.BlindFromEveryState (LogicEvents.GirlSayPlayMusic, GameState.ListenToMusic);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetFourEnd, GameState.WalkOutStreetFour);
+		m_stateMachine.BlindFromEveryState (LogicEvents.StreetFiveGirlArriveEnd, GameState.EnterAcrossStreet);
+		m_stateMachine.BlindFromEveryState (LogicEvents.AcrossStreetEnterDance, GameState.AcrossStreetBeginLevel);
+		m_stateMachine.BlindFromEveryState (LogicEvents.AcrossStreetLevelThree, GameState.AcrossStreetThreeAndChangeMusic);
+		m_stateMachine.BlindFromEveryState (LogicEvents.AcrossStreetGirlLeave, GameState.AcrossStreetGirlLeave);
+		m_stateMachine.BlindFromEveryState (LogicEvents.AcrossStreetEndFilmFinish, GameState.AcrossStreetEndDance);
+
 		m_stateMachine.BlindFromEveryState (LogicEvents.PickUpMusicPlayer, GameState.PickUpMusicPlayer);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterStreetColorful, GameState.WalkInStreetColorful);
 		m_stateMachine.BlindFromEveryState (LogicEvents.EnterApartment, GameState.BackToApartment);
@@ -369,15 +393,18 @@ public class LogicManager : MonoBehaviour {
 		});
 
 		m_stateMachine.AddEnter (GameState.InBusStop, delegate() {
-			LogicArg arg = new LogicArg(this);
-			arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 0.5f );
-			arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 3f );
-			M_Event.FireLogicEvent(LogicEvents.ToModern, arg );
+			{
+				LogicArg arg = new LogicArg(this);
+				arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 0.5f );
+				arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 3f );
+				M_Event.FireLogicEvent(LogicEvents.ToModern, arg );
+			}
 
-			LogicArg bgmArg = new LogicArg(this);
-			bgmArg.AddMessage(M_Event.EVENT_BGM_FADE_TIME , 3f );
-			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , bgmArg );
-
+			{
+				LogicArg bgmArg = new LogicArg(this);
+				bgmArg.AddMessage(M_Event.EVENT_BGM_FADE_TIME , 3f );
+				M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , bgmArg );
+			}
 		});
 
 		m_stateMachine.AddEnter (GameState.WalkWithGirl, delegate() {
@@ -391,6 +418,52 @@ public class LogicManager : MonoBehaviour {
 		m_stateMachine.AddEnter (GameState.WalkWithGirlInDark, delegate() {
 			M_Event.FireLogicEvent(LogicEvents.CompleteFrameCamera , new LogicArg(this));
 			MainCharacter.Instance.SetToSuperSlowSpeed();
+		});
+
+		m_stateMachine.AddEnter (GameState.WalkWithGirlModern, delegate() {
+
+			M_Event.FireLogicEvent( LogicEvents.HideFrameCamera , new LogicArg(this));
+			M_Event.FireLogicEvent( LogicEvents.HideMusicPlayer , new LogicArg(this));
+
+			{
+				LogicArg bgmArg = new LogicArg(this);
+				bgmArg.AddMessage(M_Event.EVENT_BGM_FADE_TIME , 0.5f );
+				M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , bgmArg );
+			}
+
+			MainCharacter.Instance.SetToNormalSpeed();
+		});
+
+		m_stateMachine.AddEnter (GameState.AcrossStreetBeginLevel, delegate {
+			{
+				LogicArg arg = new LogicArg(this);
+				arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 0.1f );
+				arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 4f );
+				M_Event.FireLogicEvent(LogicEvents.ToDark, arg );
+			}
+			
+		});
+
+
+
+		m_stateMachine.AddEnter (GameState.AcrossStreetGirlLeave, delegate() {
+			
+		});
+
+		m_stateMachine.AddEnter (GameState.AcrossStreetEndDance, delegate() {
+			{
+				LogicArg arg = new LogicArg(this);
+				arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 3f );
+				arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 4f );
+				M_Event.FireLogicEvent(LogicEvents.ToModern, arg );
+			}
+
+			{
+				LogicArg bgmArg = new LogicArg(this);
+				bgmArg.AddMessage(M_Event.EVENT_BGM_FADE_TIME , 4f );
+				M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , bgmArg );
+			}
+				
 		});
 
 		m_stateMachine.AddEnter (GameState.WalkAcrossRoadWithGirl, delegate() {
