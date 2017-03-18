@@ -17,7 +17,11 @@ public class ThoughtManager : MBehavior {
 	[SerializeField] private ThoughtScritableObject enterStateThoughtList;
 	[SerializeField] private ThoughtScritableObject damageThoughtList;
 	[SerializeField] private float tiredTime = 30f;
-	[SerializeField] bool hideThought;
+	 public bool hideThought{
+		get{
+			return (NarrativeManager.Instance.narrativeType != NarrativeManager.NarrativeType.Dialog);
+		}
+	}
 	private float tiredTimer = 0;
 
 	List<Thought> thoughtsForState = new List<Thought>();

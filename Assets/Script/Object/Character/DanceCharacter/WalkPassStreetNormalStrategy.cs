@@ -27,7 +27,7 @@ public class WalkPassStreetNormalStrategy : NormalStrategy {
 
 	void OnStartWalk( LogicArg arg )
 	{
-		if ( parent.m_state == DanceCharacter.State.Normal)
-			parent.m_agent.SetDestination (walkTo.GetRangeTarget ());
+//		if ( parent.m_state == DanceCharacter.State.Normal)
+//			parent.m_agent.SetDestination (walkTo.GetRangeTarget ());
 	}
 }

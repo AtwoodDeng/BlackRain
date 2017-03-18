@@ -94,10 +94,12 @@ public class TalkableCharacter : Character {
 	virtual protected void OnEndDisplayDialog( LogicArg arg )
 	{
 		TalkableCharacter character = (TalkableCharacter)arg.GetMessage (M_Event.EVENT_END_DISPLAY_SENDER);
+//		Debug.Log ("On End Display Dialog");
 		if (character == this) {
 			if (isMainTalking) {
 
 				if (MainTalkEndEvent != LogicEvents.None) {
+//					Debug.Log ("Fire Main talk End" + MainTalkEndEvent.ToString ());
 					M_Event.FireLogicEvent (MainTalkEndEvent, new LogicArg (this));
 				}
 				isMainTalking = false;
@@ -140,6 +142,7 @@ public class TalkableCharacter : Character {
 					LogicArg arg = new LogicArg (this);
 					if (iconNarrativeIndex == -1 || !isLockIconNarrative)
 						iconNarrativeIndex = Random.Range (0, iconNarrativeList.Length);
+					iconNarrativeList [iconNarrativeIndex].thisCharacter = this;
 					arg.AddMessage(M_Event.EVENT_ICON_NARRATIV_DIALOG , iconNarrativeList[ iconNarrativeIndex ] );
 					M_Event.FireLogicEvent (LogicEvents.DisplayIconDialog, arg);
 				}
@@ -200,7 +203,10 @@ public class TalkableCharacter : Character {
 
 	public override bool IsInteractable ()
 	{
-		return base.IsInteractable () && !IsTalking && ( IsTalkable ||  IsFlimPlayable || IsIconNarrativePlayable );
+		if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog)
+			return base.IsInteractable () && !IsTalking && IsTalkable;
+		
+		return base.IsInteractable () && ( IsFlimPlayable || IsIconNarrativePlayable );
 	}
 
 }

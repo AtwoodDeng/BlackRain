@@ -14,17 +14,19 @@ public class ActiveOnState : MBehavior {
 		SetActive (LogicManager.Instance.State);
 		LogicManager.Instance.RegisterStateChange (delegate(LogicManager.GameState fromState, LogicManager.GameState toState) {
 //			Debug.Log("Active On State" + toState );
-			SetActive( toState );	
+			SetActive (toState);	
 		});
 	}
 
 	void SetActive( LogicManager.GameState state )
 	{
-		bool to = (state >= startState && state < endState) ? setActiveTo : !setActiveTo;
+		if (enabled) {
+			bool to = (state >= startState && state < endState) ? setActiveTo : !setActiveTo;
 
-		foreach (GameObject obj in targetGameObjects) {
-			if ( obj != null )
-				obj.SetActive (to);
+			foreach (GameObject obj in targetGameObjects) {
+				if (obj != null)
+					obj.SetActive (to);
+			}
 		}
 	}
 

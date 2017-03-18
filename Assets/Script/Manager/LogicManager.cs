@@ -41,6 +41,19 @@ public class LogicManager : MonoBehaviour {
 	}
 	static bool m_isGamePaused=false;
 
+	public enum MusicChoice
+	{
+		Piano = 0,
+		Guitar = 1,
+		Violin = 2,
+	}
+
+
+	public class StoryData{
+		
+		public MusicChoice musicChoice;
+	}
+	public StoryData storyData = new StoryData();
 
 	public enum GameState
 	{
@@ -135,7 +148,6 @@ public class LogicManager : MonoBehaviour {
 			Destroy (this);
 
 		m_MainCharacter = FindObjectOfType<MainCharacter> ();
-
 
 		InitStateMachine ();
 
@@ -280,11 +292,25 @@ public class LogicManager : MonoBehaviour {
 	void OnEnable()
 	{
 		M_Event.RegisterAll (OnEvent);
+		M_Event.RegisterEvent (LogicEvents.PlayMusic, OnPlayMusic);
 	}
 
 	void OnDisable()
 	{
-		M_Event.RegisterAll (OnEvent);
+		M_Event.UnRegisterAll (OnEvent);
+		M_Event.UnregisterEvent (LogicEvents.PlayMusic, OnPlayMusic);
+	}
+
+	void OnPlayMusic( LogicArg arg )
+	{
+		string musicName = (string)arg.GetMessage (M_Event.EVENT_PLAY_MUSIC_NAME);
+		if (musicName.StartsWith("Piano"))
+			storyData.musicChoice = MusicChoice.Piano;
+		if (musicName.StartsWith("Guitar"))
+			storyData.musicChoice = MusicChoice.Guitar;
+		if (musicName.StartsWith("Violin"))
+			storyData.musicChoice = MusicChoice.Violin;
+		
 	}
 
 	void OnEvent(LogicArg arg)
@@ -294,6 +320,7 @@ public class LogicManager : MonoBehaviour {
 			OnUnpauseGame (false);
 		}
 	}
+
 
 	void OnPauseGame()
 	{
@@ -380,6 +407,13 @@ public class LogicManager : MonoBehaviour {
 			arg.AddMessage(M_Event.EVENT_OMSWITCH_DELAY , 2f );
 			arg.AddMessage(M_Event.EVENT_OMSWITCH_DURATION , 4f );
 			M_Event.FireLogicEvent(LogicEvents.ToModern, arg );
+
+
+			{
+				LogicArg bgmArg = new LogicArg(this);
+				bgmArg.AddMessage(M_Event.EVENT_BGM_FADE_TIME , 6f );
+				M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , bgmArg );
+			}
 			
 		});
 
@@ -476,11 +510,19 @@ public class LogicManager : MonoBehaviour {
 			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , arg );	
 		});
 
-		m_stateMachine.AddEnter (GameState.TalkWithFakeGirl, delegate() {
+		m_stateMachine.AddEnter (GameState.BackToApartment, delegate {
 			LogicArg arg = new LogicArg(this);
-			arg.AddMessage(M_Event.EVENT_BGM_FADE_TIME,5f);
+			arg.AddMessage(M_Event.EVENT_BGM_FADE_TIME,4f);
 			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , arg );	
 		});
+
+		m_stateMachine.AddEnter (GameState.TalkWithFakeGirl, delegate() {
+			LogicArg arg = new LogicArg(this);
+			arg.AddMessage(M_Event.EVENT_BGM_FADE_TIME,4f);
+			M_Event.FireLogicEvent(LogicEvents.SwitchDefaultBGM , arg );	
+		});
+
+
 
 		m_stateMachine.AddEnter (GameState.End, delegate() {
 			SceneManager.LoadScene("Title");

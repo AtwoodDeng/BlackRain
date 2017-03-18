@@ -84,7 +84,7 @@ public class MechanismManager : MBehavior {
 		private float minHealth = 0;
 		private float sneezeDuration = 10f;
 		public float inRainTimer;
-		private int sneezeNum;
+		public int sneezeNum;
 		private bool isOnDamage;
 
 
@@ -185,6 +185,18 @@ public class MechanismManager : MBehavior {
 	Health m_health = new Health();
 	static public Health health { get { return Instance.m_health;}}
 
+	public float InRainTime{
+		get {
+			return m_health.inRainTimer;
+		}
+	}
+
+	public float SneezeTime {
+		get{
+			return m_health.sneezeNum;
+		}
+	}
+
 	protected override void MAwake ()
 	{
 		base.MAwake ();
@@ -227,13 +239,13 @@ public class MechanismManager : MBehavior {
 			m_health.RecoverEnergy (damageSetting.energyRecover);
 		}
 
-		if ( CrossPlatformInputManager.GetButtonDown("SpeedUp")) {
-			M_Event.FireLogicEvent (LogicEvents.BeginRun, new LogicArg (this));
-		}
+//		if ( CrossPlatformInputManager.GetButtonDown("SpeedUp")) {
+//			M_Event.FireLogicEvent (LogicEvents.BeginRun, new LogicArg (this));
+//		}
 
-		if ( CrossPlatformInputManager.GetButtonUp("SpeedUp")) {
-			M_Event.FireLogicEvent (LogicEvents.EndRun, new LogicArg (this));
-		}
+//		if ( CrossPlatformInputManager.GetButtonUp("SpeedUp")) {
+//			M_Event.FireLogicEvent (LogicEvents.EndRun, new LogicArg (this));
+//		}
 	}
 
 	void OnDeathEnd( LogicArg arg )

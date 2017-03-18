@@ -26,15 +26,24 @@ public class NarrativeManager : MBehavior {
 	[SerializeField] float autoSkipTime = 15f;
 	[SerializeField] GameObject smallDialogPrefab;
 	[SerializeField] GameObject iconDialogPrefab;
-	[SerializeField] bool HideDialog;
-	[SerializeField] bool HideIconDialog;
-	public NarrativeType narrativeType{
+	public bool HideDialog{
 		get {
-			if (HideDialog)
-				return NarrativeType.Icon;
-			return NarrativeType.Dialog;
+			return narrativeType != NarrativeType.Dialog;
 		}
 	}
+	public bool HideIconDialog{
+		get {
+			return narrativeType != NarrativeType.Icon;
+		}
+	}
+	public NarrativeType narrativeType;
+//	public NarrativeType narrativeType{
+//		get {
+//			if (HideDialog)
+//				return NarrativeType.Icon;
+//			return NarrativeType.Dialog;
+//		}
+//	}
 
 	private AudioSource mainCharacterSpeaker;
 	private AudioSource temSpeaker;

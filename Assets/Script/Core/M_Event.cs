@@ -77,6 +77,7 @@ public enum LogicEvents
 	StreetTwoWatchCrow = 211,
 	StreetTwoWatchCrowEnd = 212,
 	StreetTwoSeeOldGril = 220,
+	StreetTwoSeeGrilInDistance = 222,
 	StreetTwoReflectGirlInCar = 225,
 	StreetTwoBackToMorden = 240,
 	StreetTwoGirlLeave = 250,

@@ -17,17 +17,20 @@ public class OldColliderControl : MBehavior {
 		base.MAwake ();
 		if ( isActiveOnAwake )
 			gameObject.SetActive (true);
-	}
 
-	protected override void MStart ()
-	{
-		base.MStart ();
+
 		isOld = gameObject.layer == LayerMask.NameToLayer ("Old");
 		isMorden = gameObject.layer == LayerMask.NameToLayer ("Morden");
 		isDark = gameObject.layer == LayerMask.NameToLayer ("Dark");
 
 		m_collider = GetComponent<Collider> ();
 		collidersInChildren = GetComponentsInChildren<Collider> ();
+	}
+
+	protected override void MStart ()
+	{
+		base.MStart ();
+
 
 		OnToModern (new LogicArg(this));
 	}

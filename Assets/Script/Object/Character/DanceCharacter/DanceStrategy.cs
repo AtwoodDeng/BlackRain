@@ -7,7 +7,7 @@ public class DanceStrategy : MBehavior {
 	[SerializeField] DanceCharacter.DanceAnimation danceInitAnimation = DanceCharacter.DanceAnimation.None;
 	[SerializeField] protected int beatFliter = 2;
 	[SerializeField] protected int beatOffset = 0;
-	[SerializeField] public bool MoveOnBeat = true;
+	public bool MoveOnBeat = true;
 	[SerializeField] LogicEvents waitEvent = LogicEvents.None;
 	[ReadOnlyAttribute] public int onEventCount = -1;
 
@@ -48,6 +48,7 @@ public class DanceStrategy : MBehavior {
 	public virtual void OnGotoDanceUpdate()
 	{
 		if (parent.IsGetDestination () && !shouldWaitForEvent ) {
+			Debug.Log ( name + "Start Dance " + transform.position + " " + parent.OriginalPosition + " " + parent.m_agent.destination);
 			parent.SetStateFromTo (DanceCharacter.State.GotoDance, DanceCharacter.State.Dance);
 		}
 	}

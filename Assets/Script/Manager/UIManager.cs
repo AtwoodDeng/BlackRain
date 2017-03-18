@@ -442,15 +442,15 @@ public class UIManager : MBehavior {
 	void UpdateThought()
 	{
 		Vector3 characterPos = MainCharacter.Instance.GetInteractiveCenter () ;
-
-		Vector3 screenPos = Camera.main.WorldToViewportPoint ( characterPos - 2f * TalkableCharacter.InteractionPointOffset );
+	
+		Vector3 screenPos = Camera.main.WorldToViewportPoint (characterPos);
 
 		RectTransform CanvasRect = UIManager.Instance.UICanvas.GetComponent<RectTransform> ();
 		Vector2 targetPos = new Vector2 (
-			((screenPos.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-			((screenPos.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+			                   ((screenPos.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+			                   ((screenPos.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
 
-		thoughtBackground.rectTransform.anchoredPosition = targetPos + new Vector2( 66f , 66f );
+		thoughtBackground.rectTransform.anchoredPosition = targetPos + new Vector2 (66f, 100f);
 	}
 
 	void UpdateEnergy()
@@ -565,5 +565,13 @@ public class UIManager : MBehavior {
 	public void CloseMenu(  )
 	{
 		Menu.gameObject.SetActive (false);
+	}
+
+	public void OnChooseNarrativeType( int type )
+	{
+		if (type == 0)
+			NarrativeManager.Instance.narrativeType = NarrativeManager.NarrativeType.Dialog;
+		else
+			NarrativeManager.Instance.narrativeType = NarrativeManager.NarrativeType.Icon;
 	}
 }

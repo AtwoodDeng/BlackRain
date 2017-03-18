@@ -27,14 +27,15 @@ public class RotateStrategy : DanceStrategy {
 	[ReadOnlyAttribute] public float targetRadius;
 	public bool updateInitPosition;
 
-	public override void OnBeatRhythm (int index)
-	{
+//	public override void OnBeatRhythm (int index)
+//	{
 //		Debug.Log ( name + "Rotate On Beat ");
 //		targetRadius += DegreedPerBeat;
-	}
+//	}
 
 	public override void OnBeat (int count)
 	{
+		base.OnBeat (count);
 		if (CanMoveOnBeat (count))
 			targetRadius = initDegreed + ( count - onEventCount ) / beatFliter * DegreedPerBeat;
 	}

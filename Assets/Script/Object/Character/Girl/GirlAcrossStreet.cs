@@ -297,8 +297,14 @@ public class GirlAcrossStreet : TalkableCharacter {
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
-		M_Event.RegisterAll (OnEvent);
-
+//		M_Event.RegisterAll (OnEvent);
+		M_Event.RegisterEvent(LogicEvents.AcrossStreetGirlLeave , OnEvent);
+		M_Event.RegisterEvent(LogicEvents.AcrossStreetEnterDance , OnEvent);
+		M_Event.RegisterEvent(LogicEvents.AcrossStreetLevelOneHalf , OnEvent);
+		M_Event.RegisterEvent(LogicEvents.AcrossStreetLevelOne , OnEvent);
+		M_Event.RegisterEvent(LogicEvents.AcrossStreetLevelTwo , OnEvent);
+		M_Event.RegisterEvent(LogicEvents.AcrossStreetLevelThree , OnEvent);
+		M_Event.RegisterEvent(LogicEvents.MusicBeat , OnEvent);
 //		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
 //		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
 //		M_Event.RegisterEvent (LogicEvents.EnterStone, OnEvent);
@@ -310,7 +316,14 @@ public class GirlAcrossStreet : TalkableCharacter {
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
-		M_Event.RegisterAll (OnEvent);
+		//		M_Event.RegisterAll (OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.AcrossStreetGirlLeave , OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.AcrossStreetEnterDance , OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.AcrossStreetLevelOneHalf , OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.AcrossStreetLevelOne , OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.AcrossStreetLevelTwo , OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.AcrossStreetLevelThree , OnEvent);
+		M_Event.UnregisterEvent(LogicEvents.MusicBeat , OnEvent);
 //		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
 //		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
 //		M_Event.UnregisterEvent (LogicEvents.EnterStone, OnEvent);
@@ -410,9 +423,11 @@ public class GirlAcrossStreet : TalkableCharacter {
 
 	public void SetTarget( int index )
 	{
-		targetIndex = index;
-		m_agent.destination = target [targetIndex].GetRangeTarget ();
-		Debug.Log ("Girl Across Street set target to " + index);
+		if (index >= targetIndex) {
+			targetIndex = index;
+			m_agent.destination = target [targetIndex].GetRangeTarget ();
+			Debug.Log ("Girl Across Street set target to " + index);
+		}
 	}
 
 	bool m_IsOpenUmbrella = false;

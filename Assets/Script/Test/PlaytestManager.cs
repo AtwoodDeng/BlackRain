@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.Analytics;
 
 public class PlaytestManager : MBehavior {
-
+	[SerializeField] bool isUseAnalystic = true;
 	private static PlaytestManager m_Instance;
 	public static PlaytestManager Instance{
 		get {
@@ -23,10 +24,35 @@ public class PlaytestManager : MBehavior {
 	const string  LineSep = "\r\n";
 	[SerializeField] float moveRecordInterval = 0.5f;
 
+	public enum Choice{
+		None,
+		Piano,
+		Violin,
+		Guitar,
+
+	}
+
 	public class StateData
 	{
 		public string State;
-		public float time;
+		public float endTime;
+		public float duration;
+		public float inRainTime;
+		public int sneezeTime;
+		public float minHealth;
+		public float freezeTime;
+
+		public override string ToString ()
+		{
+			return string.Format ("[StateData] State:{0}, endTime:{1}, duration:{2}, inRainTime:{3}, sneezeTime:{4}, minHealth:{5}, freezeTime:{6}" , State,endTime,duration,inRainTime,sneezeTime,minHealth,freezeTime);
+		}
+	}
+
+
+
+	public class ContentData
+	{
+		public LogicManager.MusicChoice choice;
 	}
 
 	public class DialogData
@@ -57,6 +83,7 @@ public class PlaytestManager : MBehavior {
 	private List<DialogData> dialogData = new List<DialogData>();
 	private List<DeathData> deathData = new List<DeathData>();
 	private List<MoveIntensity> moveData = new List<MoveIntensity>();
+	ContentData contentDate = new ContentData();
 
 
 	protected override void MStart ()
@@ -64,10 +91,33 @@ public class PlaytestManager : MBehavior {
 		base.MStart ();
 		playtester = System.DateTime.Now.ToString ("yy-MM-dd HH-mm");
 		LogicManager.Instance.RegisterStateChange (delegate(LogicManager.GameState fromState, LogicManager.GameState toState) {
-			StateData st = new StateData();
-			st.State = toState.ToString();
-			st.time = Time.time;
-			stateData.Add(st);
+			if ( fromState != LogicManager.GameState.None )
+			{
+				StateData st = new StateData();
+				st.State = fromState.ToString();
+				st.endTime = Time.time;
+				st.duration = state_duration;
+				st.inRainTime = state_inRainTime;
+				st.freezeTime = state_freezeTime;
+				st.sneezeTime = state_sneezeTime;
+				st.minHealth = state_minHealth;
+				Debug.Log(st);
+				if ( isUseAnalystic )
+				{
+					Analytics.CustomEvent("State" , new Dictionary<string,object>
+						{
+							{"StateName" , st.State },
+							{"GameTime" , st.endTime },
+							{"Duration" , st.duration },
+							{"InRainTime" , st.inRainTime },
+							{"SneezeTime" , st.sneezeTime },
+							{"minHealth" , st.minHealth},
+								
+						});
+				}
+				stateData.Add(st);
+			}
+			ResetState();
 		});
 
 		lastPosition = MainCharacter.Instance.transform.position;
@@ -82,6 +132,8 @@ public class PlaytestManager : MBehavior {
 		M_Event.logicEvents[(int)LogicEvents.EndDisplayDialog] += OnDisplayEnd;
 		M_Event.logicEvents [(int)LogicEvents.Death] += OnDeath;
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
+		M_Event.logicEvents [(int)LogicEvents.Sneeze] += OnSneeze;
+		M_Event.logicEvents [(int)LogicEvents.PlayMusic] += OnPlayMusic;
 	}
 
 	protected override void MOnDisable ()
@@ -91,7 +143,34 @@ public class PlaytestManager : MBehavior {
 		M_Event.logicEvents[(int)LogicEvents.DisplayNextDialog] -= OnDisplayNext;
 		M_Event.logicEvents[(int)LogicEvents.EndDisplayDialog] -= OnDisplayEnd;
 		M_Event.logicEvents [(int)LogicEvents.Death] -= OnDeath;
-		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
+		M_Event.logicEvents [(int)LogicEvents.DeathEnd] -= OnDeathEnd;
+		M_Event.logicEvents [(int)LogicEvents.Sneeze] -= OnSneeze;
+		M_Event.logicEvents [(int)LogicEvents.PlayMusic] -= OnPlayMusic;
+	}
+
+	void OnPlayMusic( LogicArg arg )
+	{
+		string musicName = (string)arg.GetMessage (M_Event.EVENT_PLAY_MUSIC_NAME);
+		if (musicName.StartsWith("Piano"))
+			contentDate.choice = LogicManager.MusicChoice.Piano;
+		if (musicName.StartsWith("Guitar"))
+			contentDate.choice = LogicManager.MusicChoice.Guitar;
+		if (musicName.StartsWith("Violin"))
+			contentDate.choice = LogicManager.MusicChoice.Violin;
+
+		if (isUseAnalystic) {
+			Analytics.CustomEvent("MusicChoice" , new Dictionary<string,object>
+				{
+					{"Choice" , (int)contentDate.choice },
+
+				});
+		}
+		
+	}
+
+	void OnSneeze( LogicArg arg )
+	{
+		state_sneezeTime += 1;
 	}
 
 	DeathData temDeath;
@@ -147,18 +226,35 @@ public class PlaytestManager : MBehavior {
 		}
 
 		OutputState ();
-		OutputDialog ();
+//		OutputDialog ();
 		OutputMove ();
 //		OutputDeath ();
+		OutputContent();
 	}
+
+	void UpdateContendDate()
+	{
+		contentDate.choice = LogicManager.Instance.storyData.musicChoice;
+	}
+
+	void OutputContent()
+	{
+		StreamWriter file = new StreamWriter ( thisFolder + "/Content" + thisFolder.Substring(thisFolder.Length-6) +".csv");
+		file.WriteLine ("MusicChoice");
+		UpdateContendDate ();
+		file.WriteLine (contentDate.choice);
+		file.Close ();
+		
+	}
+
 
 	void OutputState()
 	{
 		StreamWriter file = new StreamWriter ( thisFolder + "/State" + thisFolder.Substring(thisFolder.Length-6) +".csv");
-		file.WriteLine ("Time,State");
+		file.WriteLine ("State,EndTime,Duration,InRainTime,FreezeTime,SneezeTime,minHealth");
 		for (int i = 0; i < stateData.Count; ++i) {
 			StateData s = stateData [i];
-			file.WriteLine (s.time + "," + s.State   );
+			file.WriteLine ( s.State + "," + s.endTime + "," + s.duration + ","  + s.inRainTime + ","+ s.freezeTime + ","+ s.sneezeTime + ","+ s.minHealth);
 		}
 		file.Close ();
 	}
@@ -201,12 +297,11 @@ public class PlaytestManager : MBehavior {
 	float timer = 0;
 	Vector3 lastPosition;
 	Quaternion lastRotation;
+
 	float accDistance = 0;
 	float accAngle = 0;
-	protected override void MUpdate ()
+	public void UpdateMove()
 	{
-		base.MUpdate ();
-
 		timer -= Time.deltaTime;
 		if (timer < 0) {
 			timer = moveRecordInterval;
@@ -226,5 +321,37 @@ public class PlaytestManager : MBehavior {
 
 		lastPosition = MainCharacter.Instance.transform.position;
 		lastRotation = Camera.main.transform.rotation;
+	}
+
+	float state_duration;
+	float state_freezeTime;
+	float state_minHealth = 1f ;
+	int state_sneezeTime;
+	float state_inRainTime;
+
+	public void UpdateState(){
+		state_duration += Time.deltaTime;
+		if (MechanismManager.Instance.DamageState == MechanismManager.DamageStateType.UnderDamage)
+			state_inRainTime += Time.deltaTime;
+		if (MechanismManager.health.HealthRate < state_minHealth)
+			state_minHealth = MechanismManager.health.HealthRate;
+		if (MainCharacter.Instance.IsFocus || NarrativeManager.Instance.IsDisplaying)
+			state_freezeTime += Time.deltaTime;
+	}
+
+	public void ResetState(){
+		state_duration = 0;
+		state_freezeTime = 0;
+		state_minHealth = 1f;
+		state_sneezeTime = 0;
+		state_inRainTime = 0;
+	}
+
+	protected override void MUpdate ()
+	{
+		base.MUpdate ();
+
+		UpdateMove ();
+		UpdateState ();
 	}
 }

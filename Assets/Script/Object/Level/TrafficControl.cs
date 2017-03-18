@@ -23,23 +23,26 @@ public class TrafficControl : MObject {
 	void OnTrafficRed(LogicArg MsgArg)
 	{
 		Debug.Log ("On Traffic Red ");
-		foreach (GameObject obj in RedLight) {
-			obj.SetActive (true);
-		}
-		foreach (GameObject obj in GreenLight) {
-			obj.SetActive (false);
+		if (enabled) {
+			foreach (GameObject obj in RedLight) {
+				obj.SetActive (true);
+			}
+			foreach (GameObject obj in GreenLight) {
+				obj.SetActive (false);
+			}
 		}
 	}
 
 	void OnTrafficGreen(LogicArg arg)
 	{
-
-		Debug.Log ("On Traffic Green ");
-		foreach (GameObject obj in RedLight) {
-			obj.SetActive (false);
-		}
-		foreach (GameObject obj in GreenLight) {
-			obj.SetActive (true);
+		if (enabled) {
+			Debug.Log ("On Traffic Green ");
+			foreach (GameObject obj in RedLight) {
+				obj.SetActive (false);
+			}
+			foreach (GameObject obj in GreenLight) {
+				obj.SetActive (true);
+			}
 		}
 	}
 }

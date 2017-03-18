@@ -1,0 +1,123 @@
+fileFormatVersion: 2
+guid: a39bb411f438e274bbefec23ed011277
+timeCreated: 1489778516
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: MainCharacterRig:body
+    100002: MainCharacterRig:bot
+    100004: MainCharacterRig:Character
+    100006: MainCharacterRig:chest
+    100008: MainCharacterRig:Head
+    100010: MainCharacterRig:head
+    100012: MainCharacterRig:knee
+    100014: MainCharacterRig:mid
+    100016: MainCharacterRig:neck
+    100018: //RootNode
+    100020: UMBRELLA:bar
+    100022: UMBRELLA:group1
+    100024: UMBRELLA:top1
+    100026: UMBRELLA:top2
+    100028: UMBRELLA:TopShadow
+    400000: MainCharacterRig:body
+    400002: MainCharacterRig:bot
+    400004: MainCharacterRig:Character
+    400006: MainCharacterRig:chest
+    400008: MainCharacterRig:Head
+    400010: MainCharacterRig:head
+    400012: MainCharacterRig:knee
+    400014: MainCharacterRig:mid
+    400016: MainCharacterRig:neck
+    400018: //RootNode
+    400020: UMBRELLA:bar
+    400022: UMBRELLA:group1
+    400024: UMBRELLA:top1
+    400026: UMBRELLA:top2
+    400028: UMBRELLA:TopShadow
+    2300000: UMBRELLA:bar
+    2300002: UMBRELLA:top1
+    2300004: UMBRELLA:top2
+    2300006: UMBRELLA:TopShadow
+    3300000: UMBRELLA:bar
+    3300002: UMBRELLA:top1
+    3300004: UMBRELLA:top2
+    3300006: UMBRELLA:TopShadow
+    4300000: UMBRELLA:top1
+    4300002: UMBRELLA:top2
+    4300004: UMBRELLA:bar
+    4300006: UMBRELLA:TopShadow
+    4300008: MainCharacterRig:body
+    4300010: MainCharacterRig:Head
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: MainCharacterRig:body
+    13700002: MainCharacterRig:Head
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

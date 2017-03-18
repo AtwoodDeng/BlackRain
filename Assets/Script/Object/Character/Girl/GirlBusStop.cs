@@ -331,9 +331,11 @@ public class GirlBusStop : TalkableCharacter {
 				talkPointOneFilm.Work ();
 			}
 		} else if (arg.type == LogicEvents.BusStopTalkPointTwo) {
-			if ( NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog )
+			if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog) {
+				
 				DisplayDialog (talkPointTwo);
-
+				m_stateMachine.State = GirlState.WaitToChooseMusic;
+			}
 			if (NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Icon) {
 				m_stateMachine.State = GirlState.WaitToChooseMusic;
 				talkPointTwoFilm.Work ();

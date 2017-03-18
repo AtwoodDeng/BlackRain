@@ -24,6 +24,8 @@ public class AutoDoor : MBehavior {
 	[ReadOnlyAttribute] public List<GameObject> inObject = new List<GameObject>();
 	AStateMachine<State,LogicEvents> m_stateMachine;
 	Vector3 oriPosition;
+	[SerializeField] LogicManager.GameState startState = LogicManager.GameState.Enter;
+	[SerializeField] LogicManager.GameState endState = LogicManager.GameState.End;
 
 	protected override void MAwake ()
 	{
@@ -81,6 +83,8 @@ public class AutoDoor : MBehavior {
 	protected override void MOnTriggerEnter (Collider col)
 	{
 		base.MOnTriggerEnter (col);
+	
+		if ( LogicManager.Instance.State >= startState && LogicManager.Instance.State < endState )
 		if (col.gameObject.tag == senseTag.ToString()) {
 			if (!inObject.Contains (col.gameObject))
 				inObject.Add (col.gameObject);
@@ -91,6 +95,8 @@ public class AutoDoor : MBehavior {
 	protected override void MOnTriggerExit (Collider col)
 	{
 		base.MOnTriggerExit (col);
+
+		if ( LogicManager.Instance.State >= startState && LogicManager.Instance.State < endState )
 		if (inObject.Contains (col.gameObject))
 			inObject.Remove (col.gameObject);
 	}

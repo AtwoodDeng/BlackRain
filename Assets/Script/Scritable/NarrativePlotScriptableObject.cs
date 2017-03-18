@@ -82,6 +82,8 @@ public enum NarrativeIcon {
 	Nervous = 12,
 	Consider = 13,
 	Sad2 = 14,
+	Confuse = 15,
+	Unhappy = 16,
 
 	Kappa = 31,
 	Yao = 32,

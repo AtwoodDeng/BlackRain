@@ -36,7 +36,7 @@ public class PasserByManipulator : MBehavior {
 		passerBy.transform.SetParent (transform);
 		passerBy.transform.position = transform.position +
 			new Vector3 (Random.Range(-createArea.x,createArea.x) ,Random.Range(-createArea.y,createArea.y) ,Random.Range(-createArea.z,createArea.z) );
-//		Debug.Log (passerBy.name + "Set Position " + passerBy.transform.position);
+		Debug.Log ( " Create Passerby " + passerBy.name + " Set Position " + passerBy.transform.position);
 
 		NormalPasserBy passerByCom = passerBy.GetComponent<NormalPasserBy> ();
 		passerByCom.SetSpeed (speed.RandomBetween);

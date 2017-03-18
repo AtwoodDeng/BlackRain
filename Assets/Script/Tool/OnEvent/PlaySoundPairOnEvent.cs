@@ -8,6 +8,7 @@ public class PlaySoundPairOnEvent : OnEventResponsor {
 	public override void OnEvent (LogicArg arg)
 	{
 		base.OnEvent (arg);
-		AudioManager.Instance.StartPlayPair (pair);
+		if ( enabled )
+			AudioManager.Instance.StartPlayPair (pair);
 	}
 }

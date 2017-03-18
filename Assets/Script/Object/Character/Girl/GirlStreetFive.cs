@@ -251,7 +251,9 @@ public class GirlStreetFive : TalkableCharacter {
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
-		M_Event.RegisterAll (OnEvent);
+//		M_Event.RegisterAll (OnEvent);
+
+		M_Event.RegisterEvent (LogicEvents.StreetFiveGirlEndTalk, OnEvent);
 		//		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
 		//		M_Event.RegisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
 		//		M_Event.RegisterEvent (LogicEvents.EnterStone, OnEvent);
@@ -263,7 +265,8 @@ public class GirlStreetFive : TalkableCharacter {
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
-		M_Event.RegisterAll (OnEvent);
+		//		M_Event.RegisterAll (OnEvent);
+		M_Event.UnregisterEvent (LogicEvents.StreetFiveGirlEndTalk, OnEvent);
 		//		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointOne, OnEvent);
 		//		M_Event.UnregisterEvent (LogicEvents.BusStopTalkPointTwo, OnEvent);
 		//		M_Event.UnregisterEvent (LogicEvents.EnterStone, OnEvent);

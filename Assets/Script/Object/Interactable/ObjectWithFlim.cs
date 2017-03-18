@@ -5,15 +5,17 @@ using UnityEngine;
 public class ObjectWithFlim : Interactable {
 
 	[SerializeField] FilmController filmController;
+	[SerializeField] bool onlyWorksWithIcon;
 
 	public override void Interact ()
 	{
-		if (filmController != null)
-			filmController.Work ();
+			if (filmController != null)
+				filmController.Work ();
 	}
 
 	public override bool IsInteractable ()
 	{
-		return true;
+		return ((onlyWorksWithIcon && NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Icon) ||
+		!onlyWorksWithIcon);
 	}
 }

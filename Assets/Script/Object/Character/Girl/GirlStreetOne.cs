@@ -95,13 +95,13 @@ public class GirlStreetOne : TalkableCharacter {
 			toward.y = 0;
 			transform.forward = toward;
 			m_Animator.SetTrigger("HeadUp");
-			if ( filmController != null )
+//			if ( NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Icon )
 			{
 				isFilmPlayed = false;
 				filmController = crowController;
 			}
 
-			if ( mainPlot != null )
+//			if ( NarrativeManager.Instance.narrativeType == NarrativeManager.NarrativeType.Dialog)
 			{
 				IsMainEnded = false;
 				mainPlot = crowPlot;
@@ -180,13 +180,21 @@ public class GirlStreetOne : TalkableCharacter {
 	protected override void MOnEnable ()
 	{
 		base.MOnEnable ();
-		M_Event.RegisterAll (OnEvent);
+//		M_Event.RegisterAll (OnEvent);
+
+		M_Event.RegisterEvent (LogicEvents.StreetTwoSeeOldGril, OnEvent);
+		M_Event.RegisterEvent (LogicEvents.StreetTwoWatchCrow, OnEvent);
+		M_Event.RegisterEvent (LogicEvents.StreetTwoWatchCrowEnd, OnEvent);
 	}
 
 	protected override void MOnDisable ()
 	{
 		base.MOnDisable ();
-		M_Event.RegisterAll (OnEvent);
+//		M_Event.RegisterAll (OnEvent);
+
+		M_Event.UnregisterEvent (LogicEvents.StreetTwoSeeOldGril, OnEvent);
+		M_Event.UnregisterEvent (LogicEvents.StreetTwoWatchCrow, OnEvent);
+		M_Event.UnregisterEvent (LogicEvents.StreetTwoWatchCrowEnd, OnEvent);
 	}
 
 	void OnEvent(LogicArg arg)
@@ -200,8 +208,11 @@ public class GirlStreetOne : TalkableCharacter {
 		Gizmos.DrawSphere (transform.position, followDistance);
 	}
 
-//	void OnGUI()
-//	{
-//		GUILayout.Label ("Girl's State " + m_stateMachine.State);
-//	}
+	void OnGUI()
+	{
+//		if (m_stateMachine.State != State.End && m_stateMachine.State != State.Stand) {
+//			GUILayout.Label ("");
+//			GUILayout.Label ("Girl StreetOne State " + m_stateMachine.State);
+//		}
+	}
 }
