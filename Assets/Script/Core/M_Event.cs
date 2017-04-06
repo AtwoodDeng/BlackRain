@@ -17,6 +17,7 @@ public enum LogicEvents
 	UnlockCamera = 6,
 	PauseGame = 7,
 	UnpauseGame = 8,
+	OutputPlaytestData = 9,
 
 	/// <summary>
 	/// call to start the death effect

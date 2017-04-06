@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Analytics;
+using UnityEngine.Networking;
 
 public class PlaytestManager : MBehavior {
 	[SerializeField] bool isUseAnalystic = true;
+	[SerializeField] bool isUseServer = true;
+	[SerializeField] bool isMoveData = false;
 	private static PlaytestManager m_Instance;
 	public static PlaytestManager Instance{
 		get {
@@ -48,6 +51,7 @@ public class PlaytestManager : MBehavior {
 		}
 	}
 
+	public string ServerURL = "Sample-env-1.z2cacirxzr.us-west-2.elasticbeanstalk.com";
 
 
 	public class ContentData
@@ -86,6 +90,8 @@ public class PlaytestManager : MBehavior {
 	ContentData contentDate = new ContentData();
 
 
+
+
 	protected override void MStart ()
 	{
 		base.MStart ();
@@ -115,6 +121,10 @@ public class PlaytestManager : MBehavior {
 								
 						});
 				}
+				if ( isUseServer )
+				{
+					StartCoroutine( OutputStateToServer( st ));
+				}
 				stateData.Add(st);
 			}
 			ResetState();
@@ -122,6 +132,28 @@ public class PlaytestManager : MBehavior {
 
 		lastPosition = MainCharacter.Instance.transform.position;
 		lastRotation = Camera.main.transform.rotation;
+	}
+
+	IEnumerator OutputStateToServer( StateData data )
+	{
+		string url = string.Format ("{0}?Type=InsertState&State={1}&SneezeTime={2}&MinHealth={3}&InRainTime={4}&GameTime={5}&Duration={6}",
+			             ServerURL,
+			             data.State,
+			             data.sneezeTime,
+			             data.minHealth,
+			             data.inRainTime,
+			             data.endTime,
+			             data.duration);
+		Debug.Log ("Ready To send Data " + url);
+		UnityWebRequest www = UnityWebRequest.Get (url);
+
+		yield return www.Send ();
+
+		if (www.isError) {
+			Debug.Log (www.error);
+		} else {
+			// TODO deal with the return message
+		}
 	}
 
 	protected override void MOnEnable ()
@@ -134,6 +166,7 @@ public class PlaytestManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] += OnDeathEnd;
 		M_Event.logicEvents [(int)LogicEvents.Sneeze] += OnSneeze;
 		M_Event.logicEvents [(int)LogicEvents.PlayMusic] += OnPlayMusic;
+		M_Event.logicEvents [(int)LogicEvents.OutputPlaytestData] += OnOutputPlaytestData;
 	}
 
 	protected override void MOnDisable ()
@@ -146,6 +179,12 @@ public class PlaytestManager : MBehavior {
 		M_Event.logicEvents [(int)LogicEvents.DeathEnd] -= OnDeathEnd;
 		M_Event.logicEvents [(int)LogicEvents.Sneeze] -= OnSneeze;
 		M_Event.logicEvents [(int)LogicEvents.PlayMusic] -= OnPlayMusic;
+		M_Event.logicEvents [(int)LogicEvents.OutputPlaytestData] -= OnOutputPlaytestData;
+	}
+
+	void OnOutputPlaytestData( LogicArg arg )
+	{
+		OutputAll ();
 	}
 
 	void OnPlayMusic( LogicArg arg )
@@ -220,15 +259,21 @@ public class PlaytestManager : MBehavior {
 
 	void OnEnd( LogicArg arg )
 	{
+		OutputAll ();
+	}
+
+	public void OutputAll()
+	{
 
 		if (!Directory.Exists (thisFolder)) {
 			DirectoryInfo info = Directory.CreateDirectory (thisFolder);
 		}
 
 		OutputState ();
-//		OutputDialog ();
+		//		OutputDialog ();
+		if ( isMoveData )
 		OutputMove ();
-//		OutputDeath ();
+		//		OutputDeath ();
 		OutputContent();
 	}
 
@@ -351,7 +396,8 @@ public class PlaytestManager : MBehavior {
 	{
 		base.MUpdate ();
 
-		UpdateMove ();
+		if ( isMoveData )
+			UpdateMove ();
 		UpdateState ();
 	}
 }

@@ -46,12 +46,13 @@ public class LogicManager : MonoBehaviour {
 		Piano = 0,
 		Guitar = 1,
 		Violin = 2,
+		None = 4,
 	}
 
 
 	public class StoryData{
 		
-		public MusicChoice musicChoice;
+		public MusicChoice musicChoice = MusicChoice.None;
 	}
 	public StoryData storyData = new StoryData();
 
@@ -173,6 +174,7 @@ public class LogicManager : MonoBehaviour {
 //Control + K to toggle the main Character
 //Control + M to toggle the music player
 //Control + L to toggle the UI
+//Control + D to Output playtest Data
 
 	void Update()
 	{
@@ -228,6 +230,9 @@ public class LogicManager : MonoBehaviour {
 			M_Event.FireLogicEvent (LogicEvents.HideFrameCamera , new LogicArg (this));
 		}
 
+		if (Input.GetKeyDown (KeyCode.D) && Input.GetKey (KeyCode.LeftControl)) {
+			M_Event.FireLogicEvent (LogicEvents.OutputPlaytestData , new LogicArg(this));
+		}
 
 		if (Input.GetKeyDown (KeyCode.C) && Input.GetKey(KeyCode.LeftControl) ) {
 			m_stateMachine.State = GameState.ShowCredit;

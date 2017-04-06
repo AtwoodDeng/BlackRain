@@ -77,6 +77,9 @@ public class UIManager : MBehavior {
 	public Text MenuBackButtonText;
 	public Text MenuLanguageTips;
 
+	[Header("Test")]
+	public Text PlaytestData;
+
 
 	[System.Serializable]
 	public struct StateTargetPair
@@ -115,6 +118,8 @@ public class UIManager : MBehavior {
 			brokenMusicPlayer.gameObject.SetActive( false ) ;
 
 		HideFrame (0);
+
+		PlaytestData.DOFade (0,0);
 	}
 
 	protected override void MOnEnable ()
@@ -140,6 +145,7 @@ public class UIManager : MBehavior {
 		M_Event.RegisterEvent (LogicEvents.ShowFrameCamera, OnShowFrameCamera);
 		M_Event.RegisterEvent (LogicEvents.HideFrameCamera, OnHideFrameCamera);
 		M_Event.RegisterEvent (LogicEvents.CompleteFrameCamera, OnCompleteFrameCamera);
+		M_Event.RegisterEvent (LogicEvents.OutputPlaytestData, OnOutputPlaytestData);
 //		M_Event.RegisterEvent (LogicEvents.EnterStreetFour, OnEnterStreetFour);
 	}
 
@@ -165,8 +171,15 @@ public class UIManager : MBehavior {
 		M_Event.UnregisterEvent (LogicEvents.ShowFrameCamera, OnShowFrameCamera);
 		M_Event.UnregisterEvent (LogicEvents.HideFrameCamera, OnHideFrameCamera);
 		M_Event.UnregisterEvent (LogicEvents.CompleteFrameCamera, OnCompleteFrameCamera);
+		M_Event.UnregisterEvent (LogicEvents.OutputPlaytestData, OnOutputPlaytestData);
 //		M_Event.UnregisterEvent (LogicEvents.EnterStreetFour, OnEnterStreetFour);
 	
+	}
+
+	void OnOutputPlaytestData( LogicArg arg )
+	{
+		PlaytestData.color = Color.white;
+		PlaytestData.DOFade (0, 2f).SetDelay (2f);
 	}
 
 	void OnCompleteFrameCamera(LogicArg arg)
